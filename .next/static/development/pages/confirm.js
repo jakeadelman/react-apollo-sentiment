@@ -174,15 +174,11 @@ function (_React$Component) {
         lineNumber: 28
       },
       __self: this
-    }, "thank you for confirming your email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 30
-      },
-      __self: this
-    }, JSON.stringify(data)));
+    }, "thank you for confirming your email"));
   });
-}); // class Confi extends React.Component {
+});
+/* <div>{JSON.stringify(data)}</div> */
+// class Confi extends React.Component {
 //   constructor(props) {
 //     super(props);
 //     this.state = {};
