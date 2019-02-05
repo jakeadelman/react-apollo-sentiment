@@ -29,7 +29,9 @@ export default class extends React.Component {
     });
 
     let r = await res;
+    console.log(r);
     r = r.data.login;
+    console.log(r);
     let isTrue = r == "true";
     console.log(typeof r);
     if (isTrue == true) {
