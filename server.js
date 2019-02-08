@@ -15,6 +15,9 @@ server.get("/", (req, res) => app.render(req, res, "/"));
 server.get("/login", (req, res) => app.render(req, res, "/login"));
 server.get("/register", (req, res) => app.render(req, res, "/register"));
 server.get("/dashboard", (req, res) => app.render(req, res, "/dashboard"));
+server.get("/privacypolicy", (req, res) =>
+  app.render(req, res, "/privacypolicy")
+);
 // server.get('/dogs/:breed', (req, res) => {
 //   const params = route('/dogs/:breed')(parse(req.url).pathname)
 //   return app.render(req, res, '/dogs/_breed', params)
