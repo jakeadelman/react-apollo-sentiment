@@ -7,7 +7,7 @@ export default class extends React.Component {
     return (
       <Query query={fetchTweetsQuery} variables={fetchTweetsVars}>
         {({ loading, error, data }) => {
-          if (error) return <div>you are not allowed to access this page</div>;
+          if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
           //   console.log(data.fetchTweets);
           // const areMorePosts = allPosts.length < _allPostsMeta.count;
