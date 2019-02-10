@@ -1,10 +1,15 @@
 import React, { setState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import { withRouter } from "next/router";
 
-export default class extends React.Component {
+export default class DashMain extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    console.log(this.props.initialTerm);
   }
 
   render() {
@@ -16,8 +21,7 @@ export default class extends React.Component {
         {({ loading, error, data }) => {
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
-          //   console.log(data.fetchTweets);
-          // const areMorePosts  allPosts.length < _allPostsMeta.count;
+
           return (
             <div>
               <div className="dash-main-table">
@@ -66,3 +70,29 @@ export const fetchTweetsQuery = gql`
     }
   }
 `;
+
+// const DashMainWrapper = withRouter(props => {
+//   if (!!props.router.query) {
+//     console.log("ROUTER QUERY TERM", props.router.query);
+//     return (
+//       <div>
+//         <DashMain initialTerm={props.router.query.term} />
+//       </div>
+//     );
+//   } else {
+//     console.log("INITIAL TERM", props.initialTerm);
+//     return (
+//       <div>
+//         <DashMain initialTerm={props.initialTerm} />
+//       </div>
+//     );
+//   }
+// });
+// export default DashMainWrapper;
+// const Page = props => (
+//   <div>
+//     <DashMainWrapper initialTerm={props.initialTerm} />
+//   </div>
+// );
+
+// export default Page;

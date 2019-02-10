@@ -2,13 +2,13 @@ import React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import DashMain from "./DashMain";
-import Pagination from "./Pagination";
 import App from "../App";
 import Header from "../Header";
-
-export default class extends React.Component {
+import AddTerm from "./AddTerm";
+import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+class DashInitialTerms extends React.Component {
   state = {
-    initialTerm: "",
+    term: "",
     allTerms: []
   };
 
@@ -18,11 +18,10 @@ export default class extends React.Component {
         {({ loading, error, data }) => {
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
-          //   console.log(data.fetchTweets);
-          // const areMorePosts = allPosts.length < _allPostsMeta.count;
-          if (!this.state.initialTerm) {
+
+          if (!this.state.term) {
             this.setState({
-              initialTerm: data.fetchTerms[0].term
+              term: data.fetchTerms[0].term
             });
           }
           if (!this.state.allTerms[0]) {
@@ -30,12 +29,31 @@ export default class extends React.Component {
               this.state.allTerms.push(term.term);
             });
           }
-          console.log("THIS DATA", data.fetchTerms);
           return (
             <div>
               <div className="dash-main-table">
-                <Pagination searchterms={this.state.allTerms} />
-                <DashMain initialTerm={this.state.initialTerm} />
+                <Pagination>
+                  {this.state.allTerms.map(term => {
+                    return (
+                      <PaginationItem>
+                        <PaginationLink
+                          onClick={() => {
+                            this.setState({ term: term });
+                          }}
+                        >
+                          {term}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  })}
+                  <PaginationItem>
+                    <PaginationLink>
+                      <AddTerm />
+                    </PaginationLink>
+                  </PaginationItem>
+                </Pagination>
+
+                <DashMain initialTerm={this.state.term} />
                 <style jsx>
                   {`
                     .dash-main-table {
@@ -61,6 +79,10 @@ export const fetchTweetsQuery = gql`
     }
   }
 `;
-// export const fetchTweetsVars = {
-//   query: "bitcoin"
-// };
+
+export default () => (
+  <App>
+    <Header />
+    <DashInitialTerms />
+  </App>
+);
