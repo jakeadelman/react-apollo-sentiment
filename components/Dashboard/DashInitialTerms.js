@@ -3,14 +3,25 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import DashMain from "./DashMain";
 import App from "../App";
-import Header from "../Header";
+import Header from "../Header2";
 import AddTerm from "./AddTerm";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+// import SentimentModule from "./SentimentModule";
+
 class DashInitialTerms extends React.Component {
-  state = {
-    term: "",
-    allTerms: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      term: null,
+      allTerms: []
+    };
+    this.toggleTerm = this.toggleTerm.bind(this);
+  }
+
+  toggleTerm(term) {
+    this.setState({ term: term });
+    console.log(this.state);
+  }
 
   render() {
     return (
@@ -20,9 +31,8 @@ class DashInitialTerms extends React.Component {
           if (loading) return <div>Loading</div>;
           console.log(data.fetchTerms);
           if (!this.state.term) {
-            this.setState({
-              term: data.fetchTerms[0].term
-            });
+            this.toggleTerm(data.fetchTerms[0].term);
+            console.log(this.state.term);
           }
           if (!this.state.allTerms[0]) {
             data.fetchTerms.map(term => {
@@ -54,6 +64,7 @@ class DashInitialTerms extends React.Component {
                   </li>
                 </ul>
               </div>
+
               <DashMain initialTerm={this.state.term} />
               <style jsx>
                 {`
@@ -78,6 +89,9 @@ class DashInitialTerms extends React.Component {
                   .pagination-list {
                     display: inline-block;
                   }
+                  .outer-sent {
+                    margin: 0;
+                  }
 
                   @media only screen and (max-width: 960px) {
                     .dash-main-container {
@@ -93,6 +107,11 @@ class DashInitialTerms extends React.Component {
     );
   }
 }
+
+// .outer-sent {
+//   display: inline-block;
+//   float: left;
+// }
 
 export const fetchTweetsQuery = gql`
   query fetchTerms {

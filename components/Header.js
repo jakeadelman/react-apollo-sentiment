@@ -12,6 +12,10 @@ const Header = ({ router: { pathname } }) => (
     <Link prefetch href="/login">
       <a className={pathname === "/login" ? "is-active" : ""}>Login</a>
     </Link>
+    <Link prefetch href="/register">
+      <a className={pathname === "/register" ? "is-active" : ""}>Register</a>
+    </Link>
+
     <style jsx>{`
       header {
         margin-bottom: 25px;
