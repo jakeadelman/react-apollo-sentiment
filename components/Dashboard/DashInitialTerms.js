@@ -12,14 +12,27 @@ class DashInitialTerms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      term: null,
       allTerms: []
     };
     this.toggleTerm = this.toggleTerm.bind(this);
+    this.mapTerms = this.mapTerms.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   toggleTerm(term) {
     this.setState({ term: term });
+    console.log(this.state);
+  }
+
+  mapTerms(allterms) {
+    allterms.map(term => {
+      this.state.allTerms.push(term.term);
+    });
+  }
+
+  handleClick(e) {
+    // console.log(e.target.value);
+    this.setState({ term: e.target.value });
     console.log(this.state);
   }
 
@@ -29,15 +42,11 @@ class DashInitialTerms extends React.Component {
         {({ loading, error, data }) => {
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
-          console.log(data.fetchTerms);
-          if (!this.state.term) {
-            this.toggleTerm(data.fetchTerms[0].term);
-            console.log(this.state.term);
-          }
+
           if (!this.state.allTerms[0]) {
-            data.fetchTerms.map(term => {
-              this.state.allTerms.push(term.term);
-            });
+            this.toggleTerm(data.fetchTerms[0].term);
+            this.mapTerms(data.fetchTerms);
+            return <div>loading</div>;
           }
           return (
             <div className="dash-main-container">
@@ -47,9 +56,8 @@ class DashInitialTerms extends React.Component {
                     return (
                       <li className="pagination-list-item">
                         <button
-                          onClick={() => {
-                            this.setState({ term: term });
-                          }}
+                          value={term}
+                          onClick={this.handleClick}
                           className="pagination-button"
                         >
                           {term}

@@ -29,7 +29,7 @@ export default function AddTerm(props) {
         add term
       </button>
       <Popover placement="bottom" isOpen={popover} target="Popover1">
-        <PopoverHeader>Popover Title</PopoverHeader>
+        <PopoverHeader>Add Term</PopoverHeader>
         <PopoverBody>
           <PopBody />
         </PopoverBody>
@@ -93,8 +93,17 @@ const AddTodo = () => {
                 input = node;
               }}
             />
-            <button type="submit">Add Todo</button>
+            <button className="add-button" type="submit">
+              Add
+            </button>
           </form>
+          <style jsx>
+            {`
+              .add-button {
+                margin-top: 5px;
+              }
+            `}
+          </style>
         </div>
       )}
     </Mutation>
