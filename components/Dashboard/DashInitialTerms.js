@@ -18,7 +18,7 @@ class DashInitialTerms extends React.Component {
         {({ loading, error, data }) => {
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
-
+          console.log(data.fetchTerms);
           if (!this.state.term) {
             this.setState({
               term: data.fetchTerms[0].term
@@ -30,39 +30,62 @@ class DashInitialTerms extends React.Component {
             });
           }
           return (
-            <div>
-              <div className="dash-main-table">
-                <Pagination>
+            <div className="dash-main-container">
+              <div className="pagination-list">
+                <ul>
                   {this.state.allTerms.map(term => {
                     return (
-                      <PaginationItem>
-                        <PaginationLink
+                      <li className="pagination-list-item">
+                        <button
                           onClick={() => {
                             this.setState({ term: term });
                           }}
+                          className="pagination-button"
                         >
                           {term}
-                        </PaginationLink>
-                      </PaginationItem>
+                        </button>
+                      </li>
                     );
                   })}
-                  <PaginationItem>
-                    <PaginationLink>
+                  <li className="pagination-list-item">
+                    <button className="pagination-button">
                       <AddTerm />
-                    </PaginationLink>
-                  </PaginationItem>
-                </Pagination>
-
-                <DashMain initialTerm={this.state.term} />
-                <style jsx>
-                  {`
-                    .dash-main-table {
-                      max-width: 50%;
-                      margin: 3em auto 3em auto;
-                    }
-                  `}
-                </style>
+                    </button>
+                  </li>
+                </ul>
               </div>
+              <DashMain initialTerm={this.state.term} />
+              <style jsx>
+                {`
+                  .dash-main-table {
+                  }
+                  .pagination-list-item {
+                    float: left;
+                    list-style-type: none;
+                    margin: 2px;
+                  }
+                  .pagination-button {
+                    border-radius: 2px;
+                  }
+                  .dash-main-container {
+                    display: block;
+                    max-width: 50%;
+                    margin: 3em auto 3em auto;
+                  }
+                  .dash-main-table {
+                    display: block;
+                  }
+                  .pagination-list {
+                    display: inline-block;
+                  }
+
+                  @media only screen and (max-width: 960px) {
+                    .dash-main-container {
+                      max-width: 85%;
+                    }
+                  }
+                `}
+              </style>
             </div>
           );
         }}

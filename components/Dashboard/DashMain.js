@@ -16,6 +16,7 @@ export default class DashMain extends React.Component {
     const fetchTweetsVars = {
       query: this.props.initialTerm
     };
+
     return (
       <Query query={fetchTweetsQuery} variables={fetchTweetsVars}>
         {({ loading, error, data }) => {
@@ -23,8 +24,8 @@ export default class DashMain extends React.Component {
           if (loading) return <div>Loading</div>;
 
           return (
-            <div>
-              <div className="dash-main-table">
+            <div className="dash-main-table">
+              <div>
                 <table>
                   <thread>
                     <tr>
@@ -34,7 +35,7 @@ export default class DashMain extends React.Component {
                   <tbody>
                     <div>
                       {data.fetchTweets.map(tweet => (
-                        <tr>
+                        <tr className="data">
                           <th scope="row">text</th>
                           <td>{tweet.text}</td>
                         </tr>
@@ -46,7 +47,19 @@ export default class DashMain extends React.Component {
                   {`
                     .dash-main-table {
                       max-width: 50%;
-                      margin: 3em auto 3em auto;
+                      display: block;
+                      margin: auto;
+                    }
+                    table {
+                      table-layout: fixed;
+                      width: 100% !important;
+                    }
+                    .data {
+                      display: inline-table;
+                      word-wrap: break-word;
+                    }
+                    td {
+                      word-break: break-all;
                     }
                   `}
                 </style>
@@ -65,8 +78,7 @@ export const fetchTweetsQuery = gql`
       id
       tweetId
       text
-      score
-      comparative
+      polarity
     }
   }
 `;
