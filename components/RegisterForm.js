@@ -18,7 +18,7 @@ export default function Submit() {
           <input placeholder="email" name="email" type="text" required />
           <input placeholder="password" name="password" type="text" required />
           <button type="submit">Submit</button>
-          <style jsx>{`
+          {/* <style jsx>{`
             form {
               border-bottom: 1px solid #ececec;
               padding-bottom: 20px;
@@ -31,7 +31,7 @@ export default function Submit() {
               display: block;
               margin-bottom: 10px;
             }
-          `}</style>
+          `}</style> */}
         </form>
       )}
     </ApolloConsumer>

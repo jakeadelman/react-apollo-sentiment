@@ -3,6 +3,8 @@ import gql from "graphql-tag";
 import Router from "next/router";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import styled, { ThemeProvider } from "styled-components";
+// import theme from "./theme";
 
 export default class extends React.Component {
   constructor(props) {
@@ -67,24 +69,6 @@ export default class extends React.Component {
                 </Alert>
               </div>
             ) : null}
-            <style jsx>{`
-              form {
-                border-bottom: 1px solid #ececec;
-                padding-bottom: 20px;
-                margin-bottom: 20px;
-              }
-              h1 {
-                font-size: 20px;
-              }
-              input {
-                display: block;
-                margin-bottom: 10px;
-              }
-              .login-alert {
-                max-width: 22em;
-                margin-top: 2em;
-              }
-            `}</style>
           </form>
         )}
       </ApolloConsumer>

@@ -97,13 +97,13 @@ const AddTodo = () => {
               Add
             </button>
           </form>
-          <style jsx>
+          {/* <style jsx>
             {`
               .add-button {
                 margin-top: 5px;
               }
             `}
-          </style>
+          </style> */}
         </div>
       )}
     </Mutation>

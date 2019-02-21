@@ -8,7 +8,7 @@ export default function PostUpvoter({ votes, id }) {
       {client => (
         <button onClick={() => upvotePost(votes, id, client)}>
           {votes}
-          <style jsx>{`
+          {/* <style jsx>{`
             button {
               background-color: transparent;
               border: 1px solid #e4e4e4;
@@ -27,7 +27,7 @@ export default function PostUpvoter({ votes, id }) {
               margin-right: 5px;
               width: 0;
             }
-          `}</style>
+          `}</style> */}
         </button>
       )}
     </ApolloConsumer>

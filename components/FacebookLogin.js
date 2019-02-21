@@ -24,13 +24,13 @@ export default class extends React.Component {
             callback={this.responseFacebook}
           />
         </div>
-        <style jsx>
+        {/* <style jsx>
           {`
             .facebook-login {
               margin: 20px;
             }
           `}
-        </style>
+        </style> */}
       </div>
     );
   }

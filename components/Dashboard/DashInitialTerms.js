@@ -6,9 +6,11 @@ import App from "../App";
 import Header from "../Header2";
 import AddTerm from "./AddTerm";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
+import styled, { ThemeProvider } from "styled-components";
+import theme from "../theme";
 // import SentimentModule from "./SentimentModule";
 
-class DashInitialTerms extends React.Component {
+export default class DashInitialTerms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -74,40 +76,6 @@ class DashInitialTerms extends React.Component {
               </div>
 
               <DashMain initialTerm={this.state.term} />
-              <style jsx>
-                {`
-                  .dash-main-table {
-                  }
-                  .pagination-list-item {
-                    float: left;
-                    list-style-type: none;
-                    margin: 2px;
-                  }
-                  .pagination-button {
-                    border-radius: 2px;
-                  }
-                  .dash-main-container {
-                    display: block;
-                    max-width: 50%;
-                    margin: 3em auto 3em auto;
-                  }
-                  .dash-main-table {
-                    display: block;
-                  }
-                  .pagination-list {
-                    display: inline-block;
-                  }
-                  .outer-sent {
-                    margin: 0;
-                  }
-
-                  @media only screen and (max-width: 960px) {
-                    .dash-main-container {
-                      max-width: 85%;
-                    }
-                  }
-                `}
-              </style>
             </div>
           );
         }}
@@ -130,9 +98,9 @@ export const fetchTweetsQuery = gql`
   }
 `;
 
-export default () => (
-  <App>
-    <Header />
-    <DashInitialTerms />
-  </App>
-);
+// export default () => (
+//   <App>
+//     <Header />
+//     <DashInitialTerms />
+//   </App>
+// );
