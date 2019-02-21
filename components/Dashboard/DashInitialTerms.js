@@ -8,9 +8,13 @@ import AddTerm from "./AddTerm";
 import { Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
+import AreaChart from "../Charts/AreaChart";
+import AxisChart from "../Charts/AxisChart";
+import NewChart from "../Charts/NewChart";
+import ScreenSize from "./Window";
 // import SentimentModule from "./SentimentModule";
 
-export default class DashInitialTerms extends React.Component {
+class DashInitialTerms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,6 +43,12 @@ export default class DashInitialTerms extends React.Component {
   }
 
   render() {
+    let marg = {
+      left: 20,
+      right: 20,
+      top: 20,
+      bottom: 20
+    };
     return (
       <Query query={fetchTweetsQuery}>
         {({ loading, error, data }) => {
@@ -74,7 +84,9 @@ export default class DashInitialTerms extends React.Component {
                   </li>
                 </ul>
               </div>
-
+              {/* <AxisChart margin={marg} width={500} height={500} /> */}
+              <AreaChart margin={marg} width={1000} height={1000} />
+              <ScreenSize />
               <DashMain initialTerm={this.state.term} />
             </div>
           );
@@ -97,6 +109,8 @@ export const fetchTweetsQuery = gql`
     }
   }
 `;
+
+export default windowSize(DashInitialTerms);
 
 // export default () => (
 //   <App>

@@ -127,6 +127,857 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
 
 /***/ }),
 
+/***/ "./components/Charts/AreaChart.js":
+/*!****************************************!*\
+  !*** ./components/Charts/AreaChart.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vx/shape */ "@vx/shape");
+/* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_vx_shape__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _vx_mock_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vx/mock-data */ "@vx/mock-data");
+/* harmony import */ var _vx_mock_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_vx_mock_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vx_curve__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vx/curve */ "@vx/curve");
+/* harmony import */ var _vx_curve__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_vx_curve__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _vx_grid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vx/grid */ "@vx/grid");
+/* harmony import */ var _vx_grid__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_vx_grid__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _vx_scale__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vx/scale */ "@vx/scale");
+/* harmony import */ var _vx_scale__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_vx_scale__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _vx_tooltip__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vx/tooltip */ "@vx/tooltip");
+/* harmony import */ var _vx_tooltip__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_vx_tooltip__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _vx_event__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @vx/event */ "@vx/event");
+/* harmony import */ var _vx_event__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_vx_event__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! d3-array */ "d3-array");
+/* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(d3_array__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! d3-time-format */ "d3-time-format");
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(d3_time_format__WEBPACK_IMPORTED_MODULE_9__);
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Charts/AreaChart.js";
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+
+
+
+
+
+
+
+
+
+var stock = _vx_mock_data__WEBPACK_IMPORTED_MODULE_2__["appleStock"].slice(800); // util
+
+var formatDate = Object(d3_time_format__WEBPACK_IMPORTED_MODULE_9__["timeFormat"])("%b %d, '%y");
+
+var min = function min(arr, fn) {
+  return Math.min.apply(Math, _toConsumableArray(arr.map(fn)));
+};
+
+var max = function max(arr, fn) {
+  return Math.max.apply(Math, _toConsumableArray(arr.map(fn)));
+};
+
+var extent = function extent(arr, fn) {
+  return [min(arr, fn), max(arr, fn)];
+}; // accessors
+
+
+var xStock = function xStock(d) {
+  return new Date(d.date);
+};
+
+var yStock = function yStock(d) {
+  return d.close;
+};
+
+var bisectDate = Object(d3_array__WEBPACK_IMPORTED_MODULE_8__["bisector"])(function (d) {
+  return new Date(d.date);
+}).left;
+
+var Area =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Area, _React$Component);
+
+  function Area(props) {
+    var _this;
+
+    _classCallCheck(this, Area);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Area).call(this, props));
+    _this.handleTooltip = _this.handleTooltip.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(Area, [{
+    key: "handleTooltip",
+    value: function handleTooltip(_ref) {
+      var event = _ref.event,
+          data = _ref.data,
+          xStock = _ref.xStock,
+          xScale = _ref.xScale,
+          yScale = _ref.yScale;
+      var showTooltip = this.props.showTooltip;
+
+      var _localPoint = Object(_vx_event__WEBPACK_IMPORTED_MODULE_7__["localPoint"])(event),
+          x = _localPoint.x;
+
+      var x0 = xScale.invert(x);
+      var index = bisectDate(data, x0, 1);
+      var d0 = data[index - 1];
+      var d1 = data[index];
+      var d = d0;
+
+      if (d1 && d1.date) {
+        d = x0 - xStock(d0.date) > xStock(d1.date) - x0 ? d1 : d0;
+      }
+
+      showTooltip({
+        tooltipData: d,
+        tooltipLeft: x,
+        tooltipTop: yScale(d.close)
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var _this$props = this.props,
+          width = _this$props.width,
+          height = _this$props.height,
+          margin = _this$props.margin,
+          hideTooltip = _this$props.hideTooltip,
+          tooltipData = _this$props.tooltipData,
+          tooltipTop = _this$props.tooltipTop,
+          tooltipLeft = _this$props.tooltipLeft,
+          events = _this$props.events;
+      if (width < 10) return null; // bounds
+
+      var xMax = width - margin.left - margin.right;
+      var yMax = height - margin.top - margin.bottom; // const xMax = 200;
+      // const yMax = 200;
+      // scales
+
+      var xScale = Object(_vx_scale__WEBPACK_IMPORTED_MODULE_5__["scaleTime"])({
+        range: [0, xMax],
+        domain: extent(stock, xStock)
+      });
+      var yScale = Object(_vx_scale__WEBPACK_IMPORTED_MODULE_5__["scaleLinear"])({
+        range: [yMax, 0],
+        domain: [0, max(stock, yStock) + yMax / 3],
+        nice: true
+      });
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 78
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+        ref: function ref(s) {
+          return _this2.svg = s;
+        },
+        width: width,
+        height: height,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 79
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+        fill: "#32deaa",
+        rx: 14,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 80
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("defs", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 88
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("linearGradient", {
+        id: "gradient",
+        x1: "0%",
+        y1: "0%",
+        x2: "0%",
+        y2: "100%",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 89
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
+        offset: "0%",
+        stopColor: "#FFFFFF",
+        stopOpacity: 1,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 90
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
+        offset: "100%",
+        stopColor: "#FFFFFF",
+        stopOpacity: 0.2,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 91
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_grid__WEBPACK_IMPORTED_MODULE_4__["GridRows"], {
+        lineStyle: {
+          pointerEvents: "none"
+        },
+        scale: yScale,
+        width: xMax,
+        strokeDasharray: "2,2",
+        stroke: "rgba(255,255,255,0.3)",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 94
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_grid__WEBPACK_IMPORTED_MODULE_4__["GridColumns"], {
+        lineStyle: {
+          pointerEvents: "none"
+        },
+        scale: xScale,
+        height: yMax,
+        strokeDasharray: "2,2",
+        stroke: "rgba(255,255,255,0.3)",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 101
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_1__["AreaClosed"], {
+        data: stock,
+        x: function x(d) {
+          return xScale(xStock(d));
+        },
+        y: function y(d) {
+          return yScale(yStock(d));
+        },
+        yScale: yScale,
+        strokeWidth: 1,
+        stroke: "url(#gradient)",
+        fill: "url(#gradient)",
+        curve: _vx_curve__WEBPACK_IMPORTED_MODULE_3__["curveMonotoneX"],
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 108
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_1__["Bar"], {
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+        fill: "transparent",
+        rx: 14,
+        data: stock,
+        onTouchStart: function onTouchStart(event) {
+          return _this2.handleTooltip({
+            event: event,
+            xStock: xStock,
+            xScale: xScale,
+            yScale: yScale,
+            data: stock
+          });
+        },
+        onTouchMove: function onTouchMove(event) {
+          return _this2.handleTooltip({
+            event: event,
+            xStock: xStock,
+            xScale: xScale,
+            yScale: yScale,
+            data: stock
+          });
+        },
+        onMouseMove: function onMouseMove(event) {
+          return _this2.handleTooltip({
+            event: event,
+            xStock: xStock,
+            xScale: xScale,
+            yScale: yScale,
+            data: stock
+          });
+        },
+        onMouseLeave: function onMouseLeave(event) {
+          return hideTooltip();
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 118
+        },
+        __self: this
+      }), tooltipData && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 156
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_1__["Line"], {
+        from: {
+          x: tooltipLeft,
+          y: 0
+        },
+        to: {
+          x: tooltipLeft,
+          y: yMax
+        },
+        stroke: "rgba(92, 119, 235, 1.000)",
+        strokeWidth: 2,
+        style: {
+          pointerEvents: "none"
+        },
+        strokeDasharray: "2,2",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 157
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
+        cx: tooltipLeft,
+        cy: tooltipTop + 1,
+        r: 4,
+        fill: "black",
+        fillOpacity: 0.1,
+        stroke: "black",
+        strokeOpacity: 0.1,
+        strokeWidth: 2,
+        style: {
+          pointerEvents: "none"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 165
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("circle", {
+        cx: tooltipLeft,
+        cy: tooltipTop,
+        r: 4,
+        fill: "rgba(92, 119, 235, 1.000)",
+        stroke: "white",
+        strokeWidth: 2,
+        style: {
+          pointerEvents: "none"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 176
+        },
+        __self: this
+      }))), tooltipData && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 189
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_tooltip__WEBPACK_IMPORTED_MODULE_6__["Tooltip"], {
+        top: tooltipTop - 12,
+        left: tooltipLeft + 12,
+        style: {
+          backgroundColor: "rgba(92, 119, 235, 1.000)",
+          color: "white"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 190
+        },
+        __self: this
+      }, "$".concat(yStock(tooltipData))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_tooltip__WEBPACK_IMPORTED_MODULE_6__["Tooltip"], {
+        top: yMax - 14,
+        left: tooltipLeft,
+        style: {
+          transform: "translateX(-50%)"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 200
+        },
+        __self: this
+      }, formatDate(xStock(tooltipData)))));
+    }
+  }]);
+
+  return Area;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(_vx_tooltip__WEBPACK_IMPORTED_MODULE_6__["withTooltip"])(Area));
+
+/***/ }),
+
+/***/ "./components/Charts/AxisChart.js":
+/*!****************************************!*\
+  !*** ./components/Charts/AxisChart.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vx_grid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vx/grid */ "@vx/grid");
+/* harmony import */ var _vx_grid__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_vx_grid__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _vx_group__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vx/group */ "@vx/group");
+/* harmony import */ var _vx_group__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_vx_group__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vx_curve__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vx/curve */ "@vx/curve");
+/* harmony import */ var _vx_curve__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_vx_curve__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _vx_gradient__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @vx/gradient */ "@vx/gradient");
+/* harmony import */ var _vx_gradient__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_vx_gradient__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _vx_mock_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vx/mock-data */ "@vx/mock-data");
+/* harmony import */ var _vx_mock_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_vx_mock_data__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _vx_axis__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vx/axis */ "@vx/axis");
+/* harmony import */ var _vx_axis__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_vx_axis__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @vx/shape */ "@vx/shape");
+/* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_vx_shape__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _vx_scale__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @vx/scale */ "@vx/scale");
+/* harmony import */ var _vx_scale__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_vx_scale__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! d3-array */ "d3-array");
+/* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(d3_array__WEBPACK_IMPORTED_MODULE_9__);
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Charts/AxisChart.js";
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+
+
+
+
+
+
+
+
+
+var data = Object(_vx_mock_data__WEBPACK_IMPORTED_MODULE_5__["genDateValue"])(20); // accessors
+
+var _x = function x(d) {
+  return d.date;
+};
+
+var _y = function y(d) {
+  return d.value;
+}; // responsive utils for axis ticks
+
+
+function numTicksForHeight(height) {
+  if (height <= 300) return 3;
+  if (300 < height && height <= 600) return 5;
+  return 10;
+}
+
+function numTicksForWidth(width) {
+  if (width <= 300) return 2;
+  if (300 < width && width <= 400) return 5;
+  return 10;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      margin = _ref.margin;
+  // bounds
+  var xMax = width - margin.left - margin.right;
+  var yMax = height - margin.top - margin.bottom; // scales
+
+  var xScale = Object(_vx_scale__WEBPACK_IMPORTED_MODULE_8__["scaleTime"])({
+    range: [0, xMax],
+    domain: Object(d3_array__WEBPACK_IMPORTED_MODULE_9__["extent"])(data, _x)
+  });
+  var yScale = Object(_vx_scale__WEBPACK_IMPORTED_MODULE_8__["scaleLinear"])({
+    range: [yMax, 0],
+    domain: [0, Math.max.apply(Math, _toConsumableArray(data.map(_y)))],
+    nice: true
+  });
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    width: width,
+    height: height,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 48
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_gradient__WEBPACK_IMPORTED_MODULE_4__["GradientOrangeRed"], {
+    id: "linear",
+    vertical: false,
+    fromOpacity: 0.8,
+    toOpacity: 0.3,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 49
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+    x: 0,
+    y: 0,
+    width: width,
+    height: height,
+    fill: "#f4419f",
+    rx: 14,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 55
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_grid__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    top: margin.top,
+    left: margin.left,
+    xScale: xScale,
+    yScale: yScale,
+    stroke: "rgba(142, 32, 95, 0.9)",
+    width: xMax,
+    height: yMax,
+    numTicksRows: numTicksForHeight(height),
+    numTicksColumns: numTicksForWidth(width),
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 56
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_group__WEBPACK_IMPORTED_MODULE_2__["Group"], {
+    top: margin.top,
+    left: margin.left,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 67
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_7__["Area"], {
+    data: data,
+    x: function x(d) {
+      return xScale(_x(d));
+    },
+    y0: function y0(d) {
+      return yScale.range()[0];
+    },
+    y1: function y1(d) {
+      return yScale(_y(d));
+    },
+    strokeWidth: 2,
+    stroke: "transparent",
+    fill: "url(#linear)",
+    curve: _vx_curve__WEBPACK_IMPORTED_MODULE_3__["curveBasis"],
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 68
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_7__["LinePath"], {
+    data: data,
+    x: function x(d) {
+      return xScale(_x(d));
+    },
+    y: function y(d) {
+      return yScale(_y(d));
+    },
+    stroke: "url('#linear')",
+    strokeWidth: 2,
+    curve: _vx_curve__WEBPACK_IMPORTED_MODULE_3__["curveBasis"],
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 78
+    },
+    __self: this
+  })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_group__WEBPACK_IMPORTED_MODULE_2__["Group"], {
+    left: margin.left,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 87
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_axis__WEBPACK_IMPORTED_MODULE_6__["AxisLeft"], {
+    top: margin.top,
+    left: 0,
+    scale: yScale,
+    hideZero: true,
+    numTicks: numTicksForHeight(height),
+    label: "Axis Left Label",
+    labelProps: {
+      fill: "#8e205f",
+      textAnchor: "middle",
+      fontSize: 12,
+      fontFamily: "Arial"
+    },
+    stroke: "#1b1a1e",
+    tickStroke: "#8e205f",
+    tickLabelProps: function tickLabelProps(value, index) {
+      return {
+        fill: "#8e205f",
+        textAnchor: "end",
+        fontSize: 10,
+        fontFamily: "Arial",
+        dx: "-0.25em",
+        dy: "0.25em"
+      };
+    },
+    tickComponent: function tickComponent(_ref2) {
+      var formattedValue = _ref2.formattedValue,
+          tickProps = _objectWithoutProperties(_ref2, ["formattedValue"]);
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", _extends({}, tickProps, {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 112
+        },
+        __self: this
+      }), formattedValue);
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 88
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_axis__WEBPACK_IMPORTED_MODULE_6__["AxisRight"], {
+    top: margin.top,
+    left: xMax,
+    scale: yScale,
+    hideZero: true,
+    numTicks: numTicksForHeight(height),
+    label: "Axis Right Label",
+    labelProps: {
+      fill: "#8e205f",
+      textAnchor: "middle",
+      fontSize: 12,
+      fontFamily: "Arial"
+    },
+    stroke: "#1b1a1e",
+    tickStroke: "#8e205f",
+    tickLabelProps: function tickLabelProps(value, index) {
+      return {
+        fill: "#8e205f",
+        textAnchor: "start",
+        fontSize: 10,
+        fontFamily: "Arial",
+        dx: "0.25em",
+        dy: "0.25em"
+      };
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 115
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_axis__WEBPACK_IMPORTED_MODULE_6__["AxisBottom"], {
+    top: height - margin.bottom,
+    left: 0,
+    scale: xScale,
+    numTicks: numTicksForWidth(width),
+    label: "Time",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 139
+    },
+    __self: this
+  }, function (axis) {
+    var tickLabelSize = 10;
+    var tickRotate = 45;
+    var tickColor = "#8e205f";
+    var axisCenter = (axis.axisToPoint.x - axis.axisFromPoint.x) / 2;
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+      className: "my-custom-bottom-axis",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 152
+      },
+      __self: this
+    }, axis.ticks.map(function (tick, i) {
+      var tickX = tick.to.x;
+      var tickY = tick.to.y + tickLabelSize + axis.tickLength;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_group__WEBPACK_IMPORTED_MODULE_2__["Group"], {
+        key: "vx-tick-".concat(tick.value, "-").concat(i),
+        className: "vx-axis-tick",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 157
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_7__["Line"], {
+        from: tick.from,
+        to: tick.to,
+        stroke: tickColor,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 161
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", {
+        transform: "translate(".concat(tickX, ", ").concat(tickY, ") rotate(").concat(tickRotate, ")"),
+        fontSize: tickLabelSize,
+        textAnchor: "middle",
+        fill: tickColor,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 162
+        },
+        __self: this
+      }, tick.formattedValue));
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", {
+      textAnchor: "middle",
+      transform: "translate(".concat(axisCenter, ", 50)"),
+      fontSize: "8",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 173
+      },
+      __self: this
+    }, axis.label));
+  })));
+});
+
+/***/ }),
+
+/***/ "./components/Charts/NewChart.js":
+/*!***************************************!*\
+  !*** ./components/Charts/NewChart.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _vx_axis__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @vx/axis */ "@vx/axis");
+/* harmony import */ var _vx_axis__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_vx_axis__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _vx_mock_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vx/mock-data */ "@vx/mock-data");
+/* harmony import */ var _vx_mock_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_vx_mock_data__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vx_scale__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @vx/scale */ "@vx/scale");
+/* harmony import */ var _vx_scale__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_vx_scale__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! d3-array */ "d3-array");
+/* harmony import */ var d3_array__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(d3_array__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @vx/shape */ "@vx/shape");
+/* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_vx_shape__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _vx_group__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vx/group */ "@vx/group");
+/* harmony import */ var _vx_group__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_vx_group__WEBPACK_IMPORTED_MODULE_6__);
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Charts/NewChart.js";
+
+
+
+
+
+
+
+var data = _vx_mock_data__WEBPACK_IMPORTED_MODULE_2__["appleStock"];
+var width = 750;
+var height = 400;
+var margin = {
+  top: 60,
+  bottom: 60,
+  left: 80,
+  right: 80
+};
+var xMax = width - margin.left - margin.right;
+var yMax = height - margin.top - margin.bottom;
+
+var x = function x(d) {
+  return new Date(d.date);
+};
+
+var y = function y(d) {
+  return d.close;
+}; // console.log(data);
+
+
+var xScale = Object(_vx_scale__WEBPACK_IMPORTED_MODULE_3__["scaleTime"])({
+  range: [0, xMax],
+  domain: Object(d3_array__WEBPACK_IMPORTED_MODULE_4__["extent"])(data, x)
+});
+var yScale = Object(_vx_scale__WEBPACK_IMPORTED_MODULE_3__["scaleLinear"])({
+  range: [yMax, 0],
+  domain: [0, Object(d3_array__WEBPACK_IMPORTED_MODULE_4__["max"])(data, y)]
+});
+console.log(yScale);
+console.log(xScale);
+
+var NewChart = function NewChart() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    width: width,
+    height: height,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 38
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_group__WEBPACK_IMPORTED_MODULE_6__["Group"], {
+    top: margin.top,
+    left: margin.left,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 39
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_5__["AreaClosed"], {
+    data: data,
+    xScale: xScale,
+    yScale: yScale,
+    x: x,
+    y: y,
+    fill: "blue",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 40
+    },
+    __self: this
+  })));
+}; // module.exports = { Chart };
+
+
+/* harmony default export */ __webpack_exports__["default"] = (NewChart);
+
+/***/ }),
+
 /***/ "./components/Dashboard/AddTerm.js":
 /*!*****************************************!*\
   !*** ./components/Dashboard/AddTerm.js ***!
@@ -356,12 +1207,11 @@ var AddTodo = function AddTodo() {
 /*!**************************************************!*\
   !*** ./components/Dashboard/DashInitialTerms.js ***!
   \**************************************************/
-/*! exports provided: default, fetchTweetsQuery */
+/*! exports provided: fetchTweetsQuery, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DashInitialTerms; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTweetsQuery", function() { return fetchTweetsQuery; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
@@ -378,6 +1228,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
+/* harmony import */ var _Charts_AreaChart__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Charts/AreaChart */ "./components/Charts/AreaChart.js");
+/* harmony import */ var _Charts_AxisChart__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Charts/AxisChart */ "./components/Charts/AxisChart.js");
+/* harmony import */ var _Charts_NewChart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Charts/NewChart */ "./components/Charts/NewChart.js");
+/* harmony import */ var _Window__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Window */ "./components/Dashboard/Window.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/DashInitialTerms.js";
 
 function _templateObject() {
@@ -409,6 +1263,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
+
 
 
 
@@ -472,11 +1330,17 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var marg = {
+        left: 20,
+        right: 20,
+        top: 20,
+        bottom: 20
+      };
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["Query"], {
         query: fetchTweetsQuery,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 43
+          lineNumber: 53
         },
         __self: this
       }, function (_ref) {
@@ -486,14 +1350,14 @@ function (_React$Component) {
         if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 45
+            lineNumber: 55
           },
           __self: this
         }, "no data loaded");
         if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 46
+            lineNumber: 56
           },
           __self: this
         }, "Loading");
@@ -506,7 +1370,7 @@ function (_React$Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 51
+              lineNumber: 61
             },
             __self: this
           }, "loading");
@@ -516,20 +1380,20 @@ function (_React$Component) {
           className: "dash-main-container",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 54
+            lineNumber: 64
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pagination-list",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 55
+            lineNumber: 65
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 56
+            lineNumber: 66
           },
           __self: this
         }, _this3.state.allTerms.map(function (term) {
@@ -537,7 +1401,7 @@ function (_React$Component) {
             className: "pagination-list-item",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 59
+              lineNumber: 69
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
@@ -546,7 +1410,7 @@ function (_React$Component) {
             className: "pagination-button",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 60
+              lineNumber: 70
             },
             __self: this
           }, term));
@@ -554,27 +1418,42 @@ function (_React$Component) {
           className: "pagination-list-item",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 70
+            lineNumber: 80
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           className: "pagination-button",
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 71
+            lineNumber: 81
           },
           __self: this
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddTerm__WEBPACK_IMPORTED_MODULE_6__["default"], {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 72
+            lineNumber: 82
           },
           __self: this
-        }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DashMain__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_AreaChart__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          margin: marg,
+          width: 1000,
+          height: 1000,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 88
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Window__WEBPACK_IMPORTED_MODULE_13__["default"], {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 89
+          },
+          __self: this
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DashMain__WEBPACK_IMPORTED_MODULE_3__["default"], {
           initialTerm: _this3.state.term,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 78
+            lineNumber: 90
           },
           __self: this
         }));
@@ -589,8 +1468,8 @@ function (_React$Component) {
 // }
 
 
-
-var fetchTweetsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject()); // export default () => (
+var fetchTweetsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
+/* harmony default export */ __webpack_exports__["default"] = (windowSize(DashInitialTerms)); // export default () => (
 //   <App>
 //     <Header />
 //     <DashInitialTerms />
@@ -908,6 +1787,79 @@ function (_React$Component) {
 
 
 var fetchTweetsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
+
+/***/ }),
+
+/***/ "./components/Dashboard/Window.js":
+/*!****************************************!*\
+  !*** ./components/Dashboard/Window.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_window_size__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-window-size */ "react-window-size");
+/* harmony import */ var react_window_size__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_window_size__WEBPACK_IMPORTED_MODULE_1__);
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/Window.js";
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var ScreenSize =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(ScreenSize, _Component);
+
+  function ScreenSize() {
+    _classCallCheck(this, ScreenSize);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ScreenSize).apply(this, arguments));
+  }
+
+  _createClass(ScreenSize, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 7
+        },
+        __self: this
+      }, "Screen width is: ", this.props.windowWidth, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 9
+        },
+        __self: this
+      }), "Screen height is: ", this.props.windowHeight);
+    }
+  }]);
+
+  return ScreenSize;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (react_window_size__WEBPACK_IMPORTED_MODULE_1___default()(ScreenSize));
 
 /***/ }),
 
@@ -1525,6 +2477,138 @@ module.exports = require("@babel/runtime/regenerator");
 
 /***/ }),
 
+/***/ "@vx/axis":
+/*!***************************!*\
+  !*** external "@vx/axis" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/axis");
+
+/***/ }),
+
+/***/ "@vx/curve":
+/*!****************************!*\
+  !*** external "@vx/curve" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/curve");
+
+/***/ }),
+
+/***/ "@vx/event":
+/*!****************************!*\
+  !*** external "@vx/event" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/event");
+
+/***/ }),
+
+/***/ "@vx/gradient":
+/*!*******************************!*\
+  !*** external "@vx/gradient" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/gradient");
+
+/***/ }),
+
+/***/ "@vx/grid":
+/*!***************************!*\
+  !*** external "@vx/grid" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/grid");
+
+/***/ }),
+
+/***/ "@vx/group":
+/*!****************************!*\
+  !*** external "@vx/group" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/group");
+
+/***/ }),
+
+/***/ "@vx/mock-data":
+/*!********************************!*\
+  !*** external "@vx/mock-data" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/mock-data");
+
+/***/ }),
+
+/***/ "@vx/scale":
+/*!****************************!*\
+  !*** external "@vx/scale" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/scale");
+
+/***/ }),
+
+/***/ "@vx/shape":
+/*!****************************!*\
+  !*** external "@vx/shape" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/shape");
+
+/***/ }),
+
+/***/ "@vx/tooltip":
+/*!******************************!*\
+  !*** external "@vx/tooltip" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("@vx/tooltip");
+
+/***/ }),
+
+/***/ "d3-array":
+/*!***************************!*\
+  !*** external "d3-array" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("d3-array");
+
+/***/ }),
+
+/***/ "d3-time-format":
+/*!*********************************!*\
+  !*** external "d3-time-format" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("d3-time-format");
+
+/***/ }),
+
 /***/ "dateformat":
 /*!*****************************!*\
   !*** external "dateformat" ***!
@@ -1588,6 +2672,17 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-apollo");
+
+/***/ }),
+
+/***/ "react-window-size":
+/*!************************************!*\
+  !*** external "react-window-size" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-window-size");
 
 /***/ }),
 
