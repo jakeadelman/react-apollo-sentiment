@@ -67,23 +67,3 @@ export default class extends React.Component {
     );
   }
 }
-
-/* <div>{JSON.stringify(data)}</div> */
-
-// class Confi extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {};
-//   }
-
-//   componentDidMount() {
-//     let dat = JSON.stringify(this.props.data);
-//     console.log(dat);
-//     dat = JSON.parse(dat);
-//     this.setState({ data: dat });
-//   }
-
-//   render() {
-//     return <div>{this.state.data}</div>;
-//   }
-// }

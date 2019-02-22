@@ -119,7 +119,7 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 6
+      lineNumber: 5
     },
     __self: this
   }, children);
@@ -2810,7 +2810,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
- // import SentimentModule from "./SentimentModule";
+
 
 var dateformat = __webpack_require__(/*! dateformat */ "dateformat");
 
@@ -2833,10 +2833,7 @@ function (_React$Component) {
 
   _createClass(DashMain, [{
     key: "componentDidMount",
-    value: function componentDidMount() {// console.log(this.props.initialTerm);
-      // console.log(this.props.initialTerm);
-      // this.setState({ term: this.props.initialTerm });
-    }
+    value: function componentDidMount() {}
   }, {
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
@@ -2857,7 +2854,7 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 28
+            lineNumber: 23
           },
           __self: this
         }, "loading");
@@ -2871,7 +2868,7 @@ function (_React$Component) {
           variables: fetchTweetsVars,
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 35
+            lineNumber: 30
           },
           __self: this
         }, function (_ref) {
@@ -2881,14 +2878,14 @@ function (_React$Component) {
           if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 39
+              lineNumber: 34
             },
             __self: this
           }, "no data loaded.. there may have been an error please refresh the page");
           if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 44
+              lineNumber: 39
             },
             __self: this
           }, "Loading");
@@ -2901,46 +2898,46 @@ function (_React$Component) {
             className: "dash-main-table",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 54
+              lineNumber: 49
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 55
+              lineNumber: 50
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 56
+              lineNumber: 51
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thread", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 57
+              lineNumber: 52
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
             className: "top-row",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 58
+              lineNumber: 53
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
             className: "tr-heading",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 59
+              lineNumber: 54
             },
             __self: this
           }, "query: ", _this2.props.initialTerm), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
             className: "bar-heading tr-heading",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 62
+              lineNumber: 57
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
@@ -2951,7 +2948,7 @@ function (_React$Component) {
             role: "img",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 63
+              lineNumber: 58
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
@@ -2959,7 +2956,7 @@ function (_React$Component) {
             transform: "translate(140,4)",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 70
+              lineNumber: 65
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
@@ -2968,7 +2965,7 @@ function (_React$Component) {
             className: "rect1",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 71
+              lineNumber: 66
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", {
@@ -2978,7 +2975,7 @@ function (_React$Component) {
             className: "texto",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 72
+              lineNumber: 67
             },
             __self: this
           }, parseInt(neg), "%"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", {
@@ -2988,7 +2985,7 @@ function (_React$Component) {
             className: "texto",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 80
+              lineNumber: 75
             },
             __self: this
           }, "24 hour sentiment")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
@@ -2996,7 +2993,7 @@ function (_React$Component) {
             transform: "translate(".concat(trans, ",4)"),
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 89
+              lineNumber: 84
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
@@ -3005,7 +3002,7 @@ function (_React$Component) {
             className: "rect2",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 90
+              lineNumber: 85
             },
             __self: this
           }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("text", {
@@ -3015,19 +3012,19 @@ function (_React$Component) {
             className: "texto",
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 92
+              lineNumber: 87
             },
             __self: this
           }, parseInt(pos), "%")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 105
+              lineNumber: 100
             },
             __self: this
           }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 106
+              lineNumber: 101
             },
             __self: this
           }, data.fetchTweets.map(function (tweet) {
@@ -3035,7 +3032,7 @@ function (_React$Component) {
               className: "data",
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 108
+                lineNumber: 103
               },
               __self: this
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
@@ -3043,14 +3040,14 @@ function (_React$Component) {
               className: "hdata-".concat(tweet.polarity),
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 109
+                lineNumber: 104
               },
               __self: this
             }, dateformat(tweet.timestamp, "shortTime")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
               className: "tdata-".concat(tweet.polarity),
               __source: {
                 fileName: _jsxFileName,
-                lineNumber: 115
+                lineNumber: 110
               },
               __self: this
             }, tweet.text));
@@ -3170,6 +3167,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react-lite */ "mobx-react-lite");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/UserStore */ "./stores/UserStore.ts");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Header.js";
 
 
@@ -3178,20 +3178,25 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/H
 
 
 
-var Header = function Header(_ref) {
+
+
+var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(function (_ref) {
   var pathname = _ref.router.pathname;
-  return (// <header className="the-header">
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
+  var userStore = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_stores_UserStore__WEBPACK_IMPORTED_MODULE_6__["UserStoreContext"]);
+  console.log(userStore.isAuth);
+
+  if (userStore.isAuth == false) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 9
+        lineNumber: 16
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 10
+        lineNumber: 17
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -3199,70 +3204,105 @@ var Header = function Header(_ref) {
       href: "/",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 11
+        lineNumber: 18
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/" ? "is-active" : "",
+      style: {
+        marginRight: "auto"
+      },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 12
+        lineNumber: 19
       },
       __self: this
-    }, "Home")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/about",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 16
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/about" ? "is-active" : "",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 17
-      },
-      __self: this
-    }, "About")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
       href: "/login",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 21
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/login" ? "is-active" : "",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 22
-      },
-      __self: this
-    }, "Login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/register",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 27
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/register" ? "is-active" : "",
+      className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 28
       },
       __self: this
-    }, "Register"))))
-  );
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header));
+    }, "LOGIN")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/register",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 33
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      className: pathname === "/register" ? "is-active" : "",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 34
+      },
+      __self: this
+    }, "REGISTER"))));
+  } else {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
+      theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 43
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 44
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 45
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      className: pathname === "/" ? "is-active" : "",
+      style: {
+        marginRight: "auto"
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 46
+      },
+      __self: this
+    }, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/login",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 54
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      className: pathname === "/login" ? "is-active" : "",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 55
+      },
+      __self: this
+    }, "LOGOUT"))));
+  }
+});
+/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header2));
 var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
   displayName: "Header__StyledLink",
   componentId: "sc-19c2vr5-0"
-})(["margin:10px;color:", ";position:relative;cursor:pointer;::after{content:\"\";position:absolute;left:0;right:0;bottom:0;opacity:0;border-bottom:1px solid ", ";}:hover{opacity:1;color:", ";}&.active::after{left:0;right:0;bottom:0;border-bottom:3px solid ", ";}"], function (props) {
+})(["margin:auto 10px;color:", ";position:relative;cursor:pointer;::after{content:\"\";position:absolute;left:0;right:0;bottom:0;opacity:0;border-bottom:1px solid ", ";}:hover{opacity:1;color:", ";}&.active::after{left:0;right:0;bottom:0;border-bottom:3px solid ", ";}font-weight:700;letter-spacing:0.05em;font-size:12px;text-transform:uppercase;"], function (props) {
   return props.theme.mutedText;
 }, function (props) {
   return props.theme.accent;
@@ -3393,8 +3433,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/LoginForm.js";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n        mutation login($email: String!, $password: String!) {\n          login(email: $email, password: $password)\n        }\n      "]);
 
@@ -3407,25 +3445,18 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -3434,170 +3465,140 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 
 
 
+var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])(function () {
+  var userStore = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_stores_UserStore_ts__WEBPACK_IMPORTED_MODULE_8__["UserStoreContext"]);
 
-
-var LoginForm =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(LoginForm, _React$Component);
-
-  function LoginForm(props) {
-    var _this;
-
-    _classCallCheck(this, LoginForm);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(LoginForm).call(this, props));
-    _this.state = {
-      wrongCredentials: false
-    };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
+  function handleSubmit(_x, _x2) {
+    return _handleSubmit.apply(this, arguments);
   }
 
-  _createClass(LoginForm, [{
-    key: "handleSubmit",
-    value: function () {
-      var _handleSubmit = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event, client) {
-        var form, formData, email, password, res, r, isTrue;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                event.preventDefault();
-                form = event.target;
-                formData = new window.FormData(form);
-                email = formData.get("email");
-                password = formData.get("password");
-                form.reset();
-                res = client.mutate({
-                  mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_3___default()(_templateObject()),
-                  variables: {
-                    email: email,
-                    password: password
-                  }
-                }); // const userStore = UserStoreContext;
-                // console.log(userStore.isAuth);
-
-                _context.next = 9;
-                return res;
-
-              case 9:
-                r = _context.sent;
-                console.log(r);
-                r = r.data.login;
-                console.log(r);
-                isTrue = r == "true";
-                console.log(_typeof(r));
-
-                if (!(isTrue == true)) {
-                  _context.next = 20;
-                  break;
+  function _handleSubmit() {
+    _handleSubmit = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event, client) {
+      var form, formData, email, password, res, r, isTrue;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              event.preventDefault();
+              form = event.target;
+              formData = new window.FormData(form);
+              email = formData.get("email");
+              password = formData.get("password");
+              form.reset();
+              res = client.mutate({
+                mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_3___default()(_templateObject()),
+                variables: {
+                  email: email,
+                  password: password
                 }
+              }); //check if login credentials are correct
 
-                console.log(r);
-                next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push("/dashboard");
-                _context.next = 22;
+              _context.next = 9;
+              return res;
+
+            case 9:
+              r = _context.sent;
+              r = r.data.login;
+              isTrue = r == "true";
+
+              if (!(isTrue == true)) {
+                _context.next = 17;
                 break;
+              }
 
-              case 20:
-                this.setState({
-                  wrongCredentials: true
-                });
-                return _context.abrupt("return");
+              userStore.isAuth = true;
+              next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push("/dashboard");
+              _context.next = 19;
+              break;
 
-              case 22:
-              case "end":
-                return _context.stop();
-            }
+            case 17:
+              setWrongCredentials(true);
+              return _context.abrupt("return");
+
+            case 19:
+            case "end":
+              return _context.stop();
           }
-        }, _callee, this);
-      }));
+        }
+      }, _callee, this);
+    }));
+    return _handleSubmit.apply(this, arguments);
+  }
 
-      function handleSubmit(_x, _x2) {
-        return _handleSubmit.apply(this, arguments);
-      }
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      wrongCredentials = _useState2[0],
+      setWrongCredentials = _useState2[1];
 
-      return handleSubmit;
-    }()
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["ApolloConsumer"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 54
-        },
-        __self: this
-      }, function (client) {
-        return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
-          onSubmit: function onSubmit(event) {
-            return _this2.handleSubmit(event, client);
-          },
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 56
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 57
-          },
-          __self: this
-        }, "Login"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
-          placeholder: "email",
-          name: "email",
-          type: "text",
-          required: true,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 58
-          },
-          __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
-          placeholder: "password",
-          name: "password",
-          type: "text",
-          required: true,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 59
-          },
-          __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-          type: "submit",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 65
-          },
-          __self: this
-        }, "Submit"), _this2.state.wrongCredentials == true ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-          className: "login-alert",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 67
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Alert"], {
-          color: "secondary",
-          isOpen: _this2.state.wrongCredentials == true ? true : false,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 68
-          },
-          __self: this
-        }, "Wrong login credentials")) : null);
-      });
-    }
-  }]);
-
-  return LoginForm;
-}(react__WEBPACK_IMPORTED_MODULE_1___default.a.Component);
-
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["ApolloConsumer"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 46
+    },
+    __self: this
+  }, function (client) {
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+      onSubmit: function onSubmit(event) {
+        return handleSubmit(event, client);
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 48
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 49
+      },
+      __self: this
+    }, "Login"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+      placeholder: "email",
+      name: "email",
+      type: "text",
+      required: true,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 50
+      },
+      __self: this
+    }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+      placeholder: "password",
+      name: "password",
+      type: "text",
+      required: true,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 51
+      },
+      __self: this
+    }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+      type: "submit",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 52
+      },
+      __self: this
+    }, "Submit"), wrongCredentials == true ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      className: "login-alert",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 54
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Alert"], {
+      color: "secondary",
+      isOpen: wrongCredentials == true ? true : false,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 55
+      },
+      __self: this
+    }, "Wrong login credentials")) : null);
+  });
+});
 /* harmony default export */ __webpack_exports__["default"] = (LoginForm);
 
 /***/ }),

@@ -3,40 +3,69 @@ import { withRouter } from "next/router";
 // import Head from "Header/Head";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
+import { observer } from "mobx-react-lite";
+import { UserStoreContext } from "../../stores/UserStore";
+import { useContext } from "react";
 
-const Header = ({ router: { pathname } }) => (
-  // <header className="the-header">
-  <ThemeProvider theme={theme(false)}>
-    <Wrapper>
-      <Link prefetch href="/">
-        <StyledLink className={pathname === "/" ? "is-active" : ""}>
-          Home
-        </StyledLink>
-      </Link>
-      <Link prefetch href="/about">
-        <StyledLink className={pathname === "/about" ? "is-active" : ""}>
-          About
-        </StyledLink>
-      </Link>
-      <Link prefetch href="/login">
-        <StyledLink className={pathname === "/login" ? "is-active" : ""}>
-          Login
-        </StyledLink>
-      </Link>
+const Header2 = observer(({ router: { pathname } }) => {
+  const userStore = useContext(UserStoreContext);
+  console.log(userStore.isAuth);
 
-      <Link prefetch href="/register">
-        <StyledLink className={pathname === "/register" ? "is-active" : ""}>
-          Register
-        </StyledLink>
-      </Link>
-    </Wrapper>
-  </ThemeProvider>
-);
+  if (userStore.isAuth == false) {
+    return (
+      <ThemeProvider theme={theme(false)}>
+        <Wrapper>
+          <Link prefetch href="/">
+            <StyledLink
+              className={pathname === "/" ? "is-active" : ""}
+              style={{ marginRight: "auto" }}
+            >
+              HOME
+            </StyledLink>
+          </Link>
 
-export default withRouter(Header);
+          <Link prefetch href="/login">
+            <StyledLink className={pathname === "/login" ? "is-active" : ""}>
+              LOGIN
+            </StyledLink>
+          </Link>
+
+          <Link prefetch href="/register">
+            <StyledLink className={pathname === "/register" ? "is-active" : ""}>
+              REGISTER
+            </StyledLink>
+          </Link>
+        </Wrapper>
+      </ThemeProvider>
+    );
+  } else {
+    return (
+      <ThemeProvider theme={theme(false)}>
+        <Wrapper>
+          <Link prefetch href="/">
+            <StyledLink
+              className={pathname === "/" ? "is-active" : ""}
+              style={{ marginRight: "auto" }}
+            >
+              HOME
+            </StyledLink>
+          </Link>
+
+          <Link prefetch href="/login">
+            <StyledLink className={pathname === "/login" ? "is-active" : ""}>
+              LOGOUT
+            </StyledLink>
+          </Link>
+        </Wrapper>
+      </ThemeProvider>
+    );
+  }
+});
+
+export default withRouter(Header2);
 
 const StyledLink = styled.div`
-  margin: 10px;
+  margin: auto 10px;
   color: ${props => props.theme.mutedText};
 
   position: relative;
@@ -63,6 +92,10 @@ const StyledLink = styled.div`
     bottom: 0;
     border-bottom: 3px solid ${props => props.theme.accent};
   }
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 12px;
+  text-transform: uppercase;
 `;
 
 const Wrapper = styled.header`

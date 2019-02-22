@@ -2,7 +2,6 @@ import React, { setState } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { withRouter } from "next/router";
-// import SentimentModule from "./SentimentModule";
 const dateformat = require("dateformat");
 
 export default class DashMain extends React.Component {
@@ -10,11 +9,7 @@ export default class DashMain extends React.Component {
     super(props);
     this.state = { term: this.props.initialTerm };
   }
-  componentDidMount() {
-    // console.log(this.props.initialTerm);
-    // console.log(this.props.initialTerm);
-    // this.setState({ term: this.props.initialTerm });
-  }
+  componentDidMount() {}
 
   componentWillReceiveProps(nextProps) {
     console.log(nextProps.initialTerm);

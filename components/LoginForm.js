@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ApolloConsumer } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
@@ -7,14 +7,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { observer } from "mobx-react-lite";
 import { UserStoreContext } from "../stores/UserStore.ts";
 
-class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { wrongCredentials: false };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+const LoginForm = observer(() => {
+  const userStore = useContext(UserStoreContext);
 
-  async handleSubmit(event, client) {
+  async function handleSubmit(event, client) {
     event.preventDefault();
     const form = event.target;
     const formData = new window.FormData(form);
@@ -31,53 +27,43 @@ class LoginForm extends React.Component {
       variables: { email, password }
     });
 
-    // const userStore = UserStoreContext;
-    // console.log(userStore.isAuth);
-
+    //check if login credentials are correct
     let r = await res;
-    console.log(r);
     r = r.data.login;
-    console.log(r);
     let isTrue = r == "true";
-    console.log(typeof r);
     if (isTrue == true) {
-      console.log(r);
+      userStore.isAuth = true;
       Router.push("/dashboard");
     } else {
-      this.setState({ wrongCredentials: true });
+      setWrongCredentials(true);
       return;
     }
   }
 
-  render() {
-    return (
-      <ApolloConsumer>
-        {client => (
-          <form onSubmit={event => this.handleSubmit(event, client)}>
-            <h1>Login</h1>
-            <input placeholder="email" name="email" type="text" required />
-            <input
-              placeholder="password"
-              name="password"
-              type="text"
-              required
-            />
-            <button type="submit">Submit</button>
-            {this.state.wrongCredentials == true ? (
-              <div className="login-alert">
-                <Alert
-                  color="secondary"
-                  isOpen={this.state.wrongCredentials == true ? true : false}
-                >
-                  Wrong login credentials
-                </Alert>
-              </div>
-            ) : null}
-          </form>
-        )}
-      </ApolloConsumer>
-    );
-  }
-}
+  const [wrongCredentials, setWrongCredentials] = useState(false);
+
+  return (
+    <ApolloConsumer>
+      {client => (
+        <form onSubmit={event => handleSubmit(event, client)}>
+          <h1>Login</h1>
+          <input placeholder="email" name="email" type="text" required />
+          <input placeholder="password" name="password" type="text" required />
+          <button type="submit">Submit</button>
+          {wrongCredentials == true ? (
+            <div className="login-alert">
+              <Alert
+                color="secondary"
+                isOpen={wrongCredentials == true ? true : false}
+              >
+                Wrong login credentials
+              </Alert>
+            </div>
+          ) : null}
+        </form>
+      )}
+    </ApolloConsumer>
+  );
+});
 
 export default LoginForm;
