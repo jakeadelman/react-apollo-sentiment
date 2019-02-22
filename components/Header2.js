@@ -12,20 +12,6 @@ const Header = ({ router: { pathname } }) => (
     <Link prefetch href="/login">
       <a className={pathname === "/login" ? "is-active" : ""}>Login</a>
     </Link>
-    {/* <style jsx>{`
-      header {
-        margin-bottom: 25px;
-      }
-      a {
-        font-size: 14px;
-        margin-right: 15px;
-        text-decoration: none;
-        color: #22bad9;
-      }
-      .is-active {
-        text-decoration: underline;
-      }
-    `}</style> */}
   </header>
 );
 

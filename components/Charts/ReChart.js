@@ -59,20 +59,36 @@ export default class Example extends PureComponent {
     window.addEventListener("resize", this.updateWindowDimensions);
   }
 
-  componentDidUpdate() {
+  componentWillUnmount() {
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
-    console.log(this.state.width);
+    if (window.innerWidth < 1024) {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        chartWidth: window.innerWidth * 0.9 - 179
+      });
+    } else if (window.innerWidth < 750) {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        chartWidth: window.innerWidth - 179
+      });
+    } else if (window.innerWidth >= 1024) {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        chartWidth: window.innerWidth * 0.8 - 179
+      });
+    }
   }
-  // static jsfiddleUrl = "https://jsfiddle.net/alidingling/xqjtetw0/";
 
   render() {
     return (
       <LineChart
-        width={this.state.width * 0.8}
+        width={this.state.chartWidth}
         height={200}
         data={data.slice(0, 7)}
         margin={{

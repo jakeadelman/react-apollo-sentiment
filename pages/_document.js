@@ -6,6 +6,7 @@ export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     // Step 1: Create an instance of ServerStyleSheet
     const sheet = new ServerStyleSheet();
+    // const initialProps = await Document.getInitialProps(ctx)
 
     // Step 2: Retrieve styles from components in the page
     const page = renderPage(App => props =>

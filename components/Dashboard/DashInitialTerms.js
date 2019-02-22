@@ -16,6 +16,8 @@ import windowSize from "react-window-size";
 import BtcChart from "../Charts/BtcChart";
 import Currency from "../Charts/Currency";
 import ReChart from "../Charts/ReChart";
+import Sidebar from "../Categories/Menu";
+// import theme from "../theme";
 // import SentimentModule from "./SentimentModule";
 
 class DashInitialTerms extends React.Component {
@@ -37,7 +39,7 @@ class DashInitialTerms extends React.Component {
     window.addEventListener("resize", this.updateWindowDimensions);
   }
 
-  componentDidUpdate() {
+  componentWillUnmount() {
     window.removeEventListener("resize", this.updateWindowDimensions);
   }
 
@@ -82,21 +84,32 @@ class DashInitialTerms extends React.Component {
             return <div>loading</div>;
           }
           return (
-            <Wrapper>
-              <ReChart />
-              <div style={{ width: "100px" }}>This is a random div</div>
-            </Wrapper>
+            <ThemeProvider theme={theme}>
+              <Wrapper>
+                <div
+                  style={{
+                    background: "white",
+                    border: "1px solid #ebedf0",
+                    padding: "5px"
+                  }}
+                >
+                  <ReChart />
+                </div>
+                <Sidebar />
+              </Wrapper>
+            </ThemeProvider>
           );
         }}
       </Query>
     );
   }
 }
-
-// .outer-sent {
-//   display: inline-block;
-//   float: left;
-// }
+const Menu = styled.nav`
+  border: 1px solid ${props => props.theme.border};
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
 
 export const fetchTweetsQuery = gql`
   query fetchTerms {
@@ -109,16 +122,9 @@ export const fetchTweetsQuery = gql`
 
 export default DashInitialTerms;
 
-// export default () => (
-//   <App>
-//     <Header />
-//     <DashInitialTerms />
-//   </App>
-// );
-
 const Wrapper = styled.div`
   display: flex;
-  align-items: stretch;
+  align-items: flex-align;
 `;
 
 const SampleWrapper = styled.header`

@@ -6,16 +6,20 @@ import LoginForm from "../components/LoginForm";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
 import "../styles.css";
-export default () => (
-  <App>
-    <Header />
-    <ThemeProvider theme={theme}>
-      <Wrapper>
-        <DashInitialTerms />
-      </Wrapper>
-    </ThemeProvider>
-  </App>
-);
+export default class extends React.Component {
+  render() {
+    return (
+      <App>
+        <Header />
+        <ThemeProvider theme={theme}>
+          <Wrapper>
+            <DashInitialTerms />
+          </Wrapper>
+        </ThemeProvider>
+      </App>
+    );
+  }
+}
 
 const Wrapper = styled.div`
   display: flex;

@@ -29,6 +29,7 @@ app.prepare().then(() => {
   server.get("/login", (req, res) => app.render(req, res, "/login"));
   server.get("/register", (req, res) => app.render(req, res, "/register"));
   server.get("/dashboard", (req, res) => app.render(req, res, "/dashboard"));
+  // server.get("/test", (req, res) => app.render(req, res, "/test"));
   server.get("*", (req, res) => handle(req, res));
 
   server.listen(3000, err => {
