@@ -1,12 +1,13 @@
+import React, { useContext } from "react";
 import { ApolloConsumer } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import styled, { ThemeProvider } from "styled-components";
-// import theme from "./theme";
+import { observer } from "mobx-react-lite";
+import { UserStoreContext } from "../stores/UserStore.ts";
 
-export default class extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { wrongCredentials: false };
@@ -29,6 +30,9 @@ export default class extends React.Component {
       `,
       variables: { email, password }
     });
+
+    // const userStore = UserStoreContext;
+    // console.log(userStore.isAuth);
 
     let r = await res;
     console.log(r);
@@ -75,3 +79,5 @@ export default class extends React.Component {
     );
   }
 }
+
+export default LoginForm;

@@ -2,14 +2,16 @@
   "name": "with-apollo",
   "version": "2.0.0",
   "scripts": {
-    "dev-local": "next",
-    "dev": "node dev.server.js",
+    "dev": "next",
+    "dev-local": "node dev.server.js",
     "dev-next": "node server.js",
     "build": "next build",
     "start": "next start",
     "deploy": "next build && sls deploy"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@types/react": "^16.8.4",
     "@vx/axis": "^0.0.184",
     "@vx/curve": "^0.0.182",
     "@vx/event": "^0.0.182",
@@ -21,6 +23,7 @@
     "@vx/shape": "^0.0.184",
     "@vx/tooltip": "^0.0.184",
     "@zeit/next-css": "^1.0.1",
+    "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.27",
     "bootstrap": "^4.2.1",
     "d3-array": "^2.0.3",
@@ -56,6 +59,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.8.0"
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "babel-plugin-styled-components": "^1.8.0",
+    "next-compose": "^0.0.2"
   }
 }

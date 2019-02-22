@@ -6,7 +6,7 @@ import theme from "../theme";
 
 const Header = ({ router: { pathname } }) => (
   // <header className="the-header">
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={theme(false)}>
     <Wrapper>
       <Link prefetch href="/">
         <StyledLink className={pathname === "/" ? "is-active" : ""}>

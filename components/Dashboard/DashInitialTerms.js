@@ -78,6 +78,8 @@ class DashInitialTerms extends React.Component {
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
 
+          console.log(data);
+
           if (!this.state.allTerms[0]) {
             this.toggleTerm(data.fetchTerms[0].term);
             this.mapTerms(data.fetchTerms);

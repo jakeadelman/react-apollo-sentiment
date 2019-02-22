@@ -1,8 +1,8 @@
-const withCSS = require("@zeit/next-css");
-// const getRoutes = require("./routes");
+const withCss = require("@zeit/next-css");
+const withTypescript = require("@zeit/next-typescript");
+const compose = require("next-compose");
 
-module.exports = withCSS({
-  // exportPathMap: getRoutes
-  /* my next config */
-  // cssModules: true
-});
+// module.exports = withCSS(withTypescript());
+
+// module.exports = withCss();
+module.exports = compose([[withCss], [withTypescript]]);
