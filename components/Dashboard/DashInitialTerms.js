@@ -12,6 +12,10 @@ import AreaChart from "../Charts/AreaChart";
 import AxisChart from "../Charts/AxisChart";
 import NewChart from "../Charts/NewChart";
 import ScreenSize from "./Window";
+import windowSize from "react-window-size";
+import BtcChart from "../Charts/BtcChart";
+import Currency from "../Charts/Currency";
+import ReChart from "../Charts/ReChart";
 // import SentimentModule from "./SentimentModule";
 
 class DashInitialTerms extends React.Component {
@@ -85,9 +89,12 @@ class DashInitialTerms extends React.Component {
                 </ul>
               </div>
               {/* <AxisChart margin={marg} width={500} height={500} /> */}
-              <AreaChart margin={marg} width={1000} height={1000} />
-              <ScreenSize />
-              <DashMain initialTerm={this.state.term} />
+              {/* <AreaChart margin={marg} /> */}
+              <ScreenSize margin={marg} />
+              <NewChart />
+              <Currency />
+              <ReChart />
+              {/* <BtcChart /> */}
             </div>
           );
         }}
@@ -110,7 +117,7 @@ export const fetchTweetsQuery = gql`
   }
 `;
 
-export default windowSize(DashInitialTerms);
+export default DashInitialTerms;
 
 // export default () => (
 //   <App>
