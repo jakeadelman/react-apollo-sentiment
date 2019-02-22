@@ -22,11 +22,28 @@ class DashInitialTerms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      allTerms: []
+      allTerms: [],
+      width: 0,
+      height: 0
     };
     this.toggleTerm = this.toggleTerm.bind(this);
     this.mapTerms = this.mapTerms.bind(this);
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentDidUpdate() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    console.log(this.state.width);
   }
 
   toggleTerm(term) {
@@ -65,37 +82,10 @@ class DashInitialTerms extends React.Component {
             return <div>loading</div>;
           }
           return (
-            <div className="dash-main-container">
-              <div className="pagination-list">
-                <ul>
-                  {this.state.allTerms.map(term => {
-                    return (
-                      <li className="pagination-list-item">
-                        <button
-                          value={term}
-                          onClick={this.handleClick}
-                          className="pagination-button"
-                        >
-                          {term}
-                        </button>
-                      </li>
-                    );
-                  })}
-                  <li className="pagination-list-item">
-                    <button className="pagination-button">
-                      <AddTerm />
-                    </button>
-                  </li>
-                </ul>
-              </div>
-              {/* <AxisChart margin={marg} width={500} height={500} /> */}
-              {/* <AreaChart margin={marg} /> */}
-              <ScreenSize margin={marg} />
-              <NewChart />
-              <Currency />
+            <Wrapper>
               <ReChart />
-              {/* <BtcChart /> */}
-            </div>
+              <div style={{ width: "100px" }}>This is a random div</div>
+            </Wrapper>
           );
         }}
       </Query>
@@ -125,3 +115,30 @@ export default DashInitialTerms;
 //     <DashInitialTerms />
 //   </App>
 // );
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: stretch;
+`;
+
+const SampleWrapper = styled.header`
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  align-items: stretch;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px ${props => props.theme.shadow};
+  border-bottom: 1px solid ${props => props.theme.border};
+  height: 48px;
+  padding: 0 10vw;
+  background-color: ${props => props.theme.foreground};
+  user-select: none;
+  @media (max-width: 425px) {
+    margin-bottom: 16px;
+    height: 40px;
+  }
+  @media (max-width: 768px) {
+    padding: 0;
+  }
+`;

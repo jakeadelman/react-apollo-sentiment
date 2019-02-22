@@ -1708,6 +1708,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vx_shape__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_vx_shape__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _vx_group__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @vx/group */ "@vx/group");
 /* harmony import */ var _vx_group__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_vx_group__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _vx_gradient__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @vx/gradient */ "@vx/gradient");
+/* harmony import */ var _vx_gradient__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_vx_gradient__WEBPACK_IMPORTED_MODULE_7__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Charts/NewChart.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -1727,6 +1729,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -1802,7 +1805,7 @@ function (_React$Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 45
+          lineNumber: 46
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
@@ -1813,18 +1816,53 @@ function (_React$Component) {
         fill: "#ffffff",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 50
+          lineNumber: 51
         },
         __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_group__WEBPACK_IMPORTED_MODULE_6__["Group"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("defs", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 53
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("linearGradient", {
+        id: "gradient",
+        x1: "0%",
+        y1: "0%",
+        x2: "0%",
+        y2: "100%",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 54
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
+        offset: "0%",
+        stopColor: "#FFFFFF",
+        stopOpacity: 1,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 55
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
+        offset: "100%",
+        stopColor: "#FFFFFF",
+        stopOpacity: 0.2,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 56
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_group__WEBPACK_IMPORTED_MODULE_6__["Group"], {
         top: margin.top,
         left: margin.left,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 51
+          lineNumber: 59
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_5__["LinePath"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_vx_shape__WEBPACK_IMPORTED_MODULE_5__["AreaClosed"], {
         data: stock,
         x: function x(d) {
           return xScale(xStock(d));
@@ -1834,11 +1872,11 @@ function (_React$Component) {
         },
         yScale: yScale,
         strokeWidth: 1,
-        stroke: "#818e99",
-        fill: "none",
+        stroke: "url(#gradient)",
+        fill: "url(#gradient)",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 52
+          lineNumber: 60
         },
         __self: this
       })));
@@ -1880,52 +1918,43 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
 var data = [{
   name: "Page A",
-  uv: 4000,
-  pv: 2400,
+  sentiment: 4000,
   amt: 2400
 }, {
   name: "Page B",
-  uv: 3000,
-  pv: 1398,
+  sentiment: 3000,
   amt: 2210
 }, {
   name: "Page C",
-  uv: 2000,
-  pv: 9800,
+  sentiment: 2000,
   amt: 2290
 }, {
   name: "Page D",
-  uv: 2780,
-  pv: 3908,
+  sentiment: 2780,
   amt: 2000
 }, {
   name: "Page E",
-  uv: 1890,
-  pv: 4800,
+  sentiment: 1890,
   amt: 2181
 }, {
   name: "Page F",
-  uv: 2390,
-  pv: 3800,
+  sentiment: 2390,
   amt: 2500
 }, {
-  name: "Page G",
-  uv: 3490,
-  pv: 4300,
+  name: "the date",
+  sentiment: 3490,
   amt: 2100
 }];
 
@@ -1934,19 +1963,48 @@ var Example =
 function (_PureComponent) {
   _inherits(Example, _PureComponent);
 
-  function Example() {
+  function Example(props) {
+    var _this;
+
     _classCallCheck(this, Example);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Example).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Example).call(this, props));
+    _this.state = {
+      width: 0,
+      height: 0
+    };
+    _this.updateWindowDimensions = _this.updateWindowDimensions.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(Example, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateWindowDimensions();
+      window.addEventListener("resize", this.updateWindowDimensions);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      window.removeEventListener("resize", this.updateWindowDimensions);
+    }
+  }, {
+    key: "updateWindowDimensions",
+    value: function updateWindowDimensions() {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      console.log(this.state.width);
+    } // static jsfiddleUrl = "https://jsfiddle.net/alidingling/xqjtetw0/";
+
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
-        width: 500,
-        height: 300,
-        data: data,
+        width: this.state.width * 0.8,
+        height: 200,
+        data: data.slice(0, 7),
         margin: {
           top: 5,
           right: 30,
@@ -1955,60 +2013,48 @@ function (_PureComponent) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 62
+          lineNumber: 74
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], {
         strokeDasharray: "3 3",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 73
+          lineNumber: 85
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
         dataKey: "name",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 74
+          lineNumber: 86
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 75
+          lineNumber: 87
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 76
+          lineNumber: 88
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Legend"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 77
+          lineNumber: 89
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
         type: "monotone",
-        dataKey: "pv",
-        stroke: "#8884d8",
-        activeDot: {
-          r: 8
-        },
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 78
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
-        type: "monotone",
-        dataKey: "uv",
+        dataKey: "sentiment",
         stroke: "#82ca9d",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 84
+          lineNumber: 91
         },
         __self: this
       }));
@@ -2017,8 +2063,6 @@ function (_PureComponent) {
 
   return Example;
 }(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
-
-_defineProperty(Example, "jsfiddleUrl", "https://jsfiddle.net/alidingling/xqjtetw0/");
 
 
 
@@ -2368,15 +2412,38 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(DashInitialTerms).call(this, props));
     _this.state = {
-      allTerms: []
+      allTerms: [],
+      width: 0,
+      height: 0
     };
     _this.toggleTerm = _this.toggleTerm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.mapTerms = _this.mapTerms.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.updateWindowDimensions = _this.updateWindowDimensions.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(DashInitialTerms, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.updateWindowDimensions();
+      window.addEventListener("resize", this.updateWindowDimensions);
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      window.removeEventListener("resize", this.updateWindowDimensions);
+    }
+  }, {
+    key: "updateWindowDimensions",
+    value: function updateWindowDimensions() {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+      console.log(this.state.width);
+    }
+  }, {
     key: "toggleTerm",
     value: function toggleTerm(term) {
       this.setState({
@@ -2417,7 +2484,7 @@ function (_React$Component) {
         query: fetchTweetsQuery,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 57
+          lineNumber: 74
         },
         __self: this
       }, function (_ref) {
@@ -2427,14 +2494,14 @@ function (_React$Component) {
         if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 59
+            lineNumber: 76
           },
           __self: this
         }, "no data loaded");
         if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 60
+            lineNumber: 77
           },
           __self: this
         }, "Loading");
@@ -2447,96 +2514,34 @@ function (_React$Component) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 65
+              lineNumber: 82
             },
             __self: this
           }, "loading");
         }
 
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "dash-main-container",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 68
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-          className: "pagination-list",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 69
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 70
-          },
-          __self: this
-        }, _this3.state.allTerms.map(function (term) {
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-            className: "pagination-list-item",
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 73
-            },
-            __self: this
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-            value: term,
-            onClick: _this3.handleClick,
-            className: "pagination-button",
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 74
-            },
-            __self: this
-          }, term));
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          className: "pagination-list-item",
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 84
-          },
-          __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "pagination-button",
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
           __source: {
             fileName: _jsxFileName,
             lineNumber: 85
           },
           __self: this
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddTerm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_17__["default"], {
           __source: {
             fileName: _jsxFileName,
             lineNumber: 86
           },
           __self: this
-        }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Window__WEBPACK_IMPORTED_MODULE_13__["default"], {
-          margin: marg,
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          style: {
+            width: "100px"
+          },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 93
+            lineNumber: 87
           },
           __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_NewChart__WEBPACK_IMPORTED_MODULE_12__["default"], {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 94
-          },
-          __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_Currency__WEBPACK_IMPORTED_MODULE_16__["default"], {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 95
-          },
-          __self: this
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_17__["default"], {
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 96
-          },
-          __self: this
-        }));
+        }, "This is a random div"));
       });
     }
   }]);
@@ -2555,6 +2560,21 @@ var fetchTweetsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templ
 //     <DashInitialTerms />
 //   </App>
 // );
+
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.div.withConfig({
+  displayName: "DashInitialTerms__Wrapper",
+  componentId: "tore73-0"
+})(["display:flex;align-items:stretch;"]);
+var SampleWrapper = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.header.withConfig({
+  displayName: "DashInitialTerms__SampleWrapper",
+  componentId: "tore73-1"
+})(["position:sticky;z-index:10;top:0;display:flex;align-items:stretch;margin-bottom:24px;box-shadow:0 4px 12px ", ";border-bottom:1px solid ", ";height:48px;padding:0 10vw;background-color:", ";user-select:none;@media (max-width:425px){margin-bottom:16px;height:40px;}@media (max-width:768px){padding:0;}"], function (props) {
+  return props.theme.shadow;
+}, function (props) {
+  return props.theme.border;
+}, function (props) {
+  return props.theme.foreground;
+});
 
 /***/ }),
 

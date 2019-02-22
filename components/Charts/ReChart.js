@@ -12,57 +12,69 @@ import {
 const data = [
   {
     name: "Page A",
-    uv: 4000,
-    pv: 2400,
+    sentiment: 4000,
     amt: 2400
   },
   {
     name: "Page B",
-    uv: 3000,
-    pv: 1398,
+    sentiment: 3000,
     amt: 2210
   },
   {
     name: "Page C",
-    uv: 2000,
-    pv: 9800,
+    sentiment: 2000,
     amt: 2290
   },
   {
     name: "Page D",
-    uv: 2780,
-    pv: 3908,
+    sentiment: 2780,
     amt: 2000
   },
   {
     name: "Page E",
-    uv: 1890,
-    pv: 4800,
+    sentiment: 1890,
     amt: 2181
   },
   {
     name: "Page F",
-    uv: 2390,
-    pv: 3800,
+    sentiment: 2390,
     amt: 2500
   },
   {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
+    name: "the date",
+    sentiment: 3490,
     amt: 2100
   }
 ];
 
 export default class Example extends PureComponent {
-  static jsfiddleUrl = "https://jsfiddle.net/alidingling/xqjtetw0/";
+  constructor(props) {
+    super(props);
+    this.state = { width: 0, height: 0 };
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions();
+    window.addEventListener("resize", this.updateWindowDimensions);
+  }
+
+  componentDidUpdate() {
+    window.removeEventListener("resize", this.updateWindowDimensions);
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    console.log(this.state.width);
+  }
+  // static jsfiddleUrl = "https://jsfiddle.net/alidingling/xqjtetw0/";
 
   render() {
     return (
       <LineChart
-        width={500}
-        height={300}
-        data={data}
+        width={this.state.width * 0.8}
+        height={200}
+        data={data.slice(0, 7)}
         margin={{
           top: 5,
           right: 30,
@@ -75,13 +87,8 @@ export default class Example extends PureComponent {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+
+        <Line type="monotone" dataKey="sentiment" stroke="#82ca9d" />
       </LineChart>
     );
   }

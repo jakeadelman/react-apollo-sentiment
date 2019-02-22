@@ -6,6 +6,7 @@ import { extent, max } from "d3-array";
 import { AreaClosed, Area, LinePath } from "@vx/shape";
 import { Group } from "@vx/group";
 import { bisector } from "d3-array";
+import { GradientOrangeRed, GradientPinkBlue } from "@vx/gradient";
 
 const xStock = d => new Date(d.date);
 const yStock = d => d.close;
@@ -48,15 +49,22 @@ export default class extends React.Component {
         style={{ borderRadius: "2px", border: "1px solid #818e99" }}
       >
         <rect x={0} y={0} width={width} height={height} fill="#ffffff" />
+        {/* <GradientPinkBlue id="gradient" /> */}
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity={1} />
+            <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0.2} />
+          </linearGradient>
+        </defs>
         <Group top={margin.top} left={margin.left}>
-          <LinePath
+          <AreaClosed
             data={stock}
             x={d => xScale(xStock(d))}
             y={d => yScale(yStock(d))}
             yScale={yScale}
             strokeWidth={1}
-            stroke={"#818e99"}
-            fill={"none"}
+            stroke={"url(#gradient)"}
+            fill={"url(#gradient)"}
           />
         </Group>
       </svg>
