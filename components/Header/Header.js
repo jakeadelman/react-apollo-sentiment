@@ -6,6 +6,7 @@ import theme from "../theme";
 import { observer } from "mobx-react-lite";
 import { UserStoreContext } from "../../stores/UserStore";
 import { useContext } from "react";
+import HeaderLogo from "./Logo";
 
 const Header2 = observer(({ router: { pathname } }) => {
   const userStore = useContext(UserStoreContext);
@@ -15,24 +16,17 @@ const Header2 = observer(({ router: { pathname } }) => {
     return (
       <ThemeProvider theme={theme(false)}>
         <Wrapper>
-          <Link prefetch href="/">
-            <StyledLink
-              className={pathname === "/" ? "is-active" : ""}
-              style={{ marginRight: "auto" }}
-            >
-              HOME
-            </StyledLink>
-          </Link>
+          <HeaderLogo />
 
           <Link prefetch href="/login">
             <StyledLink className={pathname === "/login" ? "is-active" : ""}>
-              LOGIN
+              login
             </StyledLink>
           </Link>
 
           <Link prefetch href="/register">
             <StyledLink className={pathname === "/register" ? "is-active" : ""}>
-              REGISTER
+              register
             </StyledLink>
           </Link>
         </Wrapper>
@@ -42,18 +36,11 @@ const Header2 = observer(({ router: { pathname } }) => {
     return (
       <ThemeProvider theme={theme(false)}>
         <Wrapper>
-          <Link prefetch href="/">
-            <StyledLink
-              className={pathname === "/" ? "is-active" : ""}
-              style={{ marginRight: "auto" }}
-            >
-              HOME
-            </StyledLink>
-          </Link>
+          <HeaderLogo />
 
           <Link prefetch href="/login">
             <StyledLink className={pathname === "/login" ? "is-active" : ""}>
-              LOGOUT
+              logout
             </StyledLink>
           </Link>
         </Wrapper>

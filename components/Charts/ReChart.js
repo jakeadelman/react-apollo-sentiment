@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import {
   LineChart,
+  AreaChart,
+  Area,
   Line,
   XAxis,
   YAxis,
@@ -8,6 +10,9 @@ import {
   Tooltip,
   Legend
 } from "recharts";
+import styled, { ThemeProvider } from "styled-components";
+import { wideFont } from "../shared/helpers";
+import theme from "../theme";
 
 const data = [
   {
@@ -87,25 +92,76 @@ export default class Example extends PureComponent {
 
   render() {
     return (
-      <LineChart
-        width={this.state.chartWidth}
-        height={200}
-        data={data.slice(0, 7)}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
+      <ThemeProvider theme={theme(false)}>
+        <AreaChart
+          width={this.state.chartWidth}
+          height={200}
+          data={data.slice(0, 7)}
+          margin={{
+            top: 20,
+            right: 35,
+            left: 5,
+            bottom: 5
+          }}
+        >
+          <defs>
+            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#62BFED" stopOpacity={0.7} />
+              <stop offset="95%" stopColor="#62BFED" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid stroke="#eee" opacity={0.4} strokeDasharray="5 5" />
+          <XAxis dataKey="name" style={{ fontSize: "13px" }} />
+          <YAxis style={{ fontSize: "13px" }} />
+          <Tooltip />
 
-        <Line type="monotone" dataKey="sentiment" stroke="#82ca9d" />
-      </LineChart>
+          <Area
+            type="monotone"
+            dataKey="sentiment"
+            stroke="#62BFED"
+            fillOpacity={1}
+            fill="url(#colorPv)"
+          />
+          {/* <Legend height={36} /> */}
+          {/* <Legend content={<CustomizedLegend external={external} />} /> */}
+
+          <Legend content={renderLegend} />
+
+          {/* <Line type="monotone" dataKey="sentiment" stroke="#82ca9d" /> */}
+        </AreaChart>
+      </ThemeProvider>
     );
   }
 }
+
+const renderLegend = props => {
+  const { payload } = props;
+  console.log(payload);
+
+  return (
+    <StyledUl>
+      {payload.map((entry, index) => (
+        <li key={`item-${index}`} style={{ display: "flex", margin: "auto" }}>
+          <Sv color={entry.color} />
+          <div style={{ marginLeft: "7px" }}>{entry.value}</div>
+        </li>
+      ))}
+    </StyledUl>
+  );
+};
+
+const StyledUl = styled.ul`
+  display: flex;
+  font-size: 16px;
+  text-decoration: none;
+  margin-left: 60px;
+  list-style: none;
+  text-align: center;
+  color: ${props => props.theme.normalText};
+`;
+
+const Sv = ({ color }) => (
+  <svg width="10" height="10" style={{ marginTop: "8px" }}>
+    <rect width="10" height="10" fill={color} />
+  </svg>
+);

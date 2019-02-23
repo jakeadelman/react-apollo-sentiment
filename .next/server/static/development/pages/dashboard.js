@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -195,7 +195,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Categories/Header.js";
+
 
 
 
@@ -203,7 +205,7 @@ var SidebarCategoryListHeader = function SidebarCategoryListHeader() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Header, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 4
+      lineNumber: 5
     },
     __self: this
   }, "cryptocurrencies");
@@ -213,7 +215,7 @@ var SidebarCategoryListHeader = function SidebarCategoryListHeader() {
 var Header = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.span.withConfig({
   displayName: "Header",
   componentId: "waeii1-0"
-})(["display:block;padding:12px;text-align:center;color:", ";"], function (props) {
+})(["", " font-weight:600;display:block;padding:12px;text-align:center;color:", ";"], _shared_helpers__WEBPACK_IMPORTED_MODULE_2__["wideFont"], function (props) {
   return props.theme.mutedText;
 });
 
@@ -2056,6 +2058,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! recharts */ "recharts");
 /* harmony import */ var recharts__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(recharts__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
+/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Charts/ReChart.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -2075,6 +2081,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
+
 
 
 
@@ -2164,63 +2173,116 @@ function (_PureComponent) {
   }, {
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["LineChart"], {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_2__["ThemeProvider"], {
+        theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 95
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["AreaChart"], {
         width: this.state.chartWidth,
         height: 200,
         data: data.slice(0, 7),
         margin: {
-          top: 5,
-          right: 30,
-          left: 20,
+          top: 20,
+          right: 35,
+          left: 5,
           bottom: 5
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 90
+          lineNumber: 96
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], {
-        strokeDasharray: "3 3",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 101
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: "name",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 102
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 103
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 104
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Legend"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 105
-        },
-        __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Line"], {
-        type: "monotone",
-        dataKey: "sentiment",
-        stroke: "#82ca9d",
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("defs", {
         __source: {
           fileName: _jsxFileName,
           lineNumber: 107
         },
         __self: this
-      }));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("linearGradient", {
+        id: "colorPv",
+        x1: "0",
+        y1: "0",
+        x2: "0",
+        y2: "1",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 108
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
+        offset: "5%",
+        stopColor: "#62BFED",
+        stopOpacity: 0.7,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 109
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
+        offset: "95%",
+        stopColor: "#62BFED",
+        stopOpacity: 0,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 110
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], {
+        stroke: "#eee",
+        opacity: 0.4,
+        strokeDasharray: "5 5",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 113
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
+        dataKey: "name",
+        style: {
+          fontSize: "13px"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 114
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
+        style: {
+          fontSize: "13px"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 115
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 116
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Area"], {
+        type: "monotone",
+        dataKey: "sentiment",
+        stroke: "#62BFED",
+        fillOpacity: 1,
+        fill: "url(#colorPv)",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 118
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Legend"], {
+        content: renderLegend,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 128
+        },
+        __self: this
+      })));
     }
   }]);
 
@@ -2228,6 +2290,79 @@ function (_PureComponent) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 
+
+var renderLegend = function renderLegend(props) {
+  var payload = props.payload;
+  console.log(payload);
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledUl, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 142
+    },
+    __self: this
+  }, payload.map(function (entry, index) {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      key: "item-".concat(index),
+      style: {
+        display: "flex",
+        margin: "auto"
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 144
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Sv, {
+      color: entry.color,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 145
+      },
+      __self: this
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      style: {
+        marginLeft: "7px"
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 146
+      },
+      __self: this
+    }, entry.value));
+  }));
+};
+
+var StyledUl = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.ul.withConfig({
+  displayName: "ReChart__StyledUl",
+  componentId: "sc-1e3lvhz-0"
+})(["display:flex;font-size:16px;text-decoration:none;margin-left:60px;list-style:none;text-align:center;color:", ";"], function (props) {
+  return props.theme.normalText;
+});
+
+var Sv = function Sv(_ref) {
+  var color = _ref.color;
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+    width: "10",
+    height: "10",
+    style: {
+      marginTop: "8px"
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 164
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+    width: "10",
+    height: "10",
+    fill: color,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 165
+    },
+    __self: this
+  }));
+};
 
 /***/ }),
 
@@ -3170,10 +3305,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react-lite */ "mobx-react-lite");
 /* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/UserStore */ "./stores/UserStore.ts");
+/* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Logo */ "./components/Header/Logo.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Header.js";
 
 
  // import Head from "Header/Head";
+
 
 
 
@@ -3190,112 +3327,88 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 16
+        lineNumber: 17
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/",
-      __source: {
-        fileName: _jsxFileName,
         lineNumber: 18
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/" ? "is-active" : "",
-      style: {
-        marginRight: "auto"
-      },
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 19
       },
       __self: this
-    }, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
       href: "/login",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 21
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      className: pathname === "/login" ? "is-active" : "",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 22
+      },
+      __self: this
+    }, "login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/register",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 27
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/login" ? "is-active" : "",
+      className: pathname === "/register" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 28
       },
       __self: this
-    }, "LOGIN")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/register",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 33
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/register" ? "is-active" : "",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 34
-      },
-      __self: this
-    }, "REGISTER"))));
+    }, "register"))));
   } else {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 43
+        lineNumber: 37
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 44
+        lineNumber: 38
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/",
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 45
+        lineNumber: 39
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/" ? "is-active" : "",
-      style: {
-        marginRight: "auto"
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 46
-      },
-      __self: this
-    }, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
       href: "/login",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 54
+        lineNumber: 41
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 55
+        lineNumber: 42
       },
       __self: this
-    }, "LOGOUT"))));
+    }, "logout"))));
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header2));
@@ -3321,6 +3434,55 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.header.wi
 }, function (props) {
   return props.theme.foreground;
 });
+
+/***/ }),
+
+/***/ "./components/Header/Logo.js":
+/*!***********************************!*\
+  !*** ./components/Header/Logo.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/link */ "next/link");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Logo.js";
+
+
+
+
+
+var HeaderLogo = function HeaderLogo() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Logo, {
+    href: "/",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, "tradrr");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (HeaderLogo);
+var Logo = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
+  displayName: "Logo",
+  componentId: "sc-195qc4m-0"
+})(["", " margin-right:auto;font-size:24px;font-weight:500;color:", ";text-decoration:none;@media (max-width:425px){padding:0 8px 0 16px;font-size:19px;}"], _shared_helpers__WEBPACK_IMPORTED_MODULE_3__["headerItem"], function (props) {
+  return props.theme.normalText;
+}); // display: flex;
+// align-items: center;
+// flex-shrink: 0;
+// padding: 0 16px;
+// @media (max-width: 425px) {
+//   padding: 0 8px;
+// }
 
 /***/ }),
 
@@ -3603,6 +3765,44 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
 
 /***/ }),
 
+/***/ "./components/shared/helpers.js":
+/*!**************************************!*\
+  !*** ./components/shared/helpers.js ***!
+  \**************************************/
+/*! exports provided: smallFont, wideFont, fade, transition, headerItem, link, overflow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "smallFont", function() { return smallFont; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "wideFont", function() { return wideFont; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fade", function() { return fade; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transition", function() { return transition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "headerItem", function() { return headerItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "link", function() { return link; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "overflow", function() { return overflow; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_0__);
+
+var smallFont = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["font-size:12px;font-weight:600;text-transform:uppercase;"]);
+var wideFont = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["", ";font-weight:700;letter-spacing:0.05em;"], smallFont);
+var fadeKeyframes = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["keyframes"])(["from{opacity:0;}to{opacity:1;}"]);
+var fade = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["animation:", " 0.25s;"], fadeKeyframes);
+var transition = function transition(props) {
+  return Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["transition:all ", " ease;"], props.slow ? "0.3s" : "0.15s");
+};
+var headerItem = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["display:flex;align-items:center;flex-shrink:0;padding:0 16px;@media (max-width:425px){padding:0 8px;}"]);
+var link = function link(props) {
+  return Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["", ";text-underline-position:under;text-decoration:none;color:", ";:hover{", ";color:", ";}"], transition, function (props) {
+    return props.theme.normalText;
+  }, props.underline && "text-decoration: underline", function (props) {
+    return props.theme.accent;
+  });
+};
+var overflow = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"]);
+
+/***/ }),
+
 /***/ "./components/theme.js":
 /*!*****************************!*\
   !*** ./components/theme.js ***!
@@ -3840,7 +4040,7 @@ var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!**********************************!*\
   !*** multi ./pages/dashboard.js ***!
   \**********************************/

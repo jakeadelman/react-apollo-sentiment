@@ -52,10 +52,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
 /* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/dist/index.module.js");
 /* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/UserStore */ "./stores/UserStore.ts");
+/* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Logo */ "./components/Header/Logo.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Header.js";
 
 
  // import Head from "Header/Head";
+
 
 
 
@@ -72,112 +74,88 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 16
+        lineNumber: 17
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/",
-      __source: {
-        fileName: _jsxFileName,
         lineNumber: 18
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/" ? "is-active" : "",
-      style: {
-        marginRight: "auto"
-      },
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 19
       },
       __self: this
-    }, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
       href: "/login",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 21
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      className: pathname === "/login" ? "is-active" : "",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 22
+      },
+      __self: this
+    }, "login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/register",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 27
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/login" ? "is-active" : "",
+      className: pathname === "/register" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 28
       },
       __self: this
-    }, "LOGIN")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/register",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 33
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/register" ? "is-active" : "",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 34
-      },
-      __self: this
-    }, "REGISTER"))));
+    }, "register"))));
   } else {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 43
+        lineNumber: 37
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 44
+        lineNumber: 38
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
-      prefetch: true,
-      href: "/",
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 45
+        lineNumber: 39
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-      className: pathname === "/" ? "is-active" : "",
-      style: {
-        marginRight: "auto"
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 46
-      },
-      __self: this
-    }, "HOME")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
       href: "/login",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 54
+        lineNumber: 41
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 55
+        lineNumber: 42
       },
       __self: this
-    }, "LOGOUT"))));
+    }, "logout"))));
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header2));
@@ -203,6 +181,54 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].header.w
 }, function (props) {
   return props.theme.foreground;
 });
+
+/***/ }),
+
+/***/ "./components/Header/Logo.js":
+/*!***********************************!*\
+  !*** ./components/Header/Logo.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/link */ "./node_modules/next/link.js");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Logo.js";
+
+
+
+
+
+var HeaderLogo = function HeaderLogo() {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Logo, {
+    href: "/",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, "tradrr");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (HeaderLogo);
+var Logo = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div.withConfig({
+  displayName: "Logo",
+  componentId: "sc-195qc4m-0"
+})(["", " margin-right:auto;font-size:24px;font-weight:500;color:", ";text-decoration:none;@media (max-width:425px){padding:0 8px 0 16px;font-size:19px;}"], _shared_helpers__WEBPACK_IMPORTED_MODULE_3__["headerItem"], function (props) {
+  return props.theme.normalText;
+}); // display: flex;
+// align-items: center;
+// flex-shrink: 0;
+// padding: 0 16px;
+// @media (max-width: 425px) {
+//   padding: 0 8px;
+// }
 
 /***/ }),
 
@@ -400,6 +426,43 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
   });
 });
 /* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+
+/***/ }),
+
+/***/ "./components/shared/helpers.js":
+/*!**************************************!*\
+  !*** ./components/shared/helpers.js ***!
+  \**************************************/
+/*! exports provided: smallFont, wideFont, fade, transition, headerItem, link, overflow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "smallFont", function() { return smallFont; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "wideFont", function() { return wideFont; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fade", function() { return fade; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transition", function() { return transition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "headerItem", function() { return headerItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "link", function() { return link; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "overflow", function() { return overflow; });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+
+var smallFont = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["font-size:12px;font-weight:600;text-transform:uppercase;"]);
+var wideFont = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["", ";font-weight:700;letter-spacing:0.05em;"], smallFont);
+var fadeKeyframes = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["keyframes"])(["from{opacity:0;}to{opacity:1;}"]);
+var fade = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["animation:", " 0.25s;"], fadeKeyframes);
+var transition = function transition(props) {
+  return Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["transition:all ", " ease;"], props.slow ? "0.3s" : "0.15s");
+};
+var headerItem = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["display:flex;align-items:center;flex-shrink:0;padding:0 16px;@media (max-width:425px){padding:0 8px;}"]);
+var link = function link(props) {
+  return Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["", ";text-underline-position:under;text-decoration:none;color:", ";:hover{", ";color:", ";}"], transition, function (props) {
+    return props.theme.normalText;
+  }, props.underline && "text-decoration: underline", function (props) {
+    return props.theme.accent;
+  });
+};
+var overflow = Object(styled_components__WEBPACK_IMPORTED_MODULE_0__["css"])(["overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"]);
 
 /***/ }),
 
@@ -47784,7 +47847,7 @@ var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"
 
 /***/ }),
 
-/***/ 3:
+/***/ 7:
 /*!******************************!*\
   !*** multi ./pages/login.js ***!
   \******************************/
@@ -47809,5 +47872,5 @@ module.exports = dll_ea92b26618a5e8aa3a89;
 
 /***/ })
 
-},[[3,"static/runtime/webpack.js","styles"]]]));;
+},[[7,"static/runtime/webpack.js","styles"]]]));;
 //# sourceMappingURL=login.js.map
