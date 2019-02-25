@@ -3,13 +3,14 @@ import Header from "../components/Header/Header";
 import LoginForm from "../components/LoginForm";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
+import LoginForm2 from "../components/LoginForm2";
 
 export default () => (
   <App>
     <Header />
     <ThemeProvider theme={theme}>
       <Wrapper>
-        <LoginForm />
+        <LoginForm2 />
       </Wrapper>
     </ThemeProvider>
   </App>

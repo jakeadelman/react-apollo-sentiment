@@ -167,6 +167,9 @@ function (_Document) {
         },
         __self: this
       }, this.props.styleTags), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
+        style: {
+          backgroundColor: "#f4f6f8"
+        },
         __source: {
           fileName: _jsxFileName,
           lineNumber: 27

@@ -24,7 +24,7 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>{this.props.styleTags}</Head>
-        <body>
+        <body style={{ backgroundColor: "#f4f6f8" }}>
           <Main />
           <NextScript />
         </body>

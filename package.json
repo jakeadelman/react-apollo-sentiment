@@ -7,10 +7,12 @@
     "dev-next": "node server.js",
     "build": "next build",
     "start": "next start",
-    "deploy": "next build && sls deploy"
+    "deploy": "next build && sls deploy",
+    "now-build": "next build && next export -o dist"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@now/static-build": "^0.4.18",
     "@types/react": "^16.8.4",
     "@vx/axis": "^0.0.184",
     "@vx/curve": "^0.0.182",

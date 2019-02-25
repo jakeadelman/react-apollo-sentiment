@@ -6,6 +6,9 @@ import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { observer } from "mobx-react-lite";
 import { UserStoreContext } from "../stores/UserStore.ts";
+import styled from "styled-components";
+import FormWrapper from "./Form2/FormWrapper";
+import Input from "./Form2/Input";
 
 const LoginForm = observer(() => {
   const userStore = useContext(UserStoreContext);
@@ -45,25 +48,45 @@ const LoginForm = observer(() => {
   return (
     <ApolloConsumer>
       {client => (
-        <form onSubmit={event => handleSubmit(event, client)}>
-          <h1>Login</h1>
-          <input placeholder="email" name="email" type="text" required />
-          <input placeholder="password" name="password" type="text" required />
-          <button type="submit">Submit</button>
-          {wrongCredentials == true ? (
-            <div className="login-alert">
-              <Alert
-                color="secondary"
-                isOpen={wrongCredentials == true ? true : false}
-              >
-                Wrong login credentials
-              </Alert>
-            </div>
-          ) : null}
-        </form>
+        <div>
+          <FormWrapper>
+            <StyledForm>
+              <form onSubmit={event => handleSubmit(event, client)}>
+                <h1>Login</h1>
+                <Input placeholder="email" name="email" type="text" required />
+                <input
+                  placeholder="password"
+                  name="password"
+                  type="text"
+                  required
+                />
+                <button type="submit">Submit</button>
+                {wrongCredentials == true ? (
+                  <div className="login-alert">
+                    <Alert
+                      color="secondary"
+                      isOpen={wrongCredentials == true ? true : false}
+                    >
+                      Wrong login credentials
+                    </Alert>
+                  </div>
+                ) : null}
+              </form>
+            </StyledForm>
+          </FormWrapper>
+        </div>
       )}
     </ApolloConsumer>
   );
 });
 
 export default LoginForm;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  ${props =>
+    props.loading &&
+    "filter: grayscale(0.5) blur(5px) opacity(0.6); pointer-events: none"};
+`;
