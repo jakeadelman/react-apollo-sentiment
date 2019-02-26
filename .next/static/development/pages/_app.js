@@ -26,7 +26,7 @@ function create(initialState) {
     ssrMode: !true,
     // Disables forceFetch on the server (so queries are only run once)
     link: new apollo_boost__WEBPACK_IMPORTED_MODULE_0__["HttpLink"]({
-      uri: "https://sentwit.com/graphql",
+      uri: "http://localhost:4000/graphql",
       // Server URL (must be absolute)
       credentials: "include" // Additional fetch() options like `credentials` or `headers`
 

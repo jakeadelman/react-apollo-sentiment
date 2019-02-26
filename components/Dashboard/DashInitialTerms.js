@@ -17,8 +17,10 @@ import BtcChart from "../Charts/BtcChart";
 import Currency from "../Charts/Currency";
 import ReChart from "../Charts/ReChart";
 import Sidebar from "../Categories/Menu";
+import { removeArgumentsFromDocument } from "apollo-utilities";
 // import theme from "../theme";
-// import SentimentModule from "./SentimentModule";
+import Router from "next/router";
+const Cookie = require("js-cookie");
 
 class DashInitialTerms extends React.Component {
   constructor(props) {
@@ -32,9 +34,17 @@ class DashInitialTerms extends React.Component {
     this.mapTerms = this.mapTerms.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.push = this.push.bind(this);
   }
 
   componentDidMount() {
+    let cook = Cookie.get("isAuth") == "true";
+    console.log(cook);
+    if (!cook) {
+      Router.push("/");
+    } else if (!!cook) {
+      this.setState({ isAuth: cook });
+    }
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
   }
@@ -58,6 +68,9 @@ class DashInitialTerms extends React.Component {
       this.state.allTerms.push(term.term);
     });
   }
+  push() {
+    Router.push("/");
+  }
 
   handleClick(e) {
     // console.log(e.target.value);
@@ -72,38 +85,42 @@ class DashInitialTerms extends React.Component {
       top: 20,
       bottom: 20
     };
-    return (
-      <Query query={fetchTweetsQuery}>
-        {({ loading, error, data }) => {
-          if (error) return <div>no data loaded</div>;
-          if (loading) return <div>Loading</div>;
+    if (!this.state.isAuth) {
+      return null;
+    } else {
+      return (
+        <Query query={fetchTweetsQuery}>
+          {({ loading, error, data }) => {
+            if (error) return <div>no data loaded</div>;
+            if (loading) return <div>Loading</div>;
 
-          console.log(data);
+            console.log(data);
 
-          if (!this.state.allTerms[0]) {
-            this.toggleTerm(data.fetchTerms[0].term);
-            this.mapTerms(data.fetchTerms);
-            return <div>loading</div>;
-          }
-          return (
-            <ThemeProvider theme={theme}>
-              <Wrapper>
-                <div
-                  style={{
-                    background: "white",
-                    border: "1px solid #ebedf0",
-                    padding: "5px"
-                  }}
-                >
-                  <ReChart />
-                </div>
-                <Sidebar />
-              </Wrapper>
-            </ThemeProvider>
-          );
-        }}
-      </Query>
-    );
+            if (!this.state.allTerms[0]) {
+              this.toggleTerm(data.fetchTerms[0].term);
+              this.mapTerms(data.fetchTerms);
+              return <div>loading</div>;
+            }
+            return (
+              <ThemeProvider theme={theme}>
+                <Wrapper>
+                  <div
+                    style={{
+                      background: "white",
+                      border: "1px solid #ebedf0",
+                      padding: "5px"
+                    }}
+                  >
+                    <ReChart />
+                  </div>
+                  <Sidebar />
+                </Wrapper>
+              </ThemeProvider>
+            );
+          }}
+        </Query>
+      );
+    }
   }
 }
 const Menu = styled.nav`

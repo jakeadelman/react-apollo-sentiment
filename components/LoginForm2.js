@@ -4,16 +4,17 @@ import gql from "graphql-tag";
 import Router from "next/router";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { observer } from "mobx-react-lite";
-import { UserStoreContext } from "../stores/UserStore.ts";
+// import { observer } from "mobx-react-lite";
+// import { UserStoreContext } from "../stores/UserStore.ts";
 import styled from "styled-components";
 import FormWrapper from "./Form2/FormWrapper";
 import Input from "./Form2/Input";
 import Label from "./form/Label";
 import Button from "./shared/Button";
+const Cookie = require("js-cookie");
 
-const LoginForm = observer(() => {
-  const userStore = useContext(UserStoreContext);
+const LoginForm = () => {
+  // const userStore = useContext(UserStoreContext);
 
   async function handleSubmit(event, client) {
     event.preventDefault();
@@ -39,7 +40,9 @@ const LoginForm = observer(() => {
     console.log(r);
     let isTrue = r == "true";
     if (isTrue == true) {
-      userStore.isAuth = true;
+      Cookie.set("isAuth", "true");
+
+      // userStore.isAuth = true;
       Router.push("/dashboard");
     } else {
       setWrongCredentials(true);
@@ -85,7 +88,7 @@ const LoginForm = observer(() => {
       )}
     </ApolloConsumer>
   );
-});
+};
 
 export default LoginForm;
 

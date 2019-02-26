@@ -7,16 +7,15 @@ import { observer } from "mobx-react-lite";
 import { UserStoreContext } from "../../stores/UserStore";
 import { useContext, useState } from "react";
 import HeaderLogo from "./Logo";
+const Cookie = require("js-cookie");
 
 const Header2 = observer(({ router: { pathname } }) => {
-  const [loading, setLoading] = useState(true);
-  const userStore = useContext(UserStoreContext);
-  console.log(userStore.isAuth);
-  let authOrNo = userStore.isAuth;
-  // UserStoreContext.isAuth = false;
+  const cook = Cookie.get("isAuth");
+  console.log(cook);
+
+  let authOrNo = cook == "true";
 
   if (!authOrNo) {
-    // console.log(authOrNo);
     return (
       <ThemeProvider theme={theme(false)}>
         <Wrapper>

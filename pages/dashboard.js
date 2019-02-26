@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import DashInitialTerms from "../components/Dashboard/DashInitialTerms";
 import App from "../components/App";
 import Header from "../components/Header/Header";
@@ -6,8 +6,10 @@ import LoginForm from "../components/LoginForm";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
 import "../styles.css";
+// const Cookie = require("js-cookie");
+// import Router from "next/router";
 
-export default function dashboard() {
+export default function dashboard({ initialState }) {
   return (
     <App>
       <Header />

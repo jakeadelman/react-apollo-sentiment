@@ -1,12 +1,11 @@
 import Router from "next/router";
-import { userStore } from "../stores/UserStore";
 import React from "react";
+const Cookie = require("js-cookie");
 
 export default class Logout extends React.Component {
   componentDidMount() {
-    userStore.isAuth = false;
-    // hydrate("user", userStore).then(() => console.log("has been hydrated"));
-    window.location.replace("https://tradrr.app/");
+    Cookie.remove("isAuth");
+    Router.push("/");
   }
   render() {
     return null;
