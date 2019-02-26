@@ -26,7 +26,7 @@ function create(initialState) {
     ssrMode: !true,
     // Disables forceFetch on the server (so queries are only run once)
     link: new apollo_boost__WEBPACK_IMPORTED_MODULE_0__["HttpLink"]({
-      uri: "http://localhost:4000/graphql",
+      uri: "https://sentwit.com/graphql",
       // Server URL (must be absolute)
       credentials: "include" // Additional fetch() options like `credentials` or `headers`
 
@@ -1051,7 +1051,7 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-client */ "./node_modules/apollo-client/index.js");
+/* harmony import */ var apollo_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-client */ "./node_modules/apollo-boost/node_modules/apollo-client/index.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ObservableQuery", function() { return apollo_client__WEBPACK_IMPORTED_MODULE_1__["ObservableQuery"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NetworkStatus", function() { return apollo_client__WEBPACK_IMPORTED_MODULE_1__["NetworkStatus"]; });
@@ -1229,6 +1229,2098 @@ var DefaultClient = (function (_super) {
 }(apollo_client__WEBPACK_IMPORTED_MODULE_1__["default"]));
 /* harmony default export */ __webpack_exports__["default"] = (DefaultClient);
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/ApolloClient.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/ApolloClient.js ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var _core_QueryManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./core/QueryManager */ "./node_modules/apollo-boost/node_modules/apollo-client/core/QueryManager.js");
+/* harmony import */ var _data_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/store */ "./node_modules/apollo-boost/node_modules/apollo-client/data/store.js");
+/* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./version */ "./node_modules/apollo-boost/node_modules/apollo-client/version.js");
+/* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_version__WEBPACK_IMPORTED_MODULE_5__);
+
+
+
+
+
+
+var hasSuggestedDevtools = false;
+var ApolloClient = (function () {
+    function ApolloClient(options) {
+        var _this = this;
+        this.defaultOptions = {};
+        this.resetStoreCallbacks = [];
+        this.clearStoreCallbacks = [];
+        this.clientAwareness = {};
+        var link = options.link, cache = options.cache, _a = options.ssrMode, ssrMode = _a === void 0 ? false : _a, _b = options.ssrForceFetchDelay, ssrForceFetchDelay = _b === void 0 ? 0 : _b, connectToDevTools = options.connectToDevTools, _c = options.queryDeduplication, queryDeduplication = _c === void 0 ? true : _c, defaultOptions = options.defaultOptions, clientAwarenessName = options.name, clientAwarenessVersion = options.version;
+        if (!link || !cache) {
+            throw new Error("\n        In order to initialize Apollo Client, you must specify link & cache properties on the config object.\n        This is part of the required upgrade when migrating from Apollo Client 1.0 to Apollo Client 2.0.\n        For more information, please visit:\n          https://www.apollographql.com/docs/react/basics/setup.html\n        to help you get started.\n      ");
+        }
+        var supportedCache = new Map();
+        var supportedDirectives = new apollo_link__WEBPACK_IMPORTED_MODULE_1__["ApolloLink"](function (operation, forward) {
+            var result = supportedCache.get(operation.query);
+            if (!result) {
+                result = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_2__["removeConnectionDirectiveFromDocument"])(operation.query);
+                supportedCache.set(operation.query, result);
+                supportedCache.set(result, result);
+            }
+            operation.query = result;
+            return forward(operation);
+        });
+        this.link = supportedDirectives.concat(link);
+        this.cache = cache;
+        this.store = new _data_store__WEBPACK_IMPORTED_MODULE_4__["DataStore"](cache);
+        this.disableNetworkFetches = ssrMode || ssrForceFetchDelay > 0;
+        this.queryDeduplication = queryDeduplication;
+        this.ssrMode = ssrMode;
+        this.defaultOptions = defaultOptions || {};
+        if (ssrForceFetchDelay) {
+            setTimeout(function () { return (_this.disableNetworkFetches = false); }, ssrForceFetchDelay);
+        }
+        this.watchQuery = this.watchQuery.bind(this);
+        this.query = this.query.bind(this);
+        this.mutate = this.mutate.bind(this);
+        this.resetStore = this.resetStore.bind(this);
+        this.reFetchObservableQueries = this.reFetchObservableQueries.bind(this);
+        var defaultConnectToDevTools = !Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_2__["isProduction"])() &&
+            typeof window !== 'undefined' &&
+            !window.__APOLLO_CLIENT__;
+        if (typeof connectToDevTools === 'undefined'
+            ? defaultConnectToDevTools
+            : connectToDevTools && typeof window !== 'undefined') {
+            window.__APOLLO_CLIENT__ = this;
+        }
+        if (!hasSuggestedDevtools && !Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_2__["isProduction"])()) {
+            hasSuggestedDevtools = true;
+            if (typeof window !== 'undefined' &&
+                window.document &&
+                window.top === window.self) {
+                if (typeof window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ === 'undefined') {
+                    if (window.navigator &&
+                        window.navigator.userAgent &&
+                        window.navigator.userAgent.indexOf('Chrome') > -1) {
+                        console.debug('Download the Apollo DevTools ' +
+                            'for a better development experience: ' +
+                            'https://chrome.google.com/webstore/detail/apollo-client-developer-t/jdkknkkbebbapilgoeccciglkfbmbnfm');
+                    }
+                }
+            }
+        }
+        this.version = _version__WEBPACK_IMPORTED_MODULE_5__["version"];
+        if (clientAwarenessName) {
+            this.clientAwareness.name = clientAwarenessName;
+        }
+        if (clientAwarenessVersion) {
+            this.clientAwareness.version = clientAwarenessVersion;
+        }
+    }
+    ApolloClient.prototype.stop = function () {
+        if (this.queryManager) {
+            this.queryManager.stop();
+        }
+    };
+    ApolloClient.prototype.watchQuery = function (options) {
+        if (this.defaultOptions.watchQuery) {
+            options = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.defaultOptions.watchQuery, options);
+        }
+        if (this.disableNetworkFetches &&
+            (options.fetchPolicy === 'network-only' ||
+                options.fetchPolicy === 'cache-and-network')) {
+            options = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, options, { fetchPolicy: 'cache-first' });
+        }
+        return this.initQueryManager().watchQuery(options);
+    };
+    ApolloClient.prototype.query = function (options) {
+        if (this.defaultOptions.query) {
+            options = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.defaultOptions.query, options);
+        }
+        if (options.fetchPolicy === 'cache-and-network') {
+            throw new Error('cache-and-network fetchPolicy can only be used with watchQuery');
+        }
+        if (this.disableNetworkFetches && options.fetchPolicy === 'network-only') {
+            options = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, options, { fetchPolicy: 'cache-first' });
+        }
+        return this.initQueryManager().query(options);
+    };
+    ApolloClient.prototype.mutate = function (options) {
+        if (this.defaultOptions.mutate) {
+            options = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.defaultOptions.mutate, options);
+        }
+        return this.initQueryManager().mutate(options);
+    };
+    ApolloClient.prototype.subscribe = function (options) {
+        return this.initQueryManager().startGraphQLSubscription(options);
+    };
+    ApolloClient.prototype.readQuery = function (options, optimistic) {
+        if (optimistic === void 0) { optimistic = false; }
+        return this.initProxy().readQuery(options, optimistic);
+    };
+    ApolloClient.prototype.readFragment = function (options, optimistic) {
+        if (optimistic === void 0) { optimistic = false; }
+        return this.initProxy().readFragment(options, optimistic);
+    };
+    ApolloClient.prototype.writeQuery = function (options) {
+        var result = this.initProxy().writeQuery(options);
+        this.initQueryManager().broadcastQueries();
+        return result;
+    };
+    ApolloClient.prototype.writeFragment = function (options) {
+        var result = this.initProxy().writeFragment(options);
+        this.initQueryManager().broadcastQueries();
+        return result;
+    };
+    ApolloClient.prototype.writeData = function (options) {
+        var result = this.initProxy().writeData(options);
+        this.initQueryManager().broadcastQueries();
+        return result;
+    };
+    ApolloClient.prototype.__actionHookForDevTools = function (cb) {
+        this.devToolsHookCb = cb;
+    };
+    ApolloClient.prototype.__requestRaw = function (payload) {
+        return Object(apollo_link__WEBPACK_IMPORTED_MODULE_1__["execute"])(this.link, payload);
+    };
+    ApolloClient.prototype.initQueryManager = function () {
+        var _this = this;
+        if (!this.queryManager) {
+            this.queryManager = new _core_QueryManager__WEBPACK_IMPORTED_MODULE_3__["QueryManager"]({
+                link: this.link,
+                store: this.store,
+                queryDeduplication: this.queryDeduplication,
+                ssrMode: this.ssrMode,
+                clientAwareness: this.clientAwareness,
+                onBroadcast: function () {
+                    if (_this.devToolsHookCb) {
+                        _this.devToolsHookCb({
+                            action: {},
+                            state: {
+                                queries: _this.queryManager
+                                    ? _this.queryManager.queryStore.getStore()
+                                    : {},
+                                mutations: _this.queryManager
+                                    ? _this.queryManager.mutationStore.getStore()
+                                    : {},
+                            },
+                            dataWithOptimisticResults: _this.cache.extract(true),
+                        });
+                    }
+                },
+            });
+        }
+        return this.queryManager;
+    };
+    ApolloClient.prototype.resetStore = function () {
+        var _this = this;
+        return Promise.resolve()
+            .then(function () {
+            return _this.queryManager
+                ? _this.queryManager.clearStore()
+                : Promise.resolve(null);
+        })
+            .then(function () { return Promise.all(_this.resetStoreCallbacks.map(function (fn) { return fn(); })); })
+            .then(function () {
+            return _this.queryManager && _this.queryManager.reFetchObservableQueries
+                ? _this.queryManager.reFetchObservableQueries()
+                : Promise.resolve(null);
+        });
+    };
+    ApolloClient.prototype.clearStore = function () {
+        var _this = this;
+        var queryManager = this.queryManager;
+        return Promise.resolve()
+            .then(function () { return Promise.all(_this.clearStoreCallbacks.map(function (fn) { return fn(); })); })
+            .then(function () {
+            return queryManager ? queryManager.clearStore() : Promise.resolve(null);
+        });
+    };
+    ApolloClient.prototype.onResetStore = function (cb) {
+        var _this = this;
+        this.resetStoreCallbacks.push(cb);
+        return function () {
+            _this.resetStoreCallbacks = _this.resetStoreCallbacks.filter(function (c) { return c !== cb; });
+        };
+    };
+    ApolloClient.prototype.onClearStore = function (cb) {
+        var _this = this;
+        this.clearStoreCallbacks.push(cb);
+        return function () {
+            _this.clearStoreCallbacks = _this.clearStoreCallbacks.filter(function (c) { return c !== cb; });
+        };
+    };
+    ApolloClient.prototype.reFetchObservableQueries = function (includeStandby) {
+        return this.queryManager
+            ? this.queryManager.reFetchObservableQueries(includeStandby)
+            : Promise.resolve(null);
+    };
+    ApolloClient.prototype.extract = function (optimistic) {
+        return this.initProxy().extract(optimistic);
+    };
+    ApolloClient.prototype.restore = function (serializedState) {
+        return this.initProxy().restore(serializedState);
+    };
+    ApolloClient.prototype.initProxy = function () {
+        if (!this.proxy) {
+            this.initQueryManager();
+            this.proxy = this.cache;
+        }
+        return this.proxy;
+    };
+    return ApolloClient;
+}());
+/* harmony default export */ __webpack_exports__["default"] = (ApolloClient);
+//# sourceMappingURL=ApolloClient.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/core/ObservableQuery.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/core/ObservableQuery.js ***!
+  \**************************************************************************************/
+/*! exports provided: hasError, ObservableQuery */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasError", function() { return hasError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ObservableQuery", function() { return ObservableQuery; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var _networkStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./networkStatus */ "./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js");
+/* harmony import */ var _util_Observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/Observable */ "./node_modules/apollo-boost/node_modules/apollo-client/util/Observable.js");
+/* harmony import */ var _errors_ApolloError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../errors/ApolloError */ "./node_modules/apollo-boost/node_modules/apollo-client/errors/ApolloError.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./types */ "./node_modules/apollo-boost/node_modules/apollo-client/core/types.js");
+
+
+
+
+
+
+var hasError = function (storeValue, policy) {
+    if (policy === void 0) { policy = 'none'; }
+    return storeValue &&
+        ((storeValue.graphQLErrors &&
+            storeValue.graphQLErrors.length > 0 &&
+            policy === 'none') ||
+            storeValue.networkError);
+};
+var ObservableQuery = (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](ObservableQuery, _super);
+    function ObservableQuery(_a) {
+        var scheduler = _a.scheduler, options = _a.options, _b = _a.shouldSubscribe, shouldSubscribe = _b === void 0 ? true : _b;
+        var _this = _super.call(this, function (observer) {
+            return _this.onSubscribe(observer);
+        }) || this;
+        _this.isCurrentlyPolling = false;
+        _this.isTornDown = false;
+        _this.options = options;
+        _this.variables = options.variables || {};
+        _this.queryId = scheduler.queryManager.generateQueryId();
+        _this.shouldSubscribe = shouldSubscribe;
+        _this.scheduler = scheduler;
+        _this.queryManager = scheduler.queryManager;
+        _this.observers = [];
+        _this.subscriptionHandles = [];
+        return _this;
+    }
+    ObservableQuery.prototype.result = function () {
+        var that = this;
+        return new Promise(function (resolve, reject) {
+            var subscription;
+            var observer = {
+                next: function (result) {
+                    resolve(result);
+                    if (!that.observers.some(function (obs) { return obs !== observer; })) {
+                        that.queryManager.removeQuery(that.queryId);
+                    }
+                    setTimeout(function () {
+                        subscription.unsubscribe();
+                    }, 0);
+                },
+                error: function (error) {
+                    reject(error);
+                },
+            };
+            subscription = that.subscribe(observer);
+        });
+    };
+    ObservableQuery.prototype.currentResult = function () {
+        if (this.isTornDown) {
+            return {
+                data: this.lastError ? {} : this.lastResult ? this.lastResult.data : {},
+                error: this.lastError,
+                loading: false,
+                networkStatus: _networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].error,
+            };
+        }
+        var queryStoreValue = this.queryManager.queryStore.get(this.queryId);
+        if (hasError(queryStoreValue, this.options.errorPolicy)) {
+            return {
+                data: {},
+                loading: false,
+                networkStatus: queryStoreValue.networkStatus,
+                error: new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_4__["ApolloError"]({
+                    graphQLErrors: queryStoreValue.graphQLErrors,
+                    networkError: queryStoreValue.networkError,
+                }),
+            };
+        }
+        var _a = this.queryManager.getCurrentQueryResult(this), data = _a.data, partial = _a.partial;
+        var queryLoading = !queryStoreValue ||
+            queryStoreValue.networkStatus === _networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].loading;
+        var loading = (this.options.fetchPolicy === 'network-only' && queryLoading) ||
+            (partial && this.options.fetchPolicy !== 'cache-only');
+        var networkStatus;
+        if (queryStoreValue) {
+            networkStatus = queryStoreValue.networkStatus;
+        }
+        else {
+            networkStatus = loading ? _networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].loading : _networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].ready;
+        }
+        var result = {
+            data: data,
+            loading: Object(_networkStatus__WEBPACK_IMPORTED_MODULE_2__["isNetworkRequestInFlight"])(networkStatus),
+            networkStatus: networkStatus,
+        };
+        if (queryStoreValue &&
+            queryStoreValue.graphQLErrors &&
+            this.options.errorPolicy === 'all') {
+            result.errors = queryStoreValue.graphQLErrors;
+        }
+        if (!partial) {
+            this.lastResult = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, result, { stale: false });
+            this.lastResultSnapshot = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.lastResult);
+        }
+        return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, result, { partial: partial });
+    };
+    ObservableQuery.prototype.isDifferentFromLastResult = function (newResult) {
+        var snapshot = this.lastResultSnapshot;
+        return !(snapshot &&
+            newResult &&
+            snapshot.networkStatus === newResult.networkStatus &&
+            snapshot.stale === newResult.stale &&
+            Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(snapshot.data, newResult.data));
+    };
+    ObservableQuery.prototype.getLastResult = function () {
+        return this.lastResult;
+    };
+    ObservableQuery.prototype.getLastError = function () {
+        return this.lastError;
+    };
+    ObservableQuery.prototype.resetLastResults = function () {
+        delete this.lastResult;
+        delete this.lastResultSnapshot;
+        delete this.lastError;
+        this.isTornDown = false;
+    };
+    ObservableQuery.prototype.refetch = function (variables) {
+        var fetchPolicy = this.options.fetchPolicy;
+        if (fetchPolicy === 'cache-only') {
+            return Promise.reject(new Error('cache-only fetchPolicy option should not be used together with query refetch.'));
+        }
+        if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(this.variables, variables)) {
+            this.variables = Object.assign({}, this.variables, variables);
+        }
+        if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(this.options.variables, this.variables)) {
+            this.options.variables = Object.assign({}, this.options.variables, this.variables);
+        }
+        var isNetworkFetchPolicy = fetchPolicy === 'network-only' || fetchPolicy === 'no-cache';
+        var combinedOptions = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.options, { fetchPolicy: isNetworkFetchPolicy ? fetchPolicy : 'network-only' });
+        return this.queryManager
+            .fetchQuery(this.queryId, combinedOptions, _types__WEBPACK_IMPORTED_MODULE_5__["FetchType"].refetch)
+            .then(function (result) { return result; });
+    };
+    ObservableQuery.prototype.fetchMore = function (fetchMoreOptions) {
+        var _this = this;
+        if (!fetchMoreOptions.updateQuery) {
+            throw new Error('updateQuery option is required. This function defines how to update the query data with the new results.');
+        }
+        var combinedOptions;
+        return Promise.resolve()
+            .then(function () {
+            var qid = _this.queryManager.generateQueryId();
+            if (fetchMoreOptions.query) {
+                combinedOptions = fetchMoreOptions;
+            }
+            else {
+                combinedOptions = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.options, fetchMoreOptions, { variables: Object.assign({}, _this.variables, fetchMoreOptions.variables) });
+            }
+            combinedOptions.fetchPolicy = 'network-only';
+            return _this.queryManager.fetchQuery(qid, combinedOptions, _types__WEBPACK_IMPORTED_MODULE_5__["FetchType"].normal, _this.queryId);
+        })
+            .then(function (fetchMoreResult) {
+            _this.updateQuery(function (previousResult) {
+                return fetchMoreOptions.updateQuery(previousResult, {
+                    fetchMoreResult: fetchMoreResult.data,
+                    variables: combinedOptions.variables,
+                });
+            });
+            return fetchMoreResult;
+        });
+    };
+    ObservableQuery.prototype.subscribeToMore = function (options) {
+        var _this = this;
+        var subscription = this.queryManager
+            .startGraphQLSubscription({
+            query: options.document,
+            variables: options.variables,
+        })
+            .subscribe({
+            next: function (subscriptionData) {
+                if (options.updateQuery) {
+                    _this.updateQuery(function (previous, _a) {
+                        var variables = _a.variables;
+                        return options.updateQuery(previous, {
+                            subscriptionData: subscriptionData,
+                            variables: variables,
+                        });
+                    });
+                }
+            },
+            error: function (err) {
+                if (options.onError) {
+                    options.onError(err);
+                    return;
+                }
+                console.error('Unhandled GraphQL subscription error', err);
+            },
+        });
+        this.subscriptionHandles.push(subscription);
+        return function () {
+            var i = _this.subscriptionHandles.indexOf(subscription);
+            if (i >= 0) {
+                _this.subscriptionHandles.splice(i, 1);
+                subscription.unsubscribe();
+            }
+        };
+    };
+    ObservableQuery.prototype.setOptions = function (opts) {
+        var oldOptions = this.options;
+        this.options = Object.assign({}, this.options, opts);
+        if (opts.pollInterval) {
+            this.startPolling(opts.pollInterval);
+        }
+        else if (opts.pollInterval === 0) {
+            this.stopPolling();
+        }
+        var tryFetch = (oldOptions.fetchPolicy !== 'network-only' &&
+            opts.fetchPolicy === 'network-only') ||
+            (oldOptions.fetchPolicy === 'cache-only' &&
+                opts.fetchPolicy !== 'cache-only') ||
+            (oldOptions.fetchPolicy === 'standby' &&
+                opts.fetchPolicy !== 'standby') ||
+            false;
+        return this.setVariables(this.options.variables, tryFetch, opts.fetchResults);
+    };
+    ObservableQuery.prototype.setVariables = function (variables, tryFetch, fetchResults) {
+        if (tryFetch === void 0) { tryFetch = false; }
+        if (fetchResults === void 0) { fetchResults = true; }
+        this.isTornDown = false;
+        var newVariables = variables ? variables : this.variables;
+        if (Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(newVariables, this.variables) && !tryFetch) {
+            if (this.observers.length === 0 || !fetchResults) {
+                return new Promise(function (resolve) { return resolve(); });
+            }
+            return this.result();
+        }
+        else {
+            this.variables = newVariables;
+            this.options.variables = newVariables;
+            if (this.observers.length === 0) {
+                return new Promise(function (resolve) { return resolve(); });
+            }
+            return this.queryManager
+                .fetchQuery(this.queryId, tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.options, { variables: this.variables }))
+                .then(function (result) { return result; });
+        }
+    };
+    ObservableQuery.prototype.updateQuery = function (mapFn) {
+        var _a = this.queryManager.getQueryWithPreviousResult(this.queryId), previousResult = _a.previousResult, variables = _a.variables, document = _a.document;
+        var newResult = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["tryFunctionOrLogError"])(function () {
+            return mapFn(previousResult, { variables: variables });
+        });
+        if (newResult) {
+            this.queryManager.dataStore.markUpdateQueryResult(document, variables, newResult);
+            this.queryManager.broadcastQueries();
+        }
+    };
+    ObservableQuery.prototype.stopPolling = function () {
+        if (this.isCurrentlyPolling) {
+            this.scheduler.stopPollingQuery(this.queryId);
+            this.options.pollInterval = undefined;
+            this.isCurrentlyPolling = false;
+        }
+    };
+    ObservableQuery.prototype.startPolling = function (pollInterval) {
+        if (this.options.fetchPolicy === 'cache-first' ||
+            this.options.fetchPolicy === 'cache-only') {
+            throw new Error('Queries that specify the cache-first and cache-only fetchPolicies cannot also be polling queries.');
+        }
+        if (this.isCurrentlyPolling) {
+            this.scheduler.stopPollingQuery(this.queryId);
+            this.isCurrentlyPolling = false;
+        }
+        this.options.pollInterval = pollInterval;
+        this.isCurrentlyPolling = true;
+        this.scheduler.startPollingQuery(this.options, this.queryId);
+    };
+    ObservableQuery.prototype.onSubscribe = function (observer) {
+        var _this = this;
+        if (observer._subscription &&
+            observer._subscription._observer &&
+            !observer._subscription._observer.error) {
+            observer._subscription._observer.error = function (error) {
+                console.error('Unhandled error', error.message, error.stack);
+            };
+        }
+        this.observers.push(observer);
+        if (observer.next && this.lastResult)
+            observer.next(this.lastResult);
+        if (observer.error && this.lastError)
+            observer.error(this.lastError);
+        if (this.observers.length === 1)
+            this.setUpQuery();
+        return function () {
+            _this.observers = _this.observers.filter(function (obs) { return obs !== observer; });
+            if (_this.observers.length === 0) {
+                _this.tearDownQuery();
+            }
+        };
+    };
+    ObservableQuery.prototype.setUpQuery = function () {
+        var _this = this;
+        if (this.shouldSubscribe) {
+            this.queryManager.addObservableQuery(this.queryId, this);
+        }
+        if (!!this.options.pollInterval) {
+            if (this.options.fetchPolicy === 'cache-first' ||
+                this.options.fetchPolicy === 'cache-only') {
+                throw new Error('Queries that specify the cache-first and cache-only fetchPolicies cannot also be polling queries.');
+            }
+            this.isCurrentlyPolling = true;
+            this.scheduler.startPollingQuery(this.options, this.queryId);
+        }
+        var observer = {
+            next: function (result) {
+                _this.lastResult = result;
+                _this.lastResultSnapshot = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(result);
+                _this.observers.forEach(function (obs) { return obs.next && obs.next(result); });
+            },
+            error: function (error) {
+                _this.lastError = error;
+                _this.observers.forEach(function (obs) { return obs.error && obs.error(error); });
+            },
+        };
+        this.queryManager.startQuery(this.queryId, this.options, this.queryManager.queryListenerForObserver(this.queryId, this.options, observer));
+    };
+    ObservableQuery.prototype.tearDownQuery = function () {
+        this.isTornDown = true;
+        if (this.isCurrentlyPolling) {
+            this.scheduler.stopPollingQuery(this.queryId);
+            this.isCurrentlyPolling = false;
+        }
+        this.subscriptionHandles.forEach(function (sub) { return sub.unsubscribe(); });
+        this.subscriptionHandles = [];
+        this.queryManager.removeObservableQuery(this.queryId);
+        this.queryManager.stopQuery(this.queryId);
+        this.observers = [];
+    };
+    return ObservableQuery;
+}(_util_Observable__WEBPACK_IMPORTED_MODULE_3__["Observable"]));
+
+//# sourceMappingURL=ObservableQuery.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/core/QueryManager.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/core/QueryManager.js ***!
+  \***********************************************************************************/
+/*! exports provided: QueryManager */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QueryManager", function() { return QueryManager; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/index.js");
+/* harmony import */ var apollo_link_dedup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-link-dedup */ "./node_modules/apollo-link-dedup/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var _scheduler_scheduler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../scheduler/scheduler */ "./node_modules/apollo-boost/node_modules/apollo-client/scheduler/scheduler.js");
+/* harmony import */ var _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../errors/ApolloError */ "./node_modules/apollo-boost/node_modules/apollo-client/errors/ApolloError.js");
+/* harmony import */ var _util_Observable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/Observable */ "./node_modules/apollo-boost/node_modules/apollo-client/util/Observable.js");
+/* harmony import */ var _data_mutations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../data/mutations */ "./node_modules/apollo-boost/node_modules/apollo-client/data/mutations.js");
+/* harmony import */ var _data_queries__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../data/queries */ "./node_modules/apollo-boost/node_modules/apollo-client/data/queries.js");
+/* harmony import */ var _ObservableQuery__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ObservableQuery */ "./node_modules/apollo-boost/node_modules/apollo-client/core/ObservableQuery.js");
+/* harmony import */ var _networkStatus__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./networkStatus */ "./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js");
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./types */ "./node_modules/apollo-boost/node_modules/apollo-client/core/types.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+var QueryManager = (function () {
+    function QueryManager(_a) {
+        var link = _a.link, _b = _a.queryDeduplication, queryDeduplication = _b === void 0 ? false : _b, store = _a.store, _c = _a.onBroadcast, onBroadcast = _c === void 0 ? function () { return undefined; } : _c, _d = _a.ssrMode, ssrMode = _d === void 0 ? false : _d, _e = _a.clientAwareness, clientAwareness = _e === void 0 ? {} : _e;
+        this.mutationStore = new _data_mutations__WEBPACK_IMPORTED_MODULE_7__["MutationStore"]();
+        this.queryStore = new _data_queries__WEBPACK_IMPORTED_MODULE_8__["QueryStore"]();
+        this.clientAwareness = {};
+        this.idCounter = 1;
+        this.queries = new Map();
+        this.fetchQueryRejectFns = new Set();
+        this.queryIdsByName = {};
+        this.link = link;
+        this.deduplicator = apollo_link__WEBPACK_IMPORTED_MODULE_1__["ApolloLink"].from([new apollo_link_dedup__WEBPACK_IMPORTED_MODULE_2__["DedupLink"](), link]);
+        this.queryDeduplication = queryDeduplication;
+        this.dataStore = store;
+        this.onBroadcast = onBroadcast;
+        this.clientAwareness = clientAwareness;
+        this.scheduler = new _scheduler_scheduler__WEBPACK_IMPORTED_MODULE_4__["QueryScheduler"]({ queryManager: this, ssrMode: ssrMode });
+    }
+    QueryManager.prototype.stop = function () {
+        this.scheduler.stop();
+        this.fetchQueryRejectFns.forEach(function (reject) {
+            reject(new Error('QueryManager stopped while query was in flight'));
+        });
+    };
+    QueryManager.prototype.mutate = function (_a) {
+        var _this = this;
+        var mutation = _a.mutation, variables = _a.variables, optimisticResponse = _a.optimisticResponse, updateQueriesByName = _a.updateQueries, _b = _a.refetchQueries, refetchQueries = _b === void 0 ? [] : _b, _c = _a.awaitRefetchQueries, awaitRefetchQueries = _c === void 0 ? false : _c, updateWithProxyFn = _a.update, _d = _a.errorPolicy, errorPolicy = _d === void 0 ? 'none' : _d, fetchPolicy = _a.fetchPolicy, _e = _a.context, context = _e === void 0 ? {} : _e;
+        if (!mutation) {
+            throw new Error('mutation option is required. You must specify your GraphQL document in the mutation option.');
+        }
+        if (fetchPolicy && fetchPolicy !== 'no-cache') {
+            throw new Error("fetchPolicy for mutations currently only supports the 'no-cache' policy");
+        }
+        var mutationId = this.generateQueryId();
+        var cache = this.dataStore.getCache();
+        (mutation = cache.transformDocument(mutation)),
+            (variables = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["assign"])({}, Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getDefaultValues"])(Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getMutationDefinition"])(mutation)), variables));
+        this.setQuery(mutationId, function () { return ({ document: mutation }); });
+        var generateUpdateQueriesInfo = function () {
+            var ret = {};
+            if (updateQueriesByName) {
+                Object.keys(updateQueriesByName).forEach(function (queryName) {
+                    return (_this.queryIdsByName[queryName] || []).forEach(function (queryId) {
+                        ret[queryId] = {
+                            updater: updateQueriesByName[queryName],
+                            query: _this.queryStore.get(queryId),
+                        };
+                    });
+                });
+            }
+            return ret;
+        };
+        this.mutationStore.initMutation(mutationId, mutation, variables);
+        this.dataStore.markMutationInit({
+            mutationId: mutationId,
+            document: mutation,
+            variables: variables || {},
+            updateQueries: generateUpdateQueriesInfo(),
+            update: updateWithProxyFn,
+            optimisticResponse: optimisticResponse,
+        });
+        this.broadcastQueries();
+        return new Promise(function (resolve, reject) {
+            var storeResult;
+            var error;
+            var operation = _this.buildOperationForLink(mutation, variables, tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, context, { optimisticResponse: optimisticResponse }));
+            var completeMutation = function () {
+                if (error) {
+                    _this.mutationStore.markMutationError(mutationId, error);
+                }
+                _this.dataStore.markMutationComplete({
+                    mutationId: mutationId,
+                    optimisticResponse: optimisticResponse,
+                });
+                _this.broadcastQueries();
+                if (error) {
+                    return Promise.reject(error);
+                }
+                if (typeof refetchQueries === 'function') {
+                    refetchQueries = refetchQueries(storeResult);
+                }
+                var refetchQueryPromises = [];
+                for (var _i = 0, refetchQueries_1 = refetchQueries; _i < refetchQueries_1.length; _i++) {
+                    var refetchQuery = refetchQueries_1[_i];
+                    if (typeof refetchQuery === 'string') {
+                        var promise = _this.refetchQueryByName(refetchQuery);
+                        if (promise) {
+                            refetchQueryPromises.push(promise);
+                        }
+                        continue;
+                    }
+                    var queryOptions = {
+                        query: refetchQuery.query,
+                        variables: refetchQuery.variables,
+                        fetchPolicy: 'network-only',
+                    };
+                    if (refetchQuery.context) {
+                        queryOptions.context = refetchQuery.context;
+                    }
+                    refetchQueryPromises.push(_this.query(queryOptions));
+                }
+                return Promise.all(awaitRefetchQueries ? refetchQueryPromises : []).then(function () {
+                    _this.setQuery(mutationId, function () { return ({ document: undefined }); });
+                    if (errorPolicy === 'ignore' &&
+                        storeResult &&
+                        Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["graphQLResultHasError"])(storeResult)) {
+                        delete storeResult.errors;
+                    }
+                    return storeResult;
+                });
+            };
+            Object(apollo_link__WEBPACK_IMPORTED_MODULE_1__["execute"])(_this.link, operation).subscribe({
+                next: function (result) {
+                    if (Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["graphQLResultHasError"])(result) && errorPolicy === 'none') {
+                        error = new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({
+                            graphQLErrors: result.errors,
+                        });
+                        return;
+                    }
+                    _this.mutationStore.markMutationResult(mutationId);
+                    if (fetchPolicy !== 'no-cache') {
+                        _this.dataStore.markMutationResult({
+                            mutationId: mutationId,
+                            result: result,
+                            document: mutation,
+                            variables: variables || {},
+                            updateQueries: generateUpdateQueriesInfo(),
+                            update: updateWithProxyFn,
+                        });
+                    }
+                    storeResult = result;
+                },
+                error: function (err) {
+                    _this.mutationStore.markMutationError(mutationId, err);
+                    _this.dataStore.markMutationComplete({
+                        mutationId: mutationId,
+                        optimisticResponse: optimisticResponse,
+                    });
+                    _this.broadcastQueries();
+                    _this.setQuery(mutationId, function () { return ({ document: undefined }); });
+                    reject(new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({
+                        networkError: err,
+                    }));
+                },
+                complete: function () { return completeMutation().then(resolve, reject); },
+            });
+        });
+    };
+    QueryManager.prototype.fetchQuery = function (queryId, options, fetchType, fetchMoreForQueryId) {
+        var _this = this;
+        var _a = options.variables, variables = _a === void 0 ? {} : _a, _b = options.metadata, metadata = _b === void 0 ? null : _b, _c = options.fetchPolicy, fetchPolicy = _c === void 0 ? 'cache-first' : _c;
+        var cache = this.dataStore.getCache();
+        var query = cache.transformDocument(options.query);
+        var storeResult;
+        var needToFetch = fetchPolicy === 'network-only' || fetchPolicy === 'no-cache';
+        if (fetchType !== _types__WEBPACK_IMPORTED_MODULE_11__["FetchType"].refetch &&
+            fetchPolicy !== 'network-only' &&
+            fetchPolicy !== 'no-cache') {
+            var _d = this.dataStore.getCache().diff({
+                query: query,
+                variables: variables,
+                returnPartialData: true,
+                optimistic: false,
+            }), complete = _d.complete, result = _d.result;
+            needToFetch = !complete || fetchPolicy === 'cache-and-network';
+            storeResult = result;
+        }
+        var shouldFetch = needToFetch && fetchPolicy !== 'cache-only' && fetchPolicy !== 'standby';
+        if (Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["hasDirectives"])(['live'], query))
+            shouldFetch = true;
+        var requestId = this.generateRequestId();
+        var cancel = this.updateQueryWatch(queryId, query, options);
+        this.setQuery(queryId, function () { return ({
+            document: query,
+            lastRequestId: requestId,
+            invalidated: true,
+            cancel: cancel,
+        }); });
+        this.invalidate(true, fetchMoreForQueryId);
+        this.queryStore.initQuery({
+            queryId: queryId,
+            document: query,
+            storePreviousVariables: shouldFetch,
+            variables: variables,
+            isPoll: fetchType === _types__WEBPACK_IMPORTED_MODULE_11__["FetchType"].poll,
+            isRefetch: fetchType === _types__WEBPACK_IMPORTED_MODULE_11__["FetchType"].refetch,
+            metadata: metadata,
+            fetchMoreForQueryId: fetchMoreForQueryId,
+        });
+        this.broadcastQueries();
+        var shouldDispatchClientResult = !shouldFetch || fetchPolicy === 'cache-and-network';
+        if (shouldDispatchClientResult) {
+            this.queryStore.markQueryResultClient(queryId, !shouldFetch);
+            this.invalidate(true, queryId, fetchMoreForQueryId);
+            this.broadcastQueries();
+        }
+        if (shouldFetch) {
+            var networkResult = this.fetchRequest({
+                requestId: requestId,
+                queryId: queryId,
+                document: query,
+                options: options,
+                fetchMoreForQueryId: fetchMoreForQueryId,
+            }).catch(function (error) {
+                if (Object(_errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["isApolloError"])(error)) {
+                    throw error;
+                }
+                else {
+                    var lastRequestId = _this.getQuery(queryId).lastRequestId;
+                    if (requestId >= (lastRequestId || 1)) {
+                        _this.queryStore.markQueryError(queryId, error, fetchMoreForQueryId);
+                        _this.invalidate(true, queryId, fetchMoreForQueryId);
+                        _this.broadcastQueries();
+                    }
+                    throw new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({ networkError: error });
+                }
+            });
+            if (fetchPolicy !== 'cache-and-network') {
+                return networkResult;
+            }
+            else {
+                networkResult.catch(function () { });
+            }
+        }
+        return Promise.resolve({ data: storeResult });
+    };
+    QueryManager.prototype.queryListenerForObserver = function (queryId, options, observer) {
+        var _this = this;
+        var previouslyHadError = false;
+        return function (queryStoreValue, newData) {
+            _this.invalidate(false, queryId);
+            if (!queryStoreValue)
+                return;
+            var observableQuery = _this.getQuery(queryId).observableQuery;
+            var fetchPolicy = observableQuery
+                ? observableQuery.options.fetchPolicy
+                : options.fetchPolicy;
+            if (fetchPolicy === 'standby')
+                return;
+            var errorPolicy = observableQuery
+                ? observableQuery.options.errorPolicy
+                : options.errorPolicy;
+            var lastResult = observableQuery
+                ? observableQuery.getLastResult()
+                : null;
+            var lastError = observableQuery ? observableQuery.getLastError() : null;
+            var shouldNotifyIfLoading = (!newData && queryStoreValue.previousVariables != null) ||
+                fetchPolicy === 'cache-only' ||
+                fetchPolicy === 'cache-and-network';
+            var networkStatusChanged = Boolean(lastResult &&
+                queryStoreValue.networkStatus !== lastResult.networkStatus);
+            var errorStatusChanged = errorPolicy &&
+                (lastError && lastError.graphQLErrors) !==
+                    queryStoreValue.graphQLErrors &&
+                errorPolicy !== 'none';
+            if (!Object(_networkStatus__WEBPACK_IMPORTED_MODULE_10__["isNetworkRequestInFlight"])(queryStoreValue.networkStatus) ||
+                (networkStatusChanged && options.notifyOnNetworkStatusChange) ||
+                shouldNotifyIfLoading) {
+                if (((!errorPolicy || errorPolicy === 'none') &&
+                    queryStoreValue.graphQLErrors &&
+                    queryStoreValue.graphQLErrors.length > 0) ||
+                    queryStoreValue.networkError) {
+                    var apolloError_1 = new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({
+                        graphQLErrors: queryStoreValue.graphQLErrors,
+                        networkError: queryStoreValue.networkError,
+                    });
+                    previouslyHadError = true;
+                    if (observer.error) {
+                        try {
+                            observer.error(apolloError_1);
+                        }
+                        catch (e) {
+                            setTimeout(function () {
+                                throw e;
+                            }, 0);
+                        }
+                    }
+                    else {
+                        setTimeout(function () {
+                            throw apolloError_1;
+                        }, 0);
+                        if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["isProduction"])()) {
+                            console.info('An unhandled error was thrown because no error handler is registered ' +
+                                'for the query ' +
+                                JSON.stringify(queryStoreValue.document));
+                        }
+                    }
+                    return;
+                }
+                try {
+                    var data = void 0;
+                    var isMissing = void 0;
+                    if (newData) {
+                        if (fetchPolicy !== 'no-cache') {
+                            _this.setQuery(queryId, function () { return ({ newData: null }); });
+                        }
+                        data = newData.result;
+                        isMissing = !newData.complete || false;
+                    }
+                    else {
+                        if (lastResult && lastResult.data && !errorStatusChanged) {
+                            data = lastResult.data;
+                            isMissing = false;
+                        }
+                        else {
+                            var document_1 = _this.getQuery(queryId).document;
+                            var readResult = _this.dataStore.getCache().diff({
+                                query: document_1,
+                                variables: queryStoreValue.previousVariables ||
+                                    queryStoreValue.variables,
+                                optimistic: true,
+                            });
+                            data = readResult.result;
+                            isMissing = !readResult.complete;
+                        }
+                    }
+                    var resultFromStore = void 0;
+                    if (isMissing && fetchPolicy !== 'cache-only') {
+                        resultFromStore = {
+                            data: lastResult && lastResult.data,
+                            loading: Object(_networkStatus__WEBPACK_IMPORTED_MODULE_10__["isNetworkRequestInFlight"])(queryStoreValue.networkStatus),
+                            networkStatus: queryStoreValue.networkStatus,
+                            stale: true,
+                        };
+                    }
+                    else {
+                        resultFromStore = {
+                            data: data,
+                            loading: Object(_networkStatus__WEBPACK_IMPORTED_MODULE_10__["isNetworkRequestInFlight"])(queryStoreValue.networkStatus),
+                            networkStatus: queryStoreValue.networkStatus,
+                            stale: false,
+                        };
+                    }
+                    if (errorPolicy === 'all' &&
+                        queryStoreValue.graphQLErrors &&
+                        queryStoreValue.graphQLErrors.length > 0) {
+                        resultFromStore.errors = queryStoreValue.graphQLErrors;
+                    }
+                    if (observer.next) {
+                        if (previouslyHadError ||
+                            !observableQuery ||
+                            observableQuery.isDifferentFromLastResult(resultFromStore)) {
+                            try {
+                                observer.next(resultFromStore);
+                            }
+                            catch (e) {
+                                setTimeout(function () {
+                                    throw e;
+                                }, 0);
+                            }
+                        }
+                    }
+                    previouslyHadError = false;
+                }
+                catch (error) {
+                    previouslyHadError = true;
+                    if (observer.error)
+                        observer.error(new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({ networkError: error }));
+                    return;
+                }
+            }
+        };
+    };
+    QueryManager.prototype.watchQuery = function (options, shouldSubscribe) {
+        if (shouldSubscribe === void 0) { shouldSubscribe = true; }
+        if (options.fetchPolicy === 'standby') {
+            throw new Error('client.watchQuery cannot be called with fetchPolicy set to "standby"');
+        }
+        var queryDefinition = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getQueryDefinition"])(options.query);
+        if (queryDefinition.variableDefinitions &&
+            queryDefinition.variableDefinitions.length) {
+            var defaultValues = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getDefaultValues"])(queryDefinition);
+            options.variables = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["assign"])({}, defaultValues, options.variables);
+        }
+        if (typeof options.notifyOnNetworkStatusChange === 'undefined') {
+            options.notifyOnNetworkStatusChange = false;
+        }
+        var transformedOptions = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, options);
+        return new _ObservableQuery__WEBPACK_IMPORTED_MODULE_9__["ObservableQuery"]({
+            scheduler: this.scheduler,
+            options: transformedOptions,
+            shouldSubscribe: shouldSubscribe,
+        });
+    };
+    QueryManager.prototype.query = function (options) {
+        var _this = this;
+        if (!options.query) {
+            throw new Error('query option is required. You must specify your GraphQL document ' +
+                'in the query option.');
+        }
+        if (options.query.kind !== 'Document') {
+            throw new Error('You must wrap the query string in a "gql" tag.');
+        }
+        if (options.returnPartialData) {
+            throw new Error('returnPartialData option only supported on watchQuery.');
+        }
+        if (options.pollInterval) {
+            throw new Error('pollInterval option only supported on watchQuery.');
+        }
+        return new Promise(function (resolve, reject) {
+            _this.fetchQueryRejectFns.add(reject);
+            _this.watchQuery(options, false)
+                .result()
+                .then(resolve, reject)
+                .then(function () { return _this.fetchQueryRejectFns.delete(reject); });
+        });
+    };
+    QueryManager.prototype.generateQueryId = function () {
+        var queryId = this.idCounter.toString();
+        this.idCounter++;
+        return queryId;
+    };
+    QueryManager.prototype.stopQueryInStore = function (queryId) {
+        this.queryStore.stopQuery(queryId);
+        this.invalidate(true, queryId);
+        this.broadcastQueries();
+    };
+    QueryManager.prototype.addQueryListener = function (queryId, listener) {
+        this.setQuery(queryId, function (_a) {
+            var _b = _a.listeners, listeners = _b === void 0 ? [] : _b;
+            return ({
+                listeners: listeners.concat([listener]),
+                invalidate: false,
+            });
+        });
+    };
+    QueryManager.prototype.updateQueryWatch = function (queryId, document, options) {
+        var _this = this;
+        var cancel = this.getQuery(queryId).cancel;
+        if (cancel)
+            cancel();
+        var previousResult = function () {
+            var previousResult = null;
+            var observableQuery = _this.getQuery(queryId).observableQuery;
+            if (observableQuery) {
+                var lastResult = observableQuery.getLastResult();
+                if (lastResult) {
+                    previousResult = lastResult.data;
+                }
+            }
+            return previousResult;
+        };
+        return this.dataStore.getCache().watch({
+            query: document,
+            variables: options.variables,
+            optimistic: true,
+            previousResult: previousResult,
+            callback: function (newData) {
+                _this.setQuery(queryId, function () { return ({ invalidated: true, newData: newData }); });
+            },
+        });
+    };
+    QueryManager.prototype.addObservableQuery = function (queryId, observableQuery) {
+        this.setQuery(queryId, function () { return ({ observableQuery: observableQuery }); });
+        var queryDef = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getQueryDefinition"])(observableQuery.options.query);
+        if (queryDef.name && queryDef.name.value) {
+            var queryName = queryDef.name.value;
+            this.queryIdsByName[queryName] = this.queryIdsByName[queryName] || [];
+            this.queryIdsByName[queryName].push(observableQuery.queryId);
+        }
+    };
+    QueryManager.prototype.removeObservableQuery = function (queryId) {
+        var _a = this.getQuery(queryId), observableQuery = _a.observableQuery, cancel = _a.cancel;
+        if (cancel)
+            cancel();
+        if (!observableQuery)
+            return;
+        var definition = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getQueryDefinition"])(observableQuery.options.query);
+        var queryName = definition.name ? definition.name.value : null;
+        this.setQuery(queryId, function () { return ({ observableQuery: null }); });
+        if (queryName) {
+            this.queryIdsByName[queryName] = this.queryIdsByName[queryName].filter(function (val) {
+                return !(observableQuery.queryId === val);
+            });
+        }
+    };
+    QueryManager.prototype.clearStore = function () {
+        this.fetchQueryRejectFns.forEach(function (reject) {
+            reject(new Error('Store reset while query was in flight(not completed in link chain)'));
+        });
+        var resetIds = [];
+        this.queries.forEach(function (_a, queryId) {
+            var observableQuery = _a.observableQuery;
+            if (observableQuery)
+                resetIds.push(queryId);
+        });
+        this.queryStore.reset(resetIds);
+        this.mutationStore.reset();
+        var reset = this.dataStore.reset();
+        return reset;
+    };
+    QueryManager.prototype.resetStore = function () {
+        var _this = this;
+        return this.clearStore().then(function () {
+            return _this.reFetchObservableQueries();
+        });
+    };
+    QueryManager.prototype.reFetchObservableQueries = function (includeStandby) {
+        var observableQueryPromises = this.getObservableQueryPromises(includeStandby);
+        this.broadcastQueries();
+        return Promise.all(observableQueryPromises);
+    };
+    QueryManager.prototype.startQuery = function (queryId, options, listener) {
+        this.addQueryListener(queryId, listener);
+        this.fetchQuery(queryId, options)
+            .catch(function () { return undefined; });
+        return queryId;
+    };
+    QueryManager.prototype.startGraphQLSubscription = function (options) {
+        var _this = this;
+        var query = options.query;
+        var isCacheEnabled = !(options.fetchPolicy && options.fetchPolicy === 'no-cache');
+        var cache = this.dataStore.getCache();
+        var transformedDoc = cache.transformDocument(query);
+        var variables = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["assign"])({}, Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getDefaultValues"])(Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getOperationDefinition"])(query)), options.variables);
+        var sub;
+        var observers = [];
+        return new _util_Observable__WEBPACK_IMPORTED_MODULE_6__["Observable"](function (observer) {
+            observers.push(observer);
+            if (observers.length === 1) {
+                var handler = {
+                    next: function (result) {
+                        if (isCacheEnabled) {
+                            _this.dataStore.markSubscriptionResult(result, transformedDoc, variables);
+                            _this.broadcastQueries();
+                        }
+                        observers.forEach(function (obs) {
+                            if (Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["graphQLResultHasError"])(result) && obs.error) {
+                                obs.error(new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({
+                                    graphQLErrors: result.errors,
+                                }));
+                            }
+                            else if (obs.next) {
+                                obs.next(result);
+                            }
+                        });
+                    },
+                    error: function (error) {
+                        observers.forEach(function (obs) {
+                            if (obs.error) {
+                                obs.error(error);
+                            }
+                        });
+                    },
+                    complete: function () {
+                        observers.forEach(function (obs) {
+                            if (obs.complete) {
+                                obs.complete();
+                            }
+                        });
+                    }
+                };
+                var operation = _this.buildOperationForLink(transformedDoc, variables);
+                sub = Object(apollo_link__WEBPACK_IMPORTED_MODULE_1__["execute"])(_this.link, operation).subscribe(handler);
+            }
+            return function () {
+                observers = observers.filter(function (obs) { return obs !== observer; });
+                if (observers.length === 0 && sub) {
+                    sub.unsubscribe();
+                }
+            };
+        });
+    };
+    QueryManager.prototype.stopQuery = function (queryId) {
+        this.stopQueryInStore(queryId);
+        this.removeQuery(queryId);
+    };
+    QueryManager.prototype.removeQuery = function (queryId) {
+        var subscriptions = this.getQuery(queryId).subscriptions;
+        subscriptions.forEach(function (x) { return x.unsubscribe(); });
+        this.queries.delete(queryId);
+    };
+    QueryManager.prototype.getCurrentQueryResult = function (observableQuery, optimistic) {
+        if (optimistic === void 0) { optimistic = true; }
+        var _a = observableQuery.options, variables = _a.variables, query = _a.query;
+        var lastResult = observableQuery.getLastResult();
+        var newData = this.getQuery(observableQuery.queryId).newData;
+        if (newData && newData.complete) {
+            return { data: newData.result, partial: false };
+        }
+        else {
+            try {
+                var data = this.dataStore.getCache().read({
+                    query: query,
+                    variables: variables,
+                    previousResult: lastResult ? lastResult.data : undefined,
+                    optimistic: optimistic,
+                });
+                return { data: data, partial: false };
+            }
+            catch (e) {
+                return { data: {}, partial: true };
+            }
+        }
+    };
+    QueryManager.prototype.getQueryWithPreviousResult = function (queryIdOrObservable) {
+        var observableQuery;
+        if (typeof queryIdOrObservable === 'string') {
+            var foundObserveableQuery = this.getQuery(queryIdOrObservable).observableQuery;
+            if (!foundObserveableQuery) {
+                throw new Error("ObservableQuery with this id doesn't exist: " + queryIdOrObservable);
+            }
+            observableQuery = foundObserveableQuery;
+        }
+        else {
+            observableQuery = queryIdOrObservable;
+        }
+        var _a = observableQuery.options, variables = _a.variables, query = _a.query;
+        var data = this.getCurrentQueryResult(observableQuery, false).data;
+        return {
+            previousResult: data,
+            variables: variables,
+            document: query,
+        };
+    };
+    QueryManager.prototype.broadcastQueries = function () {
+        var _this = this;
+        this.onBroadcast();
+        this.queries.forEach(function (info, id) {
+            if (!info.invalidated || !info.listeners)
+                return;
+            info.listeners
+                .filter(function (x) { return !!x; })
+                .forEach(function (listener) {
+                listener(_this.queryStore.get(id), info.newData);
+            });
+        });
+    };
+    QueryManager.prototype.getObservableQueryPromises = function (includeStandby) {
+        var _this = this;
+        var observableQueryPromises = [];
+        this.queries.forEach(function (_a, queryId) {
+            var observableQuery = _a.observableQuery;
+            if (!observableQuery)
+                return;
+            var fetchPolicy = observableQuery.options.fetchPolicy;
+            observableQuery.resetLastResults();
+            if (fetchPolicy !== 'cache-only' &&
+                (includeStandby || fetchPolicy !== 'standby')) {
+                observableQueryPromises.push(observableQuery.refetch());
+            }
+            _this.setQuery(queryId, function () { return ({ newData: null }); });
+            _this.invalidate(true, queryId);
+        });
+        return observableQueryPromises;
+    };
+    QueryManager.prototype.fetchRequest = function (_a) {
+        var _this = this;
+        var requestId = _a.requestId, queryId = _a.queryId, document = _a.document, options = _a.options, fetchMoreForQueryId = _a.fetchMoreForQueryId;
+        var variables = options.variables, context = options.context, _b = options.errorPolicy, errorPolicy = _b === void 0 ? 'none' : _b, fetchPolicy = options.fetchPolicy;
+        var operation = this.buildOperationForLink(document, variables, tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, context, { forceFetch: !this.queryDeduplication }));
+        var resultFromStore;
+        var errorsFromStore;
+        var rejectFetchPromise;
+        return new Promise(function (resolve, reject) {
+            _this.fetchQueryRejectFns.add(rejectFetchPromise = reject);
+            var subscription = Object(apollo_link__WEBPACK_IMPORTED_MODULE_1__["execute"])(_this.deduplicator, operation).subscribe({
+                next: function (result) {
+                    var lastRequestId = _this.getQuery(queryId).lastRequestId;
+                    if (requestId >= (lastRequestId || 1)) {
+                        if (fetchPolicy !== 'no-cache') {
+                            try {
+                                _this.dataStore.markQueryResult(result, document, variables, fetchMoreForQueryId, errorPolicy === 'ignore' || errorPolicy === 'all');
+                            }
+                            catch (e) {
+                                reject(e);
+                                return;
+                            }
+                        }
+                        else {
+                            _this.setQuery(queryId, function () { return ({
+                                newData: { result: result.data, complete: true },
+                            }); });
+                        }
+                        _this.queryStore.markQueryResult(queryId, result, fetchMoreForQueryId);
+                        _this.invalidate(true, queryId, fetchMoreForQueryId);
+                        _this.broadcastQueries();
+                    }
+                    if (result.errors && errorPolicy === 'none') {
+                        reject(new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({
+                            graphQLErrors: result.errors,
+                        }));
+                        return;
+                    }
+                    else if (errorPolicy === 'all') {
+                        errorsFromStore = result.errors;
+                    }
+                    if (fetchMoreForQueryId || fetchPolicy === 'no-cache') {
+                        resultFromStore = result.data;
+                    }
+                    else {
+                        try {
+                            resultFromStore = _this.dataStore.getCache().read({
+                                variables: variables,
+                                query: document,
+                                optimistic: false,
+                            });
+                        }
+                        catch (e) { }
+                    }
+                },
+                error: function (error) {
+                    _this.fetchQueryRejectFns.delete(reject);
+                    _this.setQuery(queryId, function (_a) {
+                        var subscriptions = _a.subscriptions;
+                        return ({
+                            subscriptions: subscriptions.filter(function (x) { return x !== subscription; }),
+                        });
+                    });
+                    reject(error);
+                },
+                complete: function () {
+                    _this.fetchQueryRejectFns.delete(reject);
+                    _this.setQuery(queryId, function (_a) {
+                        var subscriptions = _a.subscriptions;
+                        return ({
+                            subscriptions: subscriptions.filter(function (x) { return x !== subscription; }),
+                        });
+                    });
+                    resolve({
+                        data: resultFromStore,
+                        errors: errorsFromStore,
+                        loading: false,
+                        networkStatus: _networkStatus__WEBPACK_IMPORTED_MODULE_10__["NetworkStatus"].ready,
+                        stale: false,
+                    });
+                },
+            });
+            _this.setQuery(queryId, function (_a) {
+                var subscriptions = _a.subscriptions;
+                return ({
+                    subscriptions: subscriptions.concat([subscription]),
+                });
+            });
+        }).catch(function (error) {
+            _this.fetchQueryRejectFns.delete(rejectFetchPromise);
+            throw error;
+        });
+    };
+    QueryManager.prototype.refetchQueryByName = function (queryName) {
+        var _this = this;
+        var refetchedQueries = this.queryIdsByName[queryName];
+        if (refetchedQueries === undefined)
+            return;
+        return Promise.all(refetchedQueries
+            .map(function (id) { return _this.getQuery(id).observableQuery; })
+            .filter(function (x) { return !!x; })
+            .map(function (x) { return x.refetch(); }));
+    };
+    QueryManager.prototype.generateRequestId = function () {
+        var requestId = this.idCounter;
+        this.idCounter++;
+        return requestId;
+    };
+    QueryManager.prototype.getQuery = function (queryId) {
+        return (this.queries.get(queryId) || {
+            listeners: [],
+            invalidated: false,
+            document: null,
+            newData: null,
+            lastRequestId: null,
+            observableQuery: null,
+            subscriptions: [],
+        });
+    };
+    QueryManager.prototype.setQuery = function (queryId, updater) {
+        var prev = this.getQuery(queryId);
+        var newInfo = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, prev, updater(prev));
+        this.queries.set(queryId, newInfo);
+    };
+    QueryManager.prototype.invalidate = function (invalidated, queryId, fetchMoreForQueryId) {
+        if (queryId)
+            this.setQuery(queryId, function () { return ({ invalidated: invalidated }); });
+        if (fetchMoreForQueryId) {
+            this.setQuery(fetchMoreForQueryId, function () { return ({ invalidated: invalidated }); });
+        }
+    };
+    QueryManager.prototype.buildOperationForLink = function (document, variables, extraContext) {
+        var cache = this.dataStore.getCache();
+        return {
+            query: cache.transformForLink
+                ? cache.transformForLink(document)
+                : document,
+            variables: variables,
+            operationName: Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["getOperationName"])(document) || undefined,
+            context: tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, extraContext, { cache: cache, getCacheKey: function (obj) {
+                    if (cache.config) {
+                        return cache.config.dataIdFromObject(obj);
+                    }
+                    else {
+                        throw new Error('To use context.getCacheKey, you need to use a cache that has a configurable dataIdFromObject, like apollo-cache-inmemory.');
+                    }
+                }, clientAwareness: this.clientAwareness }),
+        };
+    };
+    return QueryManager;
+}());
+
+//# sourceMappingURL=QueryManager.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js ***!
+  \************************************************************************************/
+/*! exports provided: NetworkStatus, isNetworkRequestInFlight */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NetworkStatus", function() { return NetworkStatus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNetworkRequestInFlight", function() { return isNetworkRequestInFlight; });
+var NetworkStatus;
+(function (NetworkStatus) {
+    NetworkStatus[NetworkStatus["loading"] = 1] = "loading";
+    NetworkStatus[NetworkStatus["setVariables"] = 2] = "setVariables";
+    NetworkStatus[NetworkStatus["fetchMore"] = 3] = "fetchMore";
+    NetworkStatus[NetworkStatus["refetch"] = 4] = "refetch";
+    NetworkStatus[NetworkStatus["poll"] = 6] = "poll";
+    NetworkStatus[NetworkStatus["ready"] = 7] = "ready";
+    NetworkStatus[NetworkStatus["error"] = 8] = "error";
+})(NetworkStatus || (NetworkStatus = {}));
+function isNetworkRequestInFlight(networkStatus) {
+    return networkStatus < 7;
+}
+//# sourceMappingURL=networkStatus.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/core/types.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/core/types.js ***!
+  \****************************************************************************/
+/*! exports provided: FetchType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FetchType", function() { return FetchType; });
+var FetchType;
+(function (FetchType) {
+    FetchType[FetchType["normal"] = 1] = "normal";
+    FetchType[FetchType["refetch"] = 2] = "refetch";
+    FetchType[FetchType["poll"] = 3] = "poll";
+})(FetchType || (FetchType = {}));
+//# sourceMappingURL=types.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/data/mutations.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/data/mutations.js ***!
+  \********************************************************************************/
+/*! exports provided: MutationStore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MutationStore", function() { return MutationStore; });
+var MutationStore = (function () {
+    function MutationStore() {
+        this.store = {};
+    }
+    MutationStore.prototype.getStore = function () {
+        return this.store;
+    };
+    MutationStore.prototype.get = function (mutationId) {
+        return this.store[mutationId];
+    };
+    MutationStore.prototype.initMutation = function (mutationId, mutation, variables) {
+        this.store[mutationId] = {
+            mutation: mutation,
+            variables: variables || {},
+            loading: true,
+            error: null,
+        };
+    };
+    MutationStore.prototype.markMutationError = function (mutationId, error) {
+        var mutation = this.store[mutationId];
+        if (!mutation) {
+            return;
+        }
+        mutation.loading = false;
+        mutation.error = error;
+    };
+    MutationStore.prototype.markMutationResult = function (mutationId) {
+        var mutation = this.store[mutationId];
+        if (!mutation) {
+            return;
+        }
+        mutation.loading = false;
+        mutation.error = null;
+    };
+    MutationStore.prototype.reset = function () {
+        this.store = {};
+    };
+    return MutationStore;
+}());
+
+//# sourceMappingURL=mutations.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/data/queries.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/data/queries.js ***!
+  \******************************************************************************/
+/*! exports provided: QueryStore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QueryStore", function() { return QueryStore; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/networkStatus */ "./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js");
+
+
+
+var QueryStore = (function () {
+    function QueryStore() {
+        this.store = {};
+    }
+    QueryStore.prototype.getStore = function () {
+        return this.store;
+    };
+    QueryStore.prototype.get = function (queryId) {
+        return this.store[queryId];
+    };
+    QueryStore.prototype.initQuery = function (query) {
+        var previousQuery = this.store[query.queryId];
+        if (previousQuery &&
+            previousQuery.document !== query.document &&
+            !Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(previousQuery.document, query.document)) {
+            throw new Error('Internal Error: may not update existing query string in store');
+        }
+        var isSetVariables = false;
+        var previousVariables = null;
+        if (query.storePreviousVariables &&
+            previousQuery &&
+            previousQuery.networkStatus !== _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].loading) {
+            if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_1__["isEqual"])(previousQuery.variables, query.variables)) {
+                isSetVariables = true;
+                previousVariables = previousQuery.variables;
+            }
+        }
+        var networkStatus;
+        if (isSetVariables) {
+            networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].setVariables;
+        }
+        else if (query.isPoll) {
+            networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].poll;
+        }
+        else if (query.isRefetch) {
+            networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].refetch;
+        }
+        else {
+            networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].loading;
+        }
+        var graphQLErrors = [];
+        if (previousQuery && previousQuery.graphQLErrors) {
+            graphQLErrors = previousQuery.graphQLErrors;
+        }
+        this.store[query.queryId] = {
+            document: query.document,
+            variables: query.variables,
+            previousVariables: previousVariables,
+            networkError: null,
+            graphQLErrors: graphQLErrors,
+            networkStatus: networkStatus,
+            metadata: query.metadata,
+        };
+        if (typeof query.fetchMoreForQueryId === 'string' &&
+            this.store[query.fetchMoreForQueryId]) {
+            this.store[query.fetchMoreForQueryId].networkStatus =
+                _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].fetchMore;
+        }
+    };
+    QueryStore.prototype.markQueryResult = function (queryId, result, fetchMoreForQueryId) {
+        if (!this.store || !this.store[queryId])
+            return;
+        this.store[queryId].networkError = null;
+        this.store[queryId].graphQLErrors =
+            result.errors && result.errors.length ? result.errors : [];
+        this.store[queryId].previousVariables = null;
+        this.store[queryId].networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].ready;
+        if (typeof fetchMoreForQueryId === 'string' &&
+            this.store[fetchMoreForQueryId]) {
+            this.store[fetchMoreForQueryId].networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].ready;
+        }
+    };
+    QueryStore.prototype.markQueryError = function (queryId, error, fetchMoreForQueryId) {
+        if (!this.store || !this.store[queryId])
+            return;
+        this.store[queryId].networkError = error;
+        this.store[queryId].networkStatus = _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].error;
+        if (typeof fetchMoreForQueryId === 'string') {
+            this.markQueryResultClient(fetchMoreForQueryId, true);
+        }
+    };
+    QueryStore.prototype.markQueryResultClient = function (queryId, complete) {
+        if (!this.store || !this.store[queryId])
+            return;
+        this.store[queryId].networkError = null;
+        this.store[queryId].previousVariables = null;
+        this.store[queryId].networkStatus = complete
+            ? _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].ready
+            : _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].loading;
+    };
+    QueryStore.prototype.stopQuery = function (queryId) {
+        delete this.store[queryId];
+    };
+    QueryStore.prototype.reset = function (observableQueryIds) {
+        var _this = this;
+        this.store = Object.keys(this.store)
+            .filter(function (queryId) {
+            return observableQueryIds.indexOf(queryId) > -1;
+        })
+            .reduce(function (res, key) {
+            res[key] = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.store[key], { networkStatus: _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].loading });
+            return res;
+        }, {});
+    };
+    return QueryStore;
+}());
+
+//# sourceMappingURL=queries.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/data/store.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/data/store.js ***!
+  \****************************************************************************/
+/*! exports provided: DataStore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataStore", function() { return DataStore; });
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+
+var DataStore = (function () {
+    function DataStore(initialCache) {
+        this.cache = initialCache;
+    }
+    DataStore.prototype.getCache = function () {
+        return this.cache;
+    };
+    DataStore.prototype.markQueryResult = function (result, document, variables, fetchMoreForQueryId, ignoreErrors) {
+        if (ignoreErrors === void 0) { ignoreErrors = false; }
+        var writeWithErrors = !Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["graphQLResultHasError"])(result);
+        if (ignoreErrors && Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["graphQLResultHasError"])(result) && result.data) {
+            writeWithErrors = true;
+        }
+        if (!fetchMoreForQueryId && writeWithErrors) {
+            this.cache.write({
+                result: result.data,
+                dataId: 'ROOT_QUERY',
+                query: document,
+                variables: variables,
+            });
+        }
+    };
+    DataStore.prototype.markSubscriptionResult = function (result, document, variables) {
+        if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["graphQLResultHasError"])(result)) {
+            this.cache.write({
+                result: result.data,
+                dataId: 'ROOT_SUBSCRIPTION',
+                query: document,
+                variables: variables,
+            });
+        }
+    };
+    DataStore.prototype.markMutationInit = function (mutation) {
+        var _this = this;
+        if (mutation.optimisticResponse) {
+            var optimistic_1;
+            if (typeof mutation.optimisticResponse === 'function') {
+                optimistic_1 = mutation.optimisticResponse(mutation.variables);
+            }
+            else {
+                optimistic_1 = mutation.optimisticResponse;
+            }
+            var changeFn_1 = function () {
+                _this.markMutationResult({
+                    mutationId: mutation.mutationId,
+                    result: { data: optimistic_1 },
+                    document: mutation.document,
+                    variables: mutation.variables,
+                    updateQueries: mutation.updateQueries,
+                    update: mutation.update,
+                });
+            };
+            this.cache.recordOptimisticTransaction(function (c) {
+                var orig = _this.cache;
+                _this.cache = c;
+                try {
+                    changeFn_1();
+                }
+                finally {
+                    _this.cache = orig;
+                }
+            }, mutation.mutationId);
+        }
+    };
+    DataStore.prototype.markMutationResult = function (mutation) {
+        var _this = this;
+        if (!Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["graphQLResultHasError"])(mutation.result)) {
+            var cacheWrites_1 = [];
+            cacheWrites_1.push({
+                result: mutation.result.data,
+                dataId: 'ROOT_MUTATION',
+                query: mutation.document,
+                variables: mutation.variables,
+            });
+            if (mutation.updateQueries) {
+                Object.keys(mutation.updateQueries)
+                    .filter(function (id) { return mutation.updateQueries[id]; })
+                    .forEach(function (queryId) {
+                    var _a = mutation.updateQueries[queryId], query = _a.query, updater = _a.updater;
+                    var _b = _this.cache.diff({
+                        query: query.document,
+                        variables: query.variables,
+                        returnPartialData: true,
+                        optimistic: false,
+                    }), currentQueryResult = _b.result, complete = _b.complete;
+                    if (!complete) {
+                        return;
+                    }
+                    var nextQueryResult = Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["tryFunctionOrLogError"])(function () {
+                        return updater(currentQueryResult, {
+                            mutationResult: mutation.result,
+                            queryName: Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["getOperationName"])(query.document) || undefined,
+                            queryVariables: query.variables,
+                        });
+                    });
+                    if (nextQueryResult) {
+                        cacheWrites_1.push({
+                            result: nextQueryResult,
+                            dataId: 'ROOT_QUERY',
+                            query: query.document,
+                            variables: query.variables,
+                        });
+                    }
+                });
+            }
+            this.cache.performTransaction(function (c) {
+                cacheWrites_1.forEach(function (write) { return c.write(write); });
+            });
+            var update_1 = mutation.update;
+            if (update_1) {
+                this.cache.performTransaction(function (c) {
+                    Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_0__["tryFunctionOrLogError"])(function () { return update_1(c, mutation.result); });
+                });
+            }
+        }
+    };
+    DataStore.prototype.markMutationComplete = function (_a) {
+        var mutationId = _a.mutationId, optimisticResponse = _a.optimisticResponse;
+        if (!optimisticResponse)
+            return;
+        this.cache.removeOptimistic(mutationId);
+    };
+    DataStore.prototype.markUpdateQueryResult = function (document, variables, newResult) {
+        this.cache.write({
+            result: newResult,
+            dataId: 'ROOT_QUERY',
+            variables: variables,
+            query: document,
+        });
+    };
+    DataStore.prototype.reset = function () {
+        return this.cache.reset();
+    };
+    return DataStore;
+}());
+
+//# sourceMappingURL=store.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/errors/ApolloError.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/errors/ApolloError.js ***!
+  \************************************************************************************/
+/*! exports provided: isApolloError, ApolloError */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isApolloError", function() { return isApolloError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApolloError", function() { return ApolloError; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+function isApolloError(err) {
+    return err.hasOwnProperty('graphQLErrors');
+}
+var generateErrorMessage = function (err) {
+    var message = '';
+    if (Array.isArray(err.graphQLErrors) && err.graphQLErrors.length !== 0) {
+        err.graphQLErrors.forEach(function (graphQLError) {
+            var errorMessage = graphQLError
+                ? graphQLError.message
+                : 'Error message not found.';
+            message += "GraphQL error: " + errorMessage + "\n";
+        });
+    }
+    if (err.networkError) {
+        message += 'Network error: ' + err.networkError.message + '\n';
+    }
+    message = message.replace(/\n$/, '');
+    return message;
+};
+var ApolloError = (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](ApolloError, _super);
+    function ApolloError(_a) {
+        var graphQLErrors = _a.graphQLErrors, networkError = _a.networkError, errorMessage = _a.errorMessage, extraInfo = _a.extraInfo;
+        var _this = _super.call(this, errorMessage) || this;
+        _this.graphQLErrors = graphQLErrors || [];
+        _this.networkError = networkError || null;
+        if (!errorMessage) {
+            _this.message = generateErrorMessage(_this);
+        }
+        else {
+            _this.message = errorMessage;
+        }
+        _this.extraInfo = extraInfo;
+        _this.__proto__ = ApolloError.prototype;
+        return _this;
+    }
+    return ApolloError;
+}(Error));
+
+//# sourceMappingURL=ApolloError.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/index.js ***!
+  \***********************************************************************/
+/*! exports provided: ObservableQuery, NetworkStatus, isApolloError, ApolloError, ApolloClient, default, FetchType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core_ObservableQuery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core/ObservableQuery */ "./node_modules/apollo-boost/node_modules/apollo-client/core/ObservableQuery.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ObservableQuery", function() { return _core_ObservableQuery__WEBPACK_IMPORTED_MODULE_0__["ObservableQuery"]; });
+
+/* harmony import */ var _core_networkStatus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/networkStatus */ "./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "NetworkStatus", function() { return _core_networkStatus__WEBPACK_IMPORTED_MODULE_1__["NetworkStatus"]; });
+
+/* harmony import */ var _core_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/types */ "./node_modules/apollo-boost/node_modules/apollo-client/core/types.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "FetchType", function() { return _core_types__WEBPACK_IMPORTED_MODULE_2__["FetchType"]; });
+
+/* harmony import */ var _errors_ApolloError__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./errors/ApolloError */ "./node_modules/apollo-boost/node_modules/apollo-client/errors/ApolloError.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isApolloError", function() { return _errors_ApolloError__WEBPACK_IMPORTED_MODULE_3__["isApolloError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ApolloError", function() { return _errors_ApolloError__WEBPACK_IMPORTED_MODULE_3__["ApolloError"]; });
+
+/* harmony import */ var _ApolloClient__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ApolloClient */ "./node_modules/apollo-boost/node_modules/apollo-client/ApolloClient.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "ApolloClient", function() { return _ApolloClient__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (_ApolloClient__WEBPACK_IMPORTED_MODULE_4__["default"]);
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/scheduler/scheduler.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/scheduler/scheduler.js ***!
+  \*************************************************************************************/
+/*! exports provided: QueryScheduler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QueryScheduler", function() { return QueryScheduler; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _core_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/types */ "./node_modules/apollo-boost/node_modules/apollo-client/core/types.js");
+/* harmony import */ var _core_ObservableQuery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/ObservableQuery */ "./node_modules/apollo-boost/node_modules/apollo-client/core/ObservableQuery.js");
+/* harmony import */ var _core_networkStatus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../core/networkStatus */ "./node_modules/apollo-boost/node_modules/apollo-client/core/networkStatus.js");
+
+
+
+
+var QueryScheduler = (function () {
+    function QueryScheduler(_a) {
+        var queryManager = _a.queryManager, ssrMode = _a.ssrMode;
+        this.inFlightQueries = {};
+        this.registeredQueries = {};
+        this.intervalQueries = {};
+        this.pollingTimers = {};
+        this.ssrMode = false;
+        this.queryManager = queryManager;
+        this.ssrMode = ssrMode || false;
+    }
+    QueryScheduler.prototype.stop = function () {
+        var _this = this;
+        Object.keys(this.registeredQueries).forEach(function (queryId) {
+            _this.stopPollingQuery(queryId);
+        });
+        Object.keys(this.intervalQueries).forEach(function (interval) {
+            _this.fetchQueriesOnInterval(+interval);
+        });
+    };
+    QueryScheduler.prototype.checkInFlight = function (queryId) {
+        var query = this.queryManager.queryStore.get(queryId);
+        return (query &&
+            query.networkStatus !== _core_networkStatus__WEBPACK_IMPORTED_MODULE_3__["NetworkStatus"].ready &&
+            query.networkStatus !== _core_networkStatus__WEBPACK_IMPORTED_MODULE_3__["NetworkStatus"].error);
+    };
+    QueryScheduler.prototype.fetchQuery = function (queryId, options, fetchType) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.queryManager
+                .fetchQuery(queryId, options, fetchType)
+                .then(function (result) {
+                resolve(result);
+            })
+                .catch(function (error) {
+                reject(error);
+            });
+        });
+    };
+    QueryScheduler.prototype.startPollingQuery = function (options, queryId, listener) {
+        if (!options.pollInterval) {
+            throw new Error('Attempted to start a polling query without a polling interval.');
+        }
+        if (this.ssrMode)
+            return queryId;
+        this.registeredQueries[queryId] = options;
+        if (listener) {
+            this.queryManager.addQueryListener(queryId, listener);
+        }
+        this.addQueryOnInterval(queryId, options);
+        return queryId;
+    };
+    QueryScheduler.prototype.stopPollingQuery = function (queryId) {
+        delete this.registeredQueries[queryId];
+    };
+    QueryScheduler.prototype.fetchQueriesOnInterval = function (interval) {
+        var _this = this;
+        this.intervalQueries[interval] = this.intervalQueries[interval].filter(function (queryId) {
+            if (!(_this.registeredQueries.hasOwnProperty(queryId) &&
+                _this.registeredQueries[queryId].pollInterval === interval)) {
+                return false;
+            }
+            if (_this.checkInFlight(queryId)) {
+                return true;
+            }
+            var queryOptions = _this.registeredQueries[queryId];
+            var pollingOptions = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, queryOptions);
+            pollingOptions.fetchPolicy = 'network-only';
+            _this.fetchQuery(queryId, pollingOptions, _core_types__WEBPACK_IMPORTED_MODULE_1__["FetchType"].poll).catch(function () { });
+            return true;
+        });
+        if (this.intervalQueries[interval].length === 0) {
+            clearInterval(this.pollingTimers[interval]);
+            delete this.intervalQueries[interval];
+        }
+    };
+    QueryScheduler.prototype.addQueryOnInterval = function (queryId, queryOptions) {
+        var _this = this;
+        var interval = queryOptions.pollInterval;
+        if (!interval) {
+            throw new Error("A poll interval is required to start polling query with id '" + queryId + "'.");
+        }
+        if (this.intervalQueries.hasOwnProperty(interval.toString()) &&
+            this.intervalQueries[interval].length > 0) {
+            this.intervalQueries[interval].push(queryId);
+        }
+        else {
+            this.intervalQueries[interval] = [queryId];
+            this.pollingTimers[interval] = setInterval(function () {
+                _this.fetchQueriesOnInterval(interval);
+            }, interval);
+        }
+    };
+    QueryScheduler.prototype.registerPollingQuery = function (queryOptions) {
+        if (!queryOptions.pollInterval) {
+            throw new Error('Attempted to register a non-polling query with the scheduler.');
+        }
+        return new _core_ObservableQuery__WEBPACK_IMPORTED_MODULE_2__["ObservableQuery"]({
+            scheduler: this,
+            options: queryOptions,
+        });
+    };
+    return QueryScheduler;
+}());
+
+//# sourceMappingURL=scheduler.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/util/Observable.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/util/Observable.js ***!
+  \*********************************************************************************/
+/*! exports provided: Observable */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Observable", function() { return Observable; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/index.js");
+/* harmony import */ var symbol_observable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! symbol-observable */ "./node_modules/symbol-observable/es/index.js");
+
+
+
+var Observable = (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](Observable, _super);
+    function Observable() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Observable.prototype[symbol_observable__WEBPACK_IMPORTED_MODULE_2__["default"]] = function () {
+        return this;
+    };
+    Observable.prototype['@@observable'] = function () {
+        return this;
+    };
+    return Observable;
+}(apollo_link__WEBPACK_IMPORTED_MODULE_1__["Observable"]));
+
+//# sourceMappingURL=Observable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-boost/node_modules/apollo-client/version.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/apollo-boost/node_modules/apollo-client/version.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+exports.version = "2.4.12"
 
 /***/ }),
 
@@ -2779,7 +4871,7 @@ var justTypenameQuery = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/index.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js");
 /* harmony import */ var _core_QueryManager__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./core/QueryManager */ "./node_modules/apollo-client/core/QueryManager.js");
 /* harmony import */ var _data_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./data/store */ "./node_modules/apollo-client/data/store.js");
 /* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./version */ "./node_modules/apollo-client/version.js");
@@ -3030,7 +5122,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasError", function() { return hasError; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ObservableQuery", function() { return ObservableQuery; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js");
 /* harmony import */ var _networkStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./networkStatus */ "./node_modules/apollo-client/core/networkStatus.js");
 /* harmony import */ var _util_Observable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../util/Observable */ "./node_modules/apollo-client/util/Observable.js");
 /* harmony import */ var _errors_ApolloError__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../errors/ApolloError */ "./node_modules/apollo-client/errors/ApolloError.js");
@@ -3090,9 +5182,20 @@ var ObservableQuery = (function (_super) {
         });
     };
     ObservableQuery.prototype.currentResult = function () {
+        var result = this.getCurrentResult();
+        if (result.data === undefined) {
+            result.data = {};
+        }
+        return result;
+    };
+    ObservableQuery.prototype.getCurrentResult = function () {
         if (this.isTornDown) {
             return {
-                data: this.lastError ? {} : this.lastResult ? this.lastResult.data : {},
+                data: this.lastError
+                    ? undefined
+                    : this.lastResult
+                        ? this.lastResult.data
+                        : undefined,
                 error: this.lastError,
                 loading: false,
                 networkStatus: _networkStatus__WEBPACK_IMPORTED_MODULE_2__["NetworkStatus"].error,
@@ -3101,7 +5204,7 @@ var ObservableQuery = (function (_super) {
         var queryStoreValue = this.queryManager.queryStore.get(this.queryId);
         if (hasError(queryStoreValue, this.options.errorPolicy)) {
             return {
-                data: {},
+                data: undefined,
                 loading: false,
                 networkStatus: queryStoreValue.networkStatus,
                 error: new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_4__["ApolloError"]({
@@ -3390,7 +5493,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-link */ "./node_modules/apollo-link/lib/index.js");
 /* harmony import */ var apollo_link_dedup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! apollo-link-dedup */ "./node_modules/apollo-link-dedup/lib/index.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js");
 /* harmony import */ var _scheduler_scheduler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../scheduler/scheduler */ "./node_modules/apollo-client/scheduler/scheduler.js");
 /* harmony import */ var _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../errors/ApolloError */ "./node_modules/apollo-client/errors/ApolloError.js");
 /* harmony import */ var _util_Observable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util/Observable */ "./node_modules/apollo-client/util/Observable.js");
@@ -3420,7 +5523,7 @@ var QueryManager = (function () {
         this.clientAwareness = {};
         this.idCounter = 1;
         this.queries = new Map();
-        this.fetchQueryRejectFns = new Set();
+        this.fetchQueryRejectFns = new Map();
         this.queryIdsByName = {};
         this.link = link;
         this.deduplicator = apollo_link__WEBPACK_IMPORTED_MODULE_1__["ApolloLink"].from([new apollo_link_dedup__WEBPACK_IMPORTED_MODULE_2__["DedupLink"](), link]);
@@ -3514,7 +5617,7 @@ var QueryManager = (function () {
                     refetchQueryPromises.push(_this.query(queryOptions));
                 }
                 return Promise.all(awaitRefetchQueries ? refetchQueryPromises : []).then(function () {
-                    _this.setQuery(mutationId, function () { return ({ document: undefined }); });
+                    _this.setQuery(mutationId, function () { return ({ document: null }); });
                     if (errorPolicy === 'ignore' &&
                         storeResult &&
                         Object(apollo_utilities__WEBPACK_IMPORTED_MODULE_3__["graphQLResultHasError"])(storeResult)) {
@@ -3551,7 +5654,7 @@ var QueryManager = (function () {
                         optimisticResponse: optimisticResponse,
                     });
                     _this.broadcastQueries();
-                    _this.setQuery(mutationId, function () { return ({ document: undefined }); });
+                    _this.setQuery(mutationId, function () { return ({ document: null }); });
                     reject(new _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__["ApolloError"]({
                         networkError: err,
                     }));
@@ -3812,11 +5915,14 @@ var QueryManager = (function () {
             throw new Error('pollInterval option only supported on watchQuery.');
         }
         return new Promise(function (resolve, reject) {
-            _this.fetchQueryRejectFns.add(reject);
-            _this.watchQuery(options, false)
+            var watchedQuery = _this.watchQuery(options, false);
+            _this.fetchQueryRejectFns.set("query:" + watchedQuery.queryId, reject);
+            watchedQuery
                 .result()
                 .then(resolve, reject)
-                .then(function () { return _this.fetchQueryRejectFns.delete(reject); });
+                .then(function () {
+                return _this.fetchQueryRejectFns.delete("query:" + watchedQuery.queryId);
+            });
         });
     };
     QueryManager.prototype.generateQueryId = function () {
@@ -3834,7 +5940,7 @@ var QueryManager = (function () {
             var _b = _a.listeners, listeners = _b === void 0 ? [] : _b;
             return ({
                 listeners: listeners.concat([listener]),
-                invalidate: false,
+                invalidated: false,
             });
         });
     };
@@ -3962,7 +6068,7 @@ var QueryManager = (function () {
                                 obs.complete();
                             }
                         });
-                    }
+                    },
                 };
                 var operation = _this.buildOperationForLink(transformedDoc, variables);
                 sub = Object(apollo_link__WEBPACK_IMPORTED_MODULE_1__["execute"])(_this.link, operation).subscribe(handler);
@@ -3981,6 +6087,8 @@ var QueryManager = (function () {
     };
     QueryManager.prototype.removeQuery = function (queryId) {
         var subscriptions = this.getQuery(queryId).subscriptions;
+        this.fetchQueryRejectFns.delete("query:" + queryId);
+        this.fetchQueryRejectFns.delete("fetchRequest:" + queryId);
         subscriptions.forEach(function (x) { return x.unsubscribe(); });
         this.queries.delete(queryId);
     };
@@ -3999,11 +6107,11 @@ var QueryManager = (function () {
                     variables: variables,
                     previousResult: lastResult ? lastResult.data : undefined,
                     optimistic: optimistic,
-                });
+                }) || undefined;
                 return { data: data, partial: false };
             }
             catch (e) {
-                return { data: {}, partial: true };
+                return { data: undefined, partial: true };
             }
         }
     };
@@ -4065,9 +6173,8 @@ var QueryManager = (function () {
         var operation = this.buildOperationForLink(document, variables, tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, context, { forceFetch: !this.queryDeduplication }));
         var resultFromStore;
         var errorsFromStore;
-        var rejectFetchPromise;
         return new Promise(function (resolve, reject) {
-            _this.fetchQueryRejectFns.add(rejectFetchPromise = reject);
+            _this.fetchQueryRejectFns.set("fetchRequest:" + queryId, reject);
             var subscription = Object(apollo_link__WEBPACK_IMPORTED_MODULE_1__["execute"])(_this.deduplicator, operation).subscribe({
                 next: function (result) {
                     var lastRequestId = _this.getQuery(queryId).lastRequestId;
@@ -4114,7 +6221,7 @@ var QueryManager = (function () {
                     }
                 },
                 error: function (error) {
-                    _this.fetchQueryRejectFns.delete(reject);
+                    _this.fetchQueryRejectFns.delete("fetchRequest:" + queryId);
                     _this.setQuery(queryId, function (_a) {
                         var subscriptions = _a.subscriptions;
                         return ({
@@ -4124,7 +6231,7 @@ var QueryManager = (function () {
                     reject(error);
                 },
                 complete: function () {
-                    _this.fetchQueryRejectFns.delete(reject);
+                    _this.fetchQueryRejectFns.delete("fetchRequest:" + queryId);
                     _this.setQuery(queryId, function (_a) {
                         var subscriptions = _a.subscriptions;
                         return ({
@@ -4147,7 +6254,7 @@ var QueryManager = (function () {
                 });
             });
         }).catch(function (error) {
-            _this.fetchQueryRejectFns.delete(rejectFetchPromise);
+            _this.fetchQueryRejectFns.delete("fetchRequest:" + queryId);
             throw error;
         });
     };
@@ -4327,7 +6434,7 @@ var MutationStore = (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QueryStore", function() { return QueryStore; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js");
 /* harmony import */ var _core_networkStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/networkStatus */ "./node_modules/apollo-client/core/networkStatus.js");
 
 
@@ -4453,7 +6560,7 @@ var QueryStore = (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DataStore", function() { return DataStore; });
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js");
 
 var DataStore = (function () {
     function DataStore(initialCache) {
@@ -4688,6 +6795,1243 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/directives.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/directives.js ***!
+  \************************************************************************************/
+/*! exports provided: getDirectiveInfoFromField, shouldInclude, getDirectiveNames, hasDirectives */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectiveInfoFromField", function() { return getDirectiveInfoFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shouldInclude", function() { return shouldInclude; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectiveNames", function() { return getDirectiveNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasDirectives", function() { return hasDirectives; });
+/* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! graphql/language/visitor */ "./node_modules/graphql/language/visitor.mjs");
+/* harmony import */ var _storeUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storeUtils */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/storeUtils.js");
+
+
+function getDirectiveInfoFromField(field, variables) {
+    if (field.directives && field.directives.length) {
+        var directiveObj_1 = {};
+        field.directives.forEach(function (directive) {
+            directiveObj_1[directive.name.value] = Object(_storeUtils__WEBPACK_IMPORTED_MODULE_1__["argumentsObjectFromField"])(directive, variables);
+        });
+        return directiveObj_1;
+    }
+    return null;
+}
+function shouldInclude(selection, variables) {
+    if (variables === void 0) { variables = {}; }
+    if (!selection.directives) {
+        return true;
+    }
+    var res = true;
+    selection.directives.forEach(function (directive) {
+        if (directive.name.value !== 'skip' && directive.name.value !== 'include') {
+            return;
+        }
+        var directiveArguments = directive.arguments || [];
+        var directiveName = directive.name.value;
+        if (directiveArguments.length !== 1) {
+            throw new Error("Incorrect number of arguments for the @" + directiveName + " directive.");
+        }
+        var ifArgument = directiveArguments[0];
+        if (!ifArgument.name || ifArgument.name.value !== 'if') {
+            throw new Error("Invalid argument for the @" + directiveName + " directive.");
+        }
+        var ifValue = directiveArguments[0].value;
+        var evaledValue = false;
+        if (!ifValue || ifValue.kind !== 'BooleanValue') {
+            if (ifValue.kind !== 'Variable') {
+                throw new Error("Argument for the @" + directiveName + " directive must be a variable or a boolean value.");
+            }
+            else {
+                evaledValue = variables[ifValue.name.value];
+                if (evaledValue === undefined) {
+                    throw new Error("Invalid variable referenced in @" + directiveName + " directive.");
+                }
+            }
+        }
+        else {
+            evaledValue = ifValue.value;
+        }
+        if (directiveName === 'skip') {
+            evaledValue = !evaledValue;
+        }
+        if (!evaledValue) {
+            res = false;
+        }
+    });
+    return res;
+}
+function getDirectiveNames(doc) {
+    var names = [];
+    Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__["visit"])(doc, {
+        Directive: function (node) {
+            names.push(node.name.value);
+        },
+    });
+    return names;
+}
+function hasDirectives(names, doc) {
+    return getDirectiveNames(doc).some(function (name) { return names.indexOf(name) > -1; });
+}
+//# sourceMappingURL=directives.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/fragments.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/fragments.js ***!
+  \***********************************************************************************/
+/*! exports provided: getFragmentQueryDocument */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentQueryDocument", function() { return getFragmentQueryDocument; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+function getFragmentQueryDocument(document, fragmentName) {
+    var actualFragmentName = fragmentName;
+    var fragments = [];
+    document.definitions.forEach(function (definition) {
+        if (definition.kind === 'OperationDefinition') {
+            throw new Error("Found a " + definition.operation + " operation" + (definition.name ? " named '" + definition.name.value + "'" : '') + ". " +
+                'No operations are allowed when using a fragment as a query. Only fragments are allowed.');
+        }
+        if (definition.kind === 'FragmentDefinition') {
+            fragments.push(definition);
+        }
+    });
+    if (typeof actualFragmentName === 'undefined') {
+        if (fragments.length !== 1) {
+            throw new Error("Found " + fragments.length + " fragments. `fragmentName` must be provided when there is not exactly 1 fragment.");
+        }
+        actualFragmentName = fragments[0].name.value;
+    }
+    var query = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, document, { definitions: [
+            {
+                kind: 'OperationDefinition',
+                operation: 'query',
+                selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                        {
+                            kind: 'FragmentSpread',
+                            name: {
+                                kind: 'Name',
+                                value: actualFragmentName,
+                            },
+                        },
+                    ],
+                },
+            }
+        ].concat(document.definitions) });
+    return query;
+}
+//# sourceMappingURL=fragments.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/getFromAST.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/getFromAST.js ***!
+  \************************************************************************************/
+/*! exports provided: getMutationDefinition, checkDocument, getOperationDefinition, getOperationDefinitionOrDie, getOperationName, getFragmentDefinitions, getQueryDefinition, getFragmentDefinition, getMainDefinition, createFragmentMap, getDefaultValues, variablesInOperation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMutationDefinition", function() { return getMutationDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "checkDocument", function() { return checkDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinition", function() { return getOperationDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinitionOrDie", function() { return getOperationDefinitionOrDie; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getOperationName", function() { return getOperationName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinitions", function() { return getFragmentDefinitions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getQueryDefinition", function() { return getQueryDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinition", function() { return getFragmentDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMainDefinition", function() { return getMainDefinition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFragmentMap", function() { return createFragmentMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDefaultValues", function() { return getDefaultValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "variablesInOperation", function() { return variablesInOperation; });
+/* harmony import */ var _util_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util/assign */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/assign.js");
+/* harmony import */ var _storeUtils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storeUtils */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/storeUtils.js");
+
+
+function getMutationDefinition(doc) {
+    checkDocument(doc);
+    var mutationDef = doc.definitions.filter(function (definition) {
+        return definition.kind === 'OperationDefinition' &&
+            definition.operation === 'mutation';
+    })[0];
+    if (!mutationDef) {
+        throw new Error('Must contain a mutation definition.');
+    }
+    return mutationDef;
+}
+function checkDocument(doc) {
+    if (doc.kind !== 'Document') {
+        throw new Error("Expecting a parsed GraphQL document. Perhaps you need to wrap the query string in a \"gql\" tag? http://docs.apollostack.com/apollo-client/core.html#gql");
+    }
+    var operations = doc.definitions
+        .filter(function (d) { return d.kind !== 'FragmentDefinition'; })
+        .map(function (definition) {
+        if (definition.kind !== 'OperationDefinition') {
+            throw new Error("Schema type definitions not allowed in queries. Found: \"" + definition.kind + "\"");
+        }
+        return definition;
+    });
+    if (operations.length > 1) {
+        throw new Error("Ambiguous GraphQL document: contains " + operations.length + " operations");
+    }
+    return doc;
+}
+function getOperationDefinition(doc) {
+    checkDocument(doc);
+    return doc.definitions.filter(function (definition) { return definition.kind === 'OperationDefinition'; })[0];
+}
+function getOperationDefinitionOrDie(document) {
+    var def = getOperationDefinition(document);
+    if (!def) {
+        throw new Error("GraphQL document is missing an operation");
+    }
+    return def;
+}
+function getOperationName(doc) {
+    return (doc.definitions
+        .filter(function (definition) {
+        return definition.kind === 'OperationDefinition' && definition.name;
+    })
+        .map(function (x) { return x.name.value; })[0] || null);
+}
+function getFragmentDefinitions(doc) {
+    return doc.definitions.filter(function (definition) { return definition.kind === 'FragmentDefinition'; });
+}
+function getQueryDefinition(doc) {
+    var queryDef = getOperationDefinition(doc);
+    if (!queryDef || queryDef.operation !== 'query') {
+        throw new Error('Must contain a query definition.');
+    }
+    return queryDef;
+}
+function getFragmentDefinition(doc) {
+    if (doc.kind !== 'Document') {
+        throw new Error("Expecting a parsed GraphQL document. Perhaps you need to wrap the query string in a \"gql\" tag? http://docs.apollostack.com/apollo-client/core.html#gql");
+    }
+    if (doc.definitions.length > 1) {
+        throw new Error('Fragment must have exactly one definition.');
+    }
+    var fragmentDef = doc.definitions[0];
+    if (fragmentDef.kind !== 'FragmentDefinition') {
+        throw new Error('Must be a fragment definition.');
+    }
+    return fragmentDef;
+}
+function getMainDefinition(queryDoc) {
+    checkDocument(queryDoc);
+    var fragmentDefinition;
+    for (var _i = 0, _a = queryDoc.definitions; _i < _a.length; _i++) {
+        var definition = _a[_i];
+        if (definition.kind === 'OperationDefinition') {
+            var operation = definition.operation;
+            if (operation === 'query' ||
+                operation === 'mutation' ||
+                operation === 'subscription') {
+                return definition;
+            }
+        }
+        if (definition.kind === 'FragmentDefinition' && !fragmentDefinition) {
+            fragmentDefinition = definition;
+        }
+    }
+    if (fragmentDefinition) {
+        return fragmentDefinition;
+    }
+    throw new Error('Expected a parsed GraphQL query with a query, mutation, subscription, or a fragment.');
+}
+function createFragmentMap(fragments) {
+    if (fragments === void 0) { fragments = []; }
+    var symTable = {};
+    fragments.forEach(function (fragment) {
+        symTable[fragment.name.value] = fragment;
+    });
+    return symTable;
+}
+function getDefaultValues(definition) {
+    if (definition &&
+        definition.variableDefinitions &&
+        definition.variableDefinitions.length) {
+        var defaultValues = definition.variableDefinitions
+            .filter(function (_a) {
+            var defaultValue = _a.defaultValue;
+            return defaultValue;
+        })
+            .map(function (_a) {
+            var variable = _a.variable, defaultValue = _a.defaultValue;
+            var defaultValueObj = {};
+            Object(_storeUtils__WEBPACK_IMPORTED_MODULE_1__["valueToObjectRepresentation"])(defaultValueObj, variable.name, defaultValue);
+            return defaultValueObj;
+        });
+        return _util_assign__WEBPACK_IMPORTED_MODULE_0__["assign"].apply(void 0, [{}].concat(defaultValues));
+    }
+    return {};
+}
+function variablesInOperation(operation) {
+    var names = new Set();
+    if (operation.variableDefinitions) {
+        for (var _i = 0, _a = operation.variableDefinitions; _i < _a.length; _i++) {
+            var definition = _a[_i];
+            names.add(definition.variable.name.value);
+        }
+    }
+    return names;
+}
+//# sourceMappingURL=getFromAST.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/index.js ***!
+  \*******************************************************************************/
+/*! exports provided: getDirectiveInfoFromField, shouldInclude, getDirectiveNames, hasDirectives, getFragmentQueryDocument, getMutationDefinition, checkDocument, getOperationDefinition, getOperationDefinitionOrDie, getOperationName, getFragmentDefinitions, getQueryDefinition, getFragmentDefinition, getMainDefinition, createFragmentMap, getDefaultValues, variablesInOperation, removeDirectivesFromDocument, addTypenameToDocument, removeConnectionDirectiveFromDocument, getDirectivesFromDocument, removeArgumentsFromDocument, removeFragmentSpreadFromDocument, isScalarValue, isNumberValue, valueToObjectRepresentation, storeKeyNameFromField, getStoreKeyName, argumentsObjectFromField, resultKeyNameFromField, isField, isInlineFragment, isIdValue, toIdValue, isJsonValue, valueFromNode, assign, cloneDeep, getEnv, isEnv, isProduction, isDevelopment, isTest, tryFunctionOrLogError, graphQLResultHasError, isEqual, maybeDeepFreeze, warnOnceInDevelopment, stripSymbols */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _directives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./directives */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/directives.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDirectiveInfoFromField", function() { return _directives__WEBPACK_IMPORTED_MODULE_0__["getDirectiveInfoFromField"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "shouldInclude", function() { return _directives__WEBPACK_IMPORTED_MODULE_0__["shouldInclude"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDirectiveNames", function() { return _directives__WEBPACK_IMPORTED_MODULE_0__["getDirectiveNames"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "hasDirectives", function() { return _directives__WEBPACK_IMPORTED_MODULE_0__["hasDirectives"]; });
+
+/* harmony import */ var _fragments__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fragments */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/fragments.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getFragmentQueryDocument", function() { return _fragments__WEBPACK_IMPORTED_MODULE_1__["getFragmentQueryDocument"]; });
+
+/* harmony import */ var _getFromAST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getFromAST */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/getFromAST.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getMutationDefinition", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getMutationDefinition"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "checkDocument", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["checkDocument"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinition", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getOperationDefinition"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getOperationDefinitionOrDie", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getOperationDefinitionOrDie"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getOperationName", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getOperationName"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinitions", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getFragmentDefinitions"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getQueryDefinition", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getQueryDefinition"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getFragmentDefinition", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getFragmentDefinition"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getMainDefinition", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getMainDefinition"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "createFragmentMap", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["createFragmentMap"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDefaultValues", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["getDefaultValues"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "variablesInOperation", function() { return _getFromAST__WEBPACK_IMPORTED_MODULE_2__["variablesInOperation"]; });
+
+/* harmony import */ var _transform__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./transform */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/transform.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeDirectivesFromDocument", function() { return _transform__WEBPACK_IMPORTED_MODULE_3__["removeDirectivesFromDocument"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "addTypenameToDocument", function() { return _transform__WEBPACK_IMPORTED_MODULE_3__["addTypenameToDocument"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeConnectionDirectiveFromDocument", function() { return _transform__WEBPACK_IMPORTED_MODULE_3__["removeConnectionDirectiveFromDocument"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getDirectivesFromDocument", function() { return _transform__WEBPACK_IMPORTED_MODULE_3__["getDirectivesFromDocument"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeArgumentsFromDocument", function() { return _transform__WEBPACK_IMPORTED_MODULE_3__["removeArgumentsFromDocument"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "removeFragmentSpreadFromDocument", function() { return _transform__WEBPACK_IMPORTED_MODULE_3__["removeFragmentSpreadFromDocument"]; });
+
+/* harmony import */ var _storeUtils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./storeUtils */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/storeUtils.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isScalarValue", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["isScalarValue"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isNumberValue", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["isNumberValue"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "valueToObjectRepresentation", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["valueToObjectRepresentation"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "storeKeyNameFromField", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["storeKeyNameFromField"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getStoreKeyName", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["getStoreKeyName"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "argumentsObjectFromField", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["argumentsObjectFromField"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "resultKeyNameFromField", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["resultKeyNameFromField"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isField", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["isField"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isInlineFragment", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["isInlineFragment"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isIdValue", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["isIdValue"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "toIdValue", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["toIdValue"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isJsonValue", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["isJsonValue"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "valueFromNode", function() { return _storeUtils__WEBPACK_IMPORTED_MODULE_4__["valueFromNode"]; });
+
+/* harmony import */ var _util_assign__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util/assign */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/assign.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "assign", function() { return _util_assign__WEBPACK_IMPORTED_MODULE_5__["assign"]; });
+
+/* harmony import */ var _util_cloneDeep__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util/cloneDeep */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/cloneDeep.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "cloneDeep", function() { return _util_cloneDeep__WEBPACK_IMPORTED_MODULE_6__["cloneDeep"]; });
+
+/* harmony import */ var _util_environment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./util/environment */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/environment.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "getEnv", function() { return _util_environment__WEBPACK_IMPORTED_MODULE_7__["getEnv"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isEnv", function() { return _util_environment__WEBPACK_IMPORTED_MODULE_7__["isEnv"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isProduction", function() { return _util_environment__WEBPACK_IMPORTED_MODULE_7__["isProduction"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isDevelopment", function() { return _util_environment__WEBPACK_IMPORTED_MODULE_7__["isDevelopment"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isTest", function() { return _util_environment__WEBPACK_IMPORTED_MODULE_7__["isTest"]; });
+
+/* harmony import */ var _util_errorHandling__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./util/errorHandling */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/errorHandling.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "tryFunctionOrLogError", function() { return _util_errorHandling__WEBPACK_IMPORTED_MODULE_8__["tryFunctionOrLogError"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "graphQLResultHasError", function() { return _util_errorHandling__WEBPACK_IMPORTED_MODULE_8__["graphQLResultHasError"]; });
+
+/* harmony import */ var _util_isEqual__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./util/isEqual */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/isEqual.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "isEqual", function() { return _util_isEqual__WEBPACK_IMPORTED_MODULE_9__["isEqual"]; });
+
+/* harmony import */ var _util_maybeDeepFreeze__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./util/maybeDeepFreeze */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/maybeDeepFreeze.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "maybeDeepFreeze", function() { return _util_maybeDeepFreeze__WEBPACK_IMPORTED_MODULE_10__["maybeDeepFreeze"]; });
+
+/* harmony import */ var _util_warnOnce__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./util/warnOnce */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/warnOnce.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "warnOnceInDevelopment", function() { return _util_warnOnce__WEBPACK_IMPORTED_MODULE_11__["warnOnceInDevelopment"]; });
+
+/* harmony import */ var _util_stripSymbols__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./util/stripSymbols */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/stripSymbols.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "stripSymbols", function() { return _util_stripSymbols__WEBPACK_IMPORTED_MODULE_12__["stripSymbols"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/storeUtils.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/storeUtils.js ***!
+  \************************************************************************************/
+/*! exports provided: isScalarValue, isNumberValue, valueToObjectRepresentation, storeKeyNameFromField, getStoreKeyName, argumentsObjectFromField, resultKeyNameFromField, isField, isInlineFragment, isIdValue, toIdValue, isJsonValue, valueFromNode */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isScalarValue", function() { return isScalarValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNumberValue", function() { return isNumberValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "valueToObjectRepresentation", function() { return valueToObjectRepresentation; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "storeKeyNameFromField", function() { return storeKeyNameFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStoreKeyName", function() { return getStoreKeyName; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "argumentsObjectFromField", function() { return argumentsObjectFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resultKeyNameFromField", function() { return resultKeyNameFromField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isField", function() { return isField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isInlineFragment", function() { return isInlineFragment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isIdValue", function() { return isIdValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "toIdValue", function() { return toIdValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isJsonValue", function() { return isJsonValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "valueFromNode", function() { return valueFromNode; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fast-json-stable-stringify */ "./node_modules/fast-json-stable-stringify/index.js");
+/* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function isScalarValue(value) {
+    return ['StringValue', 'BooleanValue', 'EnumValue'].indexOf(value.kind) > -1;
+}
+function isNumberValue(value) {
+    return ['IntValue', 'FloatValue'].indexOf(value.kind) > -1;
+}
+function isStringValue(value) {
+    return value.kind === 'StringValue';
+}
+function isBooleanValue(value) {
+    return value.kind === 'BooleanValue';
+}
+function isIntValue(value) {
+    return value.kind === 'IntValue';
+}
+function isFloatValue(value) {
+    return value.kind === 'FloatValue';
+}
+function isVariable(value) {
+    return value.kind === 'Variable';
+}
+function isObjectValue(value) {
+    return value.kind === 'ObjectValue';
+}
+function isListValue(value) {
+    return value.kind === 'ListValue';
+}
+function isEnumValue(value) {
+    return value.kind === 'EnumValue';
+}
+function isNullValue(value) {
+    return value.kind === 'NullValue';
+}
+function valueToObjectRepresentation(argObj, name, value, variables) {
+    if (isIntValue(value) || isFloatValue(value)) {
+        argObj[name.value] = Number(value.value);
+    }
+    else if (isBooleanValue(value) || isStringValue(value)) {
+        argObj[name.value] = value.value;
+    }
+    else if (isObjectValue(value)) {
+        var nestedArgObj_1 = {};
+        value.fields.map(function (obj) {
+            return valueToObjectRepresentation(nestedArgObj_1, obj.name, obj.value, variables);
+        });
+        argObj[name.value] = nestedArgObj_1;
+    }
+    else if (isVariable(value)) {
+        var variableValue = (variables || {})[value.name.value];
+        argObj[name.value] = variableValue;
+    }
+    else if (isListValue(value)) {
+        argObj[name.value] = value.values.map(function (listValue) {
+            var nestedArgArrayObj = {};
+            valueToObjectRepresentation(nestedArgArrayObj, name, listValue, variables);
+            return nestedArgArrayObj[name.value];
+        });
+    }
+    else if (isEnumValue(value)) {
+        argObj[name.value] = value.value;
+    }
+    else if (isNullValue(value)) {
+        argObj[name.value] = null;
+    }
+    else {
+        throw new Error("The inline argument \"" + name.value + "\" of kind \"" + value.kind + "\"" +
+            'is not supported. Use variables instead of inline arguments to ' +
+            'overcome this limitation.');
+    }
+}
+function storeKeyNameFromField(field, variables) {
+    var directivesObj = null;
+    if (field.directives) {
+        directivesObj = {};
+        field.directives.forEach(function (directive) {
+            directivesObj[directive.name.value] = {};
+            if (directive.arguments) {
+                directive.arguments.forEach(function (_a) {
+                    var name = _a.name, value = _a.value;
+                    return valueToObjectRepresentation(directivesObj[directive.name.value], name, value, variables);
+                });
+            }
+        });
+    }
+    var argObj = null;
+    if (field.arguments && field.arguments.length) {
+        argObj = {};
+        field.arguments.forEach(function (_a) {
+            var name = _a.name, value = _a.value;
+            return valueToObjectRepresentation(argObj, name, value, variables);
+        });
+    }
+    return getStoreKeyName(field.name.value, argObj, directivesObj);
+}
+var KNOWN_DIRECTIVES = [
+    'connection',
+    'include',
+    'skip',
+    'client',
+    'rest',
+    'export',
+];
+function getStoreKeyName(fieldName, args, directives) {
+    if (directives &&
+        directives['connection'] &&
+        directives['connection']['key']) {
+        if (directives['connection']['filter'] &&
+            directives['connection']['filter'].length > 0) {
+            var filterKeys = directives['connection']['filter']
+                ? directives['connection']['filter']
+                : [];
+            filterKeys.sort();
+            var queryArgs_1 = args;
+            var filteredArgs_1 = {};
+            filterKeys.forEach(function (key) {
+                filteredArgs_1[key] = queryArgs_1[key];
+            });
+            return directives['connection']['key'] + "(" + JSON.stringify(filteredArgs_1) + ")";
+        }
+        else {
+            return directives['connection']['key'];
+        }
+    }
+    var completeFieldName = fieldName;
+    if (args) {
+        var stringifiedArgs = fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_1___default()(args);
+        completeFieldName += "(" + stringifiedArgs + ")";
+    }
+    if (directives) {
+        Object.keys(directives).forEach(function (key) {
+            if (KNOWN_DIRECTIVES.indexOf(key) !== -1)
+                return;
+            if (directives[key] && Object.keys(directives[key]).length) {
+                completeFieldName += "@" + key + "(" + JSON.stringify(directives[key]) + ")";
+            }
+            else {
+                completeFieldName += "@" + key;
+            }
+        });
+    }
+    return completeFieldName;
+}
+function argumentsObjectFromField(field, variables) {
+    if (field.arguments && field.arguments.length) {
+        var argObj_1 = {};
+        field.arguments.forEach(function (_a) {
+            var name = _a.name, value = _a.value;
+            return valueToObjectRepresentation(argObj_1, name, value, variables);
+        });
+        return argObj_1;
+    }
+    return null;
+}
+function resultKeyNameFromField(field) {
+    return field.alias ? field.alias.value : field.name.value;
+}
+function isField(selection) {
+    return selection.kind === 'Field';
+}
+function isInlineFragment(selection) {
+    return selection.kind === 'InlineFragment';
+}
+function isIdValue(idObject) {
+    return idObject &&
+        idObject.type === 'id' &&
+        typeof idObject.generated === 'boolean';
+}
+function toIdValue(idConfig, generated) {
+    if (generated === void 0) { generated = false; }
+    return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({ type: 'id', generated: generated }, (typeof idConfig === 'string'
+        ? { id: idConfig, typename: undefined }
+        : idConfig));
+}
+function isJsonValue(jsonObject) {
+    return (jsonObject != null &&
+        typeof jsonObject === 'object' &&
+        jsonObject.type === 'json');
+}
+function defaultValueFromVariable(node) {
+    throw new Error("Variable nodes are not supported by valueFromNode");
+}
+function valueFromNode(node, onVariable) {
+    if (onVariable === void 0) { onVariable = defaultValueFromVariable; }
+    switch (node.kind) {
+        case 'Variable':
+            return onVariable(node);
+        case 'NullValue':
+            return null;
+        case 'IntValue':
+            return parseInt(node.value, 10);
+        case 'FloatValue':
+            return parseFloat(node.value);
+        case 'ListValue':
+            return node.values.map(function (v) { return valueFromNode(v, onVariable); });
+        case 'ObjectValue': {
+            var value = {};
+            for (var _i = 0, _a = node.fields; _i < _a.length; _i++) {
+                var field = _a[_i];
+                value[field.name.value] = valueFromNode(field.value, onVariable);
+            }
+            return value;
+        }
+        default:
+            return node.value;
+    }
+}
+//# sourceMappingURL=storeUtils.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/transform.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/transform.js ***!
+  \***********************************************************************************/
+/*! exports provided: removeDirectivesFromDocument, addTypenameToDocument, removeConnectionDirectiveFromDocument, getDirectivesFromDocument, removeArgumentsFromDocument, removeFragmentSpreadFromDocument */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeDirectivesFromDocument", function() { return removeDirectivesFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addTypenameToDocument", function() { return addTypenameToDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeConnectionDirectiveFromDocument", function() { return removeConnectionDirectiveFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDirectivesFromDocument", function() { return getDirectivesFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeArgumentsFromDocument", function() { return removeArgumentsFromDocument; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "removeFragmentSpreadFromDocument", function() { return removeFragmentSpreadFromDocument; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! graphql/language/visitor */ "./node_modules/graphql/language/visitor.mjs");
+/* harmony import */ var _getFromAST__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getFromAST */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/getFromAST.js");
+/* harmony import */ var _util_filterInPlace__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./util/filterInPlace */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/filterInPlace.js");
+
+
+
+
+var TYPENAME_FIELD = {
+    kind: 'Field',
+    name: {
+        kind: 'Name',
+        value: '__typename',
+    },
+};
+function isEmpty(op, fragments) {
+    return op.selectionSet.selections.every(function (selection) {
+        return selection.kind === 'FragmentSpread' &&
+            isEmpty(fragments[selection.name.value], fragments);
+    });
+}
+function nullIfDocIsEmpty(doc) {
+    return isEmpty(Object(_getFromAST__WEBPACK_IMPORTED_MODULE_2__["getOperationDefinitionOrDie"])(doc), Object(_getFromAST__WEBPACK_IMPORTED_MODULE_2__["createFragmentMap"])(Object(_getFromAST__WEBPACK_IMPORTED_MODULE_2__["getFragmentDefinitions"])(doc))) ? null : doc;
+}
+function getDirectiveMatcher(directives) {
+    return function directiveMatcher(directive) {
+        return directives.some(function (dir) {
+            return (dir.name && dir.name === directive.name.value) ||
+                (dir.test && dir.test(directive));
+        });
+    };
+}
+function removeDirectivesFromDocument(directives, doc) {
+    var variablesInUse = Object.create(null);
+    var variablesToRemove = [];
+    var fragmentSpreadsInUse = Object.create(null);
+    var fragmentSpreadsToRemove = [];
+    var modifiedDoc = nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_1__["visit"])(doc, {
+        Variable: {
+            enter: function (node, _key, parent) {
+                if (parent.kind !== 'VariableDefinition') {
+                    variablesInUse[node.name.value] = true;
+                }
+            },
+        },
+        Field: {
+            enter: function (node) {
+                var shouldRemoveField = directives.some(function (directive) { return directive.remove; });
+                if (shouldRemoveField &&
+                    node.directives &&
+                    node.directives.some(getDirectiveMatcher(directives))) {
+                    if (node.arguments) {
+                        node.arguments.forEach(function (arg) {
+                            if (arg.value.kind === 'Variable') {
+                                variablesToRemove.push({
+                                    name: arg.value.name.value,
+                                });
+                            }
+                        });
+                    }
+                    if (node.selectionSet) {
+                        getAllFragmentSpreadsFromSelectionSet(node.selectionSet).forEach(function (frag) {
+                            fragmentSpreadsToRemove.push({
+                                name: frag.name.value,
+                            });
+                        });
+                    }
+                    return null;
+                }
+            },
+        },
+        FragmentSpread: {
+            enter: function (node) {
+                fragmentSpreadsInUse[node.name.value] = true;
+            },
+        },
+        Directive: {
+            enter: function (node) {
+                if (getDirectiveMatcher(directives)(node)) {
+                    return null;
+                }
+            },
+        },
+    }));
+    if (modifiedDoc &&
+        Object(_util_filterInPlace__WEBPACK_IMPORTED_MODULE_3__["filterInPlace"])(variablesToRemove, function (v) { return !variablesInUse[v.name]; }).length) {
+        modifiedDoc = removeArgumentsFromDocument(variablesToRemove, modifiedDoc);
+    }
+    if (modifiedDoc &&
+        Object(_util_filterInPlace__WEBPACK_IMPORTED_MODULE_3__["filterInPlace"])(fragmentSpreadsToRemove, function (fs) { return !fragmentSpreadsInUse[fs.name]; }).length) {
+        modifiedDoc = removeFragmentSpreadFromDocument(fragmentSpreadsToRemove, modifiedDoc);
+    }
+    return modifiedDoc;
+}
+function addTypenameToDocument(doc) {
+    return Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_1__["visit"])(Object(_getFromAST__WEBPACK_IMPORTED_MODULE_2__["checkDocument"])(doc), {
+        SelectionSet: {
+            enter: function (node, _key, parent) {
+                if (parent &&
+                    parent.kind === 'OperationDefinition') {
+                    return;
+                }
+                var selections = node.selections;
+                if (!selections) {
+                    return;
+                }
+                var skip = selections.some(function (selection) {
+                    return (selection.kind === 'Field' &&
+                        (selection.name.value === '__typename' ||
+                            selection.name.value.lastIndexOf('__', 0) === 0));
+                });
+                if (skip) {
+                    return;
+                }
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, node, { selections: selections.concat([TYPENAME_FIELD]) });
+            },
+        },
+    });
+}
+var connectionRemoveConfig = {
+    test: function (directive) {
+        var willRemove = directive.name.value === 'connection';
+        if (willRemove) {
+            if (!directive.arguments ||
+                !directive.arguments.some(function (arg) { return arg.name.value === 'key'; })) {
+                console.warn('Removing an @connection directive even though it does not have a key. ' +
+                    'You may want to use the key parameter to specify a store key.');
+            }
+        }
+        return willRemove;
+    },
+};
+function removeConnectionDirectiveFromDocument(doc) {
+    return removeDirectivesFromDocument([connectionRemoveConfig], Object(_getFromAST__WEBPACK_IMPORTED_MODULE_2__["checkDocument"])(doc));
+}
+function hasDirectivesInSelectionSet(directives, selectionSet, nestedCheck) {
+    if (nestedCheck === void 0) { nestedCheck = true; }
+    return (selectionSet &&
+        selectionSet.selections &&
+        selectionSet.selections.some(function (selection) {
+            return hasDirectivesInSelection(directives, selection, nestedCheck);
+        }));
+}
+function hasDirectivesInSelection(directives, selection, nestedCheck) {
+    if (nestedCheck === void 0) { nestedCheck = true; }
+    if (selection.kind !== 'Field' || !selection) {
+        return true;
+    }
+    if (!selection.directives) {
+        return false;
+    }
+    return (selection.directives.some(getDirectiveMatcher(directives)) ||
+        (nestedCheck &&
+            hasDirectivesInSelectionSet(directives, selection.selectionSet, nestedCheck)));
+}
+function getDirectivesFromDocument(directives, doc) {
+    Object(_getFromAST__WEBPACK_IMPORTED_MODULE_2__["checkDocument"])(doc);
+    var parentPath;
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_1__["visit"])(doc, {
+        SelectionSet: {
+            enter: function (node, _key, _parent, path) {
+                var currentPath = path.join('-');
+                if (!parentPath ||
+                    currentPath === parentPath ||
+                    !currentPath.startsWith(parentPath)) {
+                    if (node.selections) {
+                        var selectionsWithDirectives = node.selections.filter(function (selection) {
+                            return hasDirectivesInSelection(directives, selection);
+                        });
+                        if (hasDirectivesInSelectionSet(directives, node, false)) {
+                            parentPath = currentPath;
+                        }
+                        return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, node, { selections: selectionsWithDirectives });
+                    }
+                    else {
+                        return null;
+                    }
+                }
+            },
+        },
+    }));
+}
+function getArgumentMatcher(config) {
+    return function argumentMatcher(argument) {
+        return config.some(function (aConfig) {
+            return argument.value &&
+                argument.value.kind === 'Variable' &&
+                argument.value.name &&
+                (aConfig.name === argument.value.name.value ||
+                    (aConfig.test && aConfig.test(argument)));
+        });
+    };
+}
+function removeArgumentsFromDocument(config, doc) {
+    var argMatcher = getArgumentMatcher(config);
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_1__["visit"])(doc, {
+        OperationDefinition: {
+            enter: function (node) {
+                return tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, node, { variableDefinitions: node.variableDefinitions.filter(function (varDef) { return !config.some(function (arg) { return arg.name === varDef.variable.name.value; }); }) });
+            },
+        },
+        Field: {
+            enter: function (node) {
+                var shouldRemoveField = config.some(function (argConfig) { return argConfig.remove; });
+                if (shouldRemoveField) {
+                    var argMatchCount_1 = 0;
+                    node.arguments.forEach(function (arg) {
+                        if (argMatcher(arg)) {
+                            argMatchCount_1 += 1;
+                        }
+                    });
+                    if (argMatchCount_1 === 1) {
+                        return null;
+                    }
+                }
+            },
+        },
+        Argument: {
+            enter: function (node) {
+                if (argMatcher(node)) {
+                    return null;
+                }
+            },
+        },
+    }));
+}
+function removeFragmentSpreadFromDocument(config, doc) {
+    function enter(node) {
+        if (config.some(function (def) { return def.name === node.name.value; })) {
+            return null;
+        }
+    }
+    return nullIfDocIsEmpty(Object(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_1__["visit"])(doc, {
+        FragmentSpread: { enter: enter },
+        FragmentDefinition: { enter: enter },
+    }));
+}
+function getAllFragmentSpreadsFromSelectionSet(selectionSet) {
+    var allFragments = [];
+    selectionSet.selections.forEach(function (selection) {
+        if ((selection.kind === 'Field' ||
+            selection.kind === 'InlineFragment') &&
+            selection.selectionSet) {
+            getAllFragmentSpreadsFromSelectionSet(selection.selectionSet).forEach(function (frag) { return allFragments.push(frag); });
+        }
+        else if (selection.kind === 'FragmentSpread') {
+            allFragments.push(selection);
+        }
+    });
+    return allFragments;
+}
+//# sourceMappingURL=transform.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/assign.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/assign.js ***!
+  \*************************************************************************************/
+/*! exports provided: assign */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "assign", function() { return assign; });
+function assign(target) {
+    var sources = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        sources[_i - 1] = arguments[_i];
+    }
+    sources.forEach(function (source) {
+        if (typeof source === 'undefined' || source === null) {
+            return;
+        }
+        Object.keys(source).forEach(function (key) {
+            target[key] = source[key];
+        });
+    });
+    return target;
+}
+//# sourceMappingURL=assign.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/cloneDeep.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/cloneDeep.js ***!
+  \****************************************************************************************/
+/*! exports provided: cloneDeep */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cloneDeep", function() { return cloneDeep; });
+var toString = Object.prototype.toString;
+function cloneDeep(value) {
+    return cloneDeepHelper(value, new Map());
+}
+function cloneDeepHelper(val, seen) {
+    switch (toString.call(val)) {
+        case "[object Array]": {
+            if (seen.has(val))
+                return seen.get(val);
+            var copy_1 = val.slice(0);
+            seen.set(val, copy_1);
+            copy_1.forEach(function (child, i) {
+                copy_1[i] = cloneDeepHelper(child, seen);
+            });
+            return copy_1;
+        }
+        case "[object Object]": {
+            if (seen.has(val))
+                return seen.get(val);
+            var copy_2 = Object.create(Object.getPrototypeOf(val));
+            seen.set(val, copy_2);
+            Object.keys(val).forEach(function (key) {
+                copy_2[key] = cloneDeepHelper(val[key], seen);
+            });
+            return copy_2;
+        }
+        default:
+            return val;
+    }
+}
+//# sourceMappingURL=cloneDeep.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/environment.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/environment.js ***!
+  \******************************************************************************************/
+/*! exports provided: getEnv, isEnv, isProduction, isDevelopment, isTest */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEnv", function() { return getEnv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isEnv", function() { return isEnv; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isProduction", function() { return isProduction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isDevelopment", function() { return isDevelopment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isTest", function() { return isTest; });
+function getEnv() {
+    if (typeof process !== 'undefined' && "development") {
+        return "development";
+    }
+    return 'development';
+}
+function isEnv(env) {
+    return getEnv() === env;
+}
+function isProduction() {
+    return isEnv('production') === true;
+}
+function isDevelopment() {
+    return isEnv('development') === true;
+}
+function isTest() {
+    return isEnv('test') === true;
+}
+//# sourceMappingURL=environment.js.map
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/errorHandling.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/errorHandling.js ***!
+  \********************************************************************************************/
+/*! exports provided: tryFunctionOrLogError, graphQLResultHasError */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tryFunctionOrLogError", function() { return tryFunctionOrLogError; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "graphQLResultHasError", function() { return graphQLResultHasError; });
+function tryFunctionOrLogError(f) {
+    try {
+        return f();
+    }
+    catch (e) {
+        if (console.error) {
+            console.error(e);
+        }
+    }
+}
+function graphQLResultHasError(result) {
+    return result.errors && result.errors.length;
+}
+//# sourceMappingURL=errorHandling.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/filterInPlace.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/filterInPlace.js ***!
+  \********************************************************************************************/
+/*! exports provided: filterInPlace */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterInPlace", function() { return filterInPlace; });
+function filterInPlace(array, test, context) {
+    var target = 0;
+    array.forEach(function (elem, i) {
+        if (test.call(this, elem, i, array)) {
+            array[target++] = elem;
+        }
+    }, context);
+    array.length = target;
+    return array;
+}
+//# sourceMappingURL=filterInPlace.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/isEqual.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/isEqual.js ***!
+  \**************************************************************************************/
+/*! exports provided: isEqual */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isEqual", function() { return isEqual; });
+function isEqual(a, b) {
+    if (a === b) {
+        return true;
+    }
+    if (a instanceof Date && b instanceof Date) {
+        return a.getTime() === b.getTime();
+    }
+    if (a != null &&
+        typeof a === 'object' &&
+        b != null &&
+        typeof b === 'object') {
+        for (var key in a) {
+            if (Object.prototype.hasOwnProperty.call(a, key)) {
+                if (!Object.prototype.hasOwnProperty.call(b, key)) {
+                    return false;
+                }
+                if (!isEqual(a[key], b[key])) {
+                    return false;
+                }
+            }
+        }
+        for (var key in b) {
+            if (Object.prototype.hasOwnProperty.call(b, key) &&
+                !Object.prototype.hasOwnProperty.call(a, key)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
+}
+//# sourceMappingURL=isEqual.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/maybeDeepFreeze.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/maybeDeepFreeze.js ***!
+  \**********************************************************************************************/
+/*! exports provided: maybeDeepFreeze */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "maybeDeepFreeze", function() { return maybeDeepFreeze; });
+/* harmony import */ var _environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./environment */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/environment.js");
+
+function deepFreeze(o) {
+    Object.freeze(o);
+    Object.getOwnPropertyNames(o).forEach(function (prop) {
+        if (o[prop] !== null &&
+            (typeof o[prop] === 'object' || typeof o[prop] === 'function') &&
+            !Object.isFrozen(o[prop])) {
+            deepFreeze(o[prop]);
+        }
+    });
+    return o;
+}
+function maybeDeepFreeze(obj) {
+    if (Object(_environment__WEBPACK_IMPORTED_MODULE_0__["isDevelopment"])() || Object(_environment__WEBPACK_IMPORTED_MODULE_0__["isTest"])()) {
+        var symbolIsPolyfilled = typeof Symbol === 'function' && typeof Symbol('') === 'string';
+        if (!symbolIsPolyfilled) {
+            return deepFreeze(obj);
+        }
+    }
+    return obj;
+}
+//# sourceMappingURL=maybeDeepFreeze.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/stripSymbols.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/stripSymbols.js ***!
+  \*******************************************************************************************/
+/*! exports provided: stripSymbols */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "stripSymbols", function() { return stripSymbols; });
+function stripSymbols(data) {
+    return JSON.parse(JSON.stringify(data));
+}
+//# sourceMappingURL=stripSymbols.js.map
+
+/***/ }),
+
+/***/ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/warnOnce.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/warnOnce.js ***!
+  \***************************************************************************************/
+/*! exports provided: warnOnceInDevelopment */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "warnOnceInDevelopment", function() { return warnOnceInDevelopment; });
+/* harmony import */ var _environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./environment */ "./node_modules/apollo-client/node_modules/apollo-utilities/lib/util/environment.js");
+
+var haveWarned = Object.create({});
+function warnOnceInDevelopment(msg, type) {
+    if (type === void 0) { type = 'warn'; }
+    if (Object(_environment__WEBPACK_IMPORTED_MODULE_0__["isProduction"])()) {
+        return;
+    }
+    if (!haveWarned[msg]) {
+        if (!Object(_environment__WEBPACK_IMPORTED_MODULE_0__["isTest"])()) {
+            haveWarned[msg] = true;
+        }
+        switch (type) {
+            case 'error':
+                console.error(msg);
+                break;
+            default:
+                console.warn(msg);
+        }
+    }
+}
+//# sourceMappingURL=warnOnce.js.map
+
+/***/ }),
+
 /***/ "./node_modules/apollo-client/scheduler/scheduler.js":
 /*!***********************************************************!*\
   !*** ./node_modules/apollo-client/scheduler/scheduler.js ***!
@@ -4856,7 +8200,7 @@ var Observable = (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-exports.version = "2.4.12"
+exports.version = "2.4.13"
 
 /***/ }),
 
@@ -32559,7 +35903,7 @@ var flowRight = createFlow(true);
 
 module.exports = flowRight;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../next/node_modules/webpack/buildin/global.js */ "./node_modules/next/node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -34646,6 +37990,85 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 /***/ }),
 
+/***/ "./node_modules/next/node_modules/webpack/buildin/global.js":
+/*!************************************************************************************************************************!*\
+  !*** delegated ./node_modules/next/node_modules/webpack/buildin/global.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
+  \************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/next/node_modules/webpack/buildin/global.js");
+
+/***/ }),
+
+/***/ "./node_modules/next/node_modules/webpack/buildin/harmony-module.js":
+/*!*******************************************!*\
+  !*** (webpack)/buildin/harmony-module.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(originalModule) {
+	if (!originalModule.webpackPolyfill) {
+		var module = Object.create(originalModule);
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		Object.defineProperty(module, "exports", {
+			enumerable: true
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/next/node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/node-libs-browser/node_modules/punycode/punycode.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/node-libs-browser/node_modules/punycode/punycode.js ***!
@@ -35173,18 +38596,18 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../next/node_modules/webpack/buildin/module.js */ "./node_modules/next/node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../../next/node_modules/webpack/buildin/global.js */ "./node_modules/next/node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
 /***/ "./node_modules/object-assign/index.js":
 /*!***************************************************************************************************!*\
-  !*** delegated ./node_modules/object-assign/index.js from dll-reference dll_ea92b26618a5e8aa3a89 ***!
+  !*** delegated ./node_modules/object-assign/index.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
   \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_ea92b26618a5e8aa3a89 */ "dll-reference dll_ea92b26618a5e8aa3a89"))("./node_modules/object-assign/index.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/object-assign/index.js");
 
 /***/ }),
 
@@ -35875,7 +39298,7 @@ exports.get = function () {
   return fiber[localKey] || (fiber[localKey] = Object.create(null));
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../next/node_modules/webpack/buildin/module.js */ "./node_modules/next/node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
@@ -36076,12 +39499,12 @@ process.umask = function() { return 0; };
 
 /***/ "./node_modules/prop-types/checkPropTypes.js":
 /*!*********************************************************************************************************!*\
-  !*** delegated ./node_modules/prop-types/checkPropTypes.js from dll-reference dll_ea92b26618a5e8aa3a89 ***!
+  !*** delegated ./node_modules/prop-types/checkPropTypes.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
   \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_ea92b26618a5e8aa3a89 */ "dll-reference dll_ea92b26618a5e8aa3a89"))("./node_modules/prop-types/checkPropTypes.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/prop-types/checkPropTypes.js");
 
 /***/ }),
 
@@ -36689,12 +40112,12 @@ if (true) {
 
 /***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
 /*!*******************************************************************************************************************!*\
-  !*** delegated ./node_modules/prop-types/lib/ReactPropTypesSecret.js from dll-reference dll_ea92b26618a5e8aa3a89 ***!
+  !*** delegated ./node_modules/prop-types/lib/ReactPropTypesSecret.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
   \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_ea92b26618a5e8aa3a89 */ "dll-reference dll_ea92b26618a5e8aa3a89"))("./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/prop-types/lib/ReactPropTypesSecret.js");
 
 /***/ }),
 
@@ -42356,12 +45779,12 @@ if (false) {} else {
 
 /***/ "./node_modules/react/index.js":
 /*!*******************************************************************************************!*\
-  !*** delegated ./node_modules/react/index.js from dll-reference dll_ea92b26618a5e8aa3a89 ***!
+  !*** delegated ./node_modules/react/index.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
   \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_ea92b26618a5e8aa3a89 */ "dll-reference dll_ea92b26618a5e8aa3a89"))("./node_modules/react/index.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/react/index.js");
 
 /***/ }),
 
@@ -43173,7 +46596,7 @@ if (typeof self !== 'undefined') {
 var result = Object(_ponyfill_js__WEBPACK_IMPORTED_MODULE_0__["default"])(root);
 /* harmony default export */ __webpack_exports__["default"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../next/node_modules/webpack/buildin/global.js */ "./node_modules/next/node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../../next/node_modules/webpack/buildin/harmony-module.js */ "./node_modules/next/node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
 
@@ -44198,85 +47621,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!******************************************************************************************************!*\
-  !*** delegated ./node_modules/webpack/buildin/global.js from dll-reference dll_ea92b26618a5e8aa3a89 ***!
-  \******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(/*! dll-reference dll_ea92b26618a5e8aa3a89 */ "dll-reference dll_ea92b26618a5e8aa3a89"))("./node_modules/webpack/buildin/global.js");
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/harmony-module.js":
-/*!*******************************************!*\
-  !*** (webpack)/buildin/harmony-module.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(originalModule) {
-	if (!originalModule.webpackPolyfill) {
-		var module = Object.create(originalModule);
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		Object.defineProperty(module, "exports", {
-			enumerable: true
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/module.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/zen-observable-ts/lib/index.js":
 /*!*****************************************************!*\
   !*** ./node_modules/zen-observable-ts/lib/index.js ***!
@@ -45054,7 +48398,7 @@ function (_App) {
       }
     })(typeof __webpack_exports__ !== 'undefined' ? __webpack_exports__.default : (module.exports.default || module.exports), "/_app")
   
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/harmony-module.js */ "./node_modules/webpack/buildin/harmony-module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/next/node_modules/webpack/buildin/harmony-module.js */ "./node_modules/next/node_modules/webpack/buildin/harmony-module.js")(module)))
 
 /***/ }),
 
@@ -45072,14 +48416,14 @@ return { page: module.exports.default }});
 
 /***/ }),
 
-/***/ "dll-reference dll_ea92b26618a5e8aa3a89":
+/***/ "dll-reference dll_27b5d34cc2d6e91265fa":
 /*!*******************************************!*\
-  !*** external "dll_ea92b26618a5e8aa3a89" ***!
+  !*** external "dll_27b5d34cc2d6e91265fa" ***!
   \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = dll_ea92b26618a5e8aa3a89;
+module.exports = dll_27b5d34cc2d6e91265fa;
 
 /***/ })
 

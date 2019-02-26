@@ -5,14 +5,18 @@ import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
 import { observer } from "mobx-react-lite";
 import { UserStoreContext } from "../../stores/UserStore";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import HeaderLogo from "./Logo";
 
 const Header2 = observer(({ router: { pathname } }) => {
+  const [loading, setLoading] = useState(true);
   const userStore = useContext(UserStoreContext);
   console.log(userStore.isAuth);
+  let authOrNo = userStore.isAuth;
+  // UserStoreContext.isAuth = false;
 
-  if (userStore.isAuth == false) {
+  if (!authOrNo) {
+    // console.log(authOrNo);
     return (
       <ThemeProvider theme={theme(false)}>
         <Wrapper>
@@ -38,7 +42,7 @@ const Header2 = observer(({ router: { pathname } }) => {
         <Wrapper>
           <HeaderLogo />
 
-          <Link prefetch href="/login">
+          <Link prefetch href="/logout">
             <StyledLink className={pathname === "/login" ? "is-active" : ""}>
               logout
             </StyledLink>

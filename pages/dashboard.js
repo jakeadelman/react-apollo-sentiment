@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import DashInitialTerms from "../components/Dashboard/DashInitialTerms";
 import App from "../components/App";
 import Header from "../components/Header/Header";
@@ -6,19 +6,18 @@ import LoginForm from "../components/LoginForm";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
 import "../styles.css";
-export default class extends React.Component {
-  render() {
-    return (
-      <App>
-        <Header />
-        <ThemeProvider theme={theme}>
-          <Wrapper>
-            <DashInitialTerms />
-          </Wrapper>
-        </ThemeProvider>
-      </App>
-    );
-  }
+
+export default function dashboard() {
+  return (
+    <App>
+      <Header />
+      <ThemeProvider theme={theme}>
+        <Wrapper>
+          <DashInitialTerms />
+        </Wrapper>
+      </ThemeProvider>
+    </App>
+  );
 }
 
 const Wrapper = styled.div`

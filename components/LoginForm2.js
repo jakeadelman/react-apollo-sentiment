@@ -10,6 +10,7 @@ import styled from "styled-components";
 import FormWrapper from "./Form2/FormWrapper";
 import Input from "./Form2/Input";
 import Label from "./form/Label";
+import Button from "./shared/Button";
 
 const LoginForm = observer(() => {
   const userStore = useContext(UserStoreContext);
@@ -20,6 +21,7 @@ const LoginForm = observer(() => {
     const formData = new window.FormData(form);
     const email = formData.get("email");
     const password = formData.get("password");
+    console.log(email, password);
     form.reset();
 
     let res = client.mutate({
@@ -34,6 +36,7 @@ const LoginForm = observer(() => {
     //check if login credentials are correct
     let r = await res;
     r = r.data.login;
+    console.log(r);
     let isTrue = r == "true";
     if (isTrue == true) {
       userStore.isAuth = true;
@@ -49,34 +52,36 @@ const LoginForm = observer(() => {
   return (
     <ApolloConsumer>
       {client => (
-        <div>
-          <FormWrapper>
-            <StyledForm>
-              <form onSubmit={event => handleSubmit(event, client)}>
-                <h1>Login</h1>
-                <Label>email</Label>
-                <Input placeholder="email" name="email" type="text" required />
-                <input
-                  placeholder="password"
-                  name="password"
-                  type="text"
-                  required
-                />
-                <button type="submit">Submit</button>
-                {wrongCredentials == true ? (
-                  <div className="login-alert">
-                    <Alert
-                      color="secondary"
-                      isOpen={wrongCredentials == true ? true : false}
-                    >
-                      Wrong login credentials
-                    </Alert>
-                  </div>
-                ) : null}
-              </form>
-            </StyledForm>
-          </FormWrapper>
-        </div>
+        <FormWrapper>
+          <StyledForm onSubmit={event => handleSubmit(event, client)}>
+            <InputWrapper>
+              <Label>email</Label>
+              <Input placeholder="email" name="email" type="text" required />
+            </InputWrapper>
+            <InputWrapper>
+              <Label>password</Label>
+              <Input
+                placeholder="password"
+                name="password"
+                type="text"
+                required
+              />
+            </InputWrapper>
+            <div style={{ display: "flex", width: "100%" }}>
+              <SubmitButton type="submit">Submit</SubmitButton>
+            </div>
+            {wrongCredentials == true ? (
+              <div className="login-alert">
+                <Alert
+                  color="secondary"
+                  isOpen={wrongCredentials == true ? true : false}
+                >
+                  Wrong login credentials
+                </Alert>
+              </div>
+            ) : null}
+          </StyledForm>
+        </FormWrapper>
       )}
     </ApolloConsumer>
   );
@@ -91,4 +96,16 @@ const StyledForm = styled.form`
   ${props =>
     props.loading &&
     "filter: grayscale(0.5) blur(5px) opacity(0.6); pointer-events: none"};
+`;
+
+const SubmitButton = styled(Button)`
+  align-self: flex-end;
+  margin-right: 0px;
+  margin-left: auto;
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  margin-bottom: 24px;
+  width: 100%;
 `;

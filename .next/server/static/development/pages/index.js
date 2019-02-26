@@ -106,11 +106,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header/Header */ "./components/Header/Header.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
-
 
 
 
@@ -119,7 +117,7 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 5
+      lineNumber: 4
     },
     __self: this
   }, children);
@@ -142,16 +140,14 @@ __webpack_require__.r(__webpack_exports__);
 var FormWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.div.withConfig({
   displayName: "FormWrapper",
   componentId: "sc-1970mg2-0"
-})(["position:relative;overflow:hidden;margin:0 auto;border:1px solid ", ";border-radius:2px;max-width:", ";padding:24px;background-color:", ";@media (max-width:768px){padding:16px;}@media (max-width:", "){border-radius:0;border-left:none;border-right:none;}"], function (props) {
+})(["position:relative;overflow:hidden;margin:0 auto;border:1px solid ", ";border-radius:2px;width:375px;padding:24px;background-color:", ";@media (max-width:768px){padding:16px;}@media (max-width:", "){border-radius:0;border-left:none;border-right:none;}"], function (props) {
   return props.theme.border;
-}, function (props) {
-  return props.wide ? "600px" : "375px";
 }, function (props) {
   return props.theme.foreground;
 }, function (props) {
   return props.wide ? "600px" : "375px";
 });
-/* harmony default export */ __webpack_exports__["default"] = (FormWrapper);
+/* harmony default export */ __webpack_exports__["default"] = (FormWrapper); // max-width: ${props => (props.wide ? "600px" : "375px")};
 
 /***/ }),
 
@@ -186,10 +182,10 @@ var Input = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.input.withC
 
 /***/ }),
 
-/***/ "./components/Header/Header.js":
-/*!*************************************!*\
-  !*** ./components/Header/Header.js ***!
-  \*************************************/
+/***/ "./components/Header/HomeHeader.js":
+/*!*****************************************!*\
+  !*** ./components/Header/HomeHeader.js ***!
+  \*****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -208,7 +204,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/UserStore */ "./stores/UserStore.ts");
 /* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Logo */ "./components/Header/Logo.js");
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Header.js";
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/HomeHeader.js";
+
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
  // import Head from "Header/Head";
@@ -221,27 +226,35 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/H
 
 var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(function (_ref) {
   var pathname = _ref.router.pathname;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
   var userStore = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_stores_UserStore__WEBPACK_IMPORTED_MODULE_6__["UserStoreContext"]);
   console.log(userStore.isAuth);
+  var authOrNo = userStore.isAuth; // UserStoreContext.isAuth = false;
 
-  if (userStore.isAuth == false) {
+  if (!authOrNo) {
+    // console.log(authOrNo);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
+        lineNumber: 21
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 18
+        lineNumber: 22
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 19
+        lineNumber: 23
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -249,14 +262,14 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       href: "/login",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21
+        lineNumber: 25
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 22
+        lineNumber: 26
       },
       __self: this
     }, "login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -264,14 +277,14 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       href: "/register",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 27
+        lineNumber: 31
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/register" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 28
+        lineNumber: 32
       },
       __self: this
     }, "register"))));
@@ -280,34 +293,34 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 37
+        lineNumber: 41
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 38
+        lineNumber: 42
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 39
+        lineNumber: 43
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
-      href: "/login",
+      href: "/logout",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 41
+        lineNumber: 45
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 42
+        lineNumber: 46
       },
       __self: this
     }, "logout"))));
@@ -315,8 +328,8 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
 });
 /* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header2));
 var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
-  displayName: "Header__StyledLink",
-  componentId: "sc-19c2vr5-0"
+  displayName: "HomeHeader__StyledLink",
+  componentId: "tls1pp-0"
 })(["margin:auto 10px;color:", ";position:relative;cursor:pointer;::after{content:\"\";position:absolute;left:0;right:0;bottom:0;opacity:0;border-bottom:1px solid ", ";}:hover{opacity:1;color:", ";}&.active::after{left:0;right:0;bottom:0;border-bottom:3px solid ", ";}font-weight:700;letter-spacing:0.05em;font-size:12px;text-transform:uppercase;"], function (props) {
   return props.theme.mutedText;
 }, function (props) {
@@ -327,9 +340,9 @@ var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.wi
   return props.theme.accent;
 });
 var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.header.withConfig({
-  displayName: "Header__Wrapper",
-  componentId: "sc-19c2vr5-1"
-})(["position:sticky;z-index:10;top:0;display:flex;align-items:stretch;margin-bottom:24px;box-shadow:0 4px 12px ", ";border-bottom:1px solid ", ";height:48px;padding:0 10vw;background-color:", ";user-select:none;@media (max-width:425px){margin-bottom:16px;height:40px;}@media (max-width:768px){padding:0;}"], function (props) {
+  displayName: "HomeHeader__Wrapper",
+  componentId: "tls1pp-1"
+})(["position:sticky;z-index:10;top:0;display:flex;align-items:stretch;box-shadow:0 4px 12px ", ";border-bottom:1px solid ", ";height:48px;padding:0 10vw;background-color:", ";user-select:none;@media (max-width:425px){height:40px;}@media (max-width:768px){padding:0;}"], function (props) {
   return props.theme.shadow;
 }, function (props) {
   return props.theme.border;
@@ -385,6 +398,423 @@ var Logo = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConf
 // @media (max-width: 425px) {
 //   padding: 0 8px;
 // }
+
+/***/ }),
+
+/***/ "./components/HomepageSvg.js":
+/*!***********************************!*\
+  !*** ./components/HomepageSvg.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return HomepageSvg; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_pose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-pose */ "react-pose");
+/* harmony import */ var react_pose__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_pose__WEBPACK_IMPORTED_MODULE_1__);
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/HomepageSvg.js";
+
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var Box = react_pose__WEBPACK_IMPORTED_MODULE_1___default.a.div({
+  hidden: {
+    opacity: 0
+  },
+  visible: {
+    opacity: 1
+  }
+});
+
+var HomepageSvg =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(HomepageSvg, _React$Component);
+
+  function HomepageSvg(props) {
+    var _this;
+
+    _classCallCheck(this, HomepageSvg);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HomepageSvg).call(this, props));
+    _this.state = {
+      visible: true
+    };
+    return _this;
+  }
+
+  _createClass(HomepageSvg, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      setInterval(function () {
+        _this2.setState({
+          visible: !_this2.state.visible
+        });
+      }, 4000);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Box, {
+        pose: this.state.visible ? "visible" : "hidden",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 23
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("svg", {
+        version: "1.1",
+        style: {
+          height: "100%",
+          width: "100%"
+        },
+        viewBox: "0 0 600 600",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 24
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 29
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 30
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M394.668,0H32.001c-17.673,0-32,14.327-32,32v256c0,17.673,14.327,32,32,32h138.667v-21.333H32.001 c-5.891,0-10.667-4.776-10.667-10.667V32c0-5.891,4.776-10.667,10.667-10.667h362.667c5.891,0,10.667,4.776,10.667,10.667v192 h21.333V32C426.668,14.327,412.341,0,394.668,0z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 31
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 38
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 39
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "128.001",
+        y: "309.333",
+        width: "21.333",
+        height: "64",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 40
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 43
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 44
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M74.668,256c-5.891,0-10.667-4.776-10.667-10.667V224H42.668v21.333c0,17.673,14.327,32,32,32h21.333V256H74.668z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 45
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 49
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "42.668",
+        y: "181.333",
+        width: "21.333",
+        height: "21.333",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 50
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 53
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 54
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M389.836,225.941c-21.736-21.74-51.219-33.953-81.961-33.952c-64.006,0.003-115.891,51.892-115.889,115.898 c0.003,64.006,51.892,115.891,115.898,115.889c30.732-0.001,60.204-12.208,81.937-33.937 C435.084,344.584,435.091,271.205,389.836,225.941z M307.82,402.453c-52.224-0.018-94.546-42.368-94.528-94.592 c0.018-52.224,42.368-94.546,94.592-94.528c25.101-0.068,49.184,9.92,66.869,27.733c17.718,17.738,27.667,41.787,27.659,66.859 C402.394,360.149,360.044,402.471,307.82,402.453z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 55
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 64
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 65
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M508.876,464l-66.955-66.933c-2-2-4.713-3.125-7.541-3.125c-2.829,0.001-5.541,1.125-7.541,3.125l-29.76,29.76 c-4.164,4.165-4.164,10.917,0,15.083l66.955,66.965c2,2.001,4.713,3.125,7.541,3.125v0c2.833-0.009,5.547-1.145,7.541-3.157 l29.76-29.76C513.04,474.917,513.04,468.165,508.876,464z M471.574,486.251l-51.872-51.883l14.677-14.677l51.872,51.883 L471.574,486.251z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 66
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 74
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 75
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "390.231",
+        y: "374.581",
+        transform: "matrix(0.7071 -0.7071 0.7071 0.7071 -166.0486 400.894)",
+        width: "21.333",
+        height: "52.608",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 76
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 86
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 87
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M309.334,234.667V256c29.441,0.035,53.298,23.893,53.333,53.333h21.333C383.954,268.116,350.552,234.714,309.334,234.667z ",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 88
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 94
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 95
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "106.668",
+        y: "362.667",
+        width: "85.333",
+        height: "21.333",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 96
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 99
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 100
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M160.001,42.667c-17.673,0-32,14.327-32,32c0,17.673,14.327,32,32,32s32-14.327,32-32 C192.001,56.994,177.674,42.667,160.001,42.667z M160.001,85.333c-5.891,0-10.667-4.776-10.667-10.667 c0-5.891,4.776-10.667,10.667-10.667s10.667,4.776,10.667,10.667C170.668,80.558,165.892,85.333,160.001,85.333z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 101
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 108
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 109
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M234.668,117.333c-17.673,0-32,14.327-32,32c0,17.673,14.327,32,32,32c17.673,0,32-14.327,32-32 C266.668,131.66,252.341,117.333,234.668,117.333z M234.668,160c-5.891,0-10.667-4.776-10.667-10.667 c0-5.891,4.776-10.667,10.667-10.667c5.891,0,10.667,4.776,10.667,10.667C245.334,155.224,240.559,160,234.668,160z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 110
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 117
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 118
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "84.956",
+        y: "101.336",
+        transform: "matrix(0.7071 -0.7071 0.7071 0.7071 -43.269 119.5445)",
+        width: "75.424",
+        height: "21.333",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 119
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 129
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 130
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "186.623",
+        y: "74.317",
+        transform: "matrix(0.7071 -0.7071 0.7071 0.7071 -21.4319 172.3178)",
+        width: "21.333",
+        height: "75.424",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 131
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 140
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 141
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("path", {
+        d: "M309.334,42.667c-17.673,0-32,14.327-32,32c0,17.673,14.327,32,32,32c17.673,0,32-14.327,32-32 C341.335,56.994,327.008,42.667,309.334,42.667z M309.334,85.333c-5.891,0-10.667-4.776-10.667-10.667 c0-5.891,4.776-10.667,10.667-10.667c5.891,0,10.667,4.776,10.667,10.667C320.001,80.558,315.225,85.333,309.334,85.333z",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 142
+        },
+        __self: this
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 149
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("g", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 150
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
+        x: "234.285",
+        y: "101.373",
+        transform: "matrix(0.7071 -0.7071 0.7071 0.7071 0.4421 225.1463)",
+        width: "75.424",
+        height: "21.333",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 151
+        },
+        __self: this
+      })))));
+    }
+  }]);
+
+  return HomepageSvg;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
 
 /***/ }),
 
@@ -733,12 +1163,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/App */ "./components/App.js");
-/* harmony import */ var _components_Header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header/Header */ "./components/Header/Header.js");
+/* harmony import */ var _components_Header_HomeHeader__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header/HomeHeader */ "./components/Header/HomeHeader.js");
 /* harmony import */ var _components_LoginForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/LoginForm */ "./components/LoginForm.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_theme__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/theme */ "./components/theme.js");
+/* harmony import */ var _components_HomepageSvg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/HomepageSvg */ "./components/HomepageSvg.js");
+/* harmony import */ var _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/shared/helpers */ "./components/shared/helpers.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/index.js";
+
+
 
 
 
@@ -749,40 +1183,148 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/index.js";
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 7
+      lineNumber: 10
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Header_HomeHeader__WEBPACK_IMPORTED_MODULE_2__["default"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 8
+      lineNumber: 11
     },
     __self: this
   }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_4__["ThemeProvider"], {
     theme: _components_theme__WEBPACK_IMPORTED_MODULE_5__["default"],
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 9
+      lineNumber: 12
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(OuterWrapper, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 13
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 10
+      lineNumber: 14
     },
     __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RowOne, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 11
+      lineNumber: 15
     },
     __self: this
-  }))));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InnerRowContainer, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 16
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      width: "200px",
+      height: "auto",
+      margin: "auto"
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 17
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+    src: "/static/brain.svg",
+    style: {
+      margin: "auto",
+      maxWidth: "200px"
+    },
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 18
+    },
+    __self: this
+  }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InnerRowContainer, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 24
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TxtDiv, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 25
+    },
+    __self: this
+  }, "Outperform the market with better data at your fingertips")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InnerRowContainerBlack, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 29
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TxtDivBlack, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 30
+    },
+    __self: this
+  }, "Get access to meaningful metrics by state of the art machine learning classifiers to supercharge your crypto trading."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TxtDivBlack2, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 34
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SignUpButton, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 35
+    },
+    __self: this
+  }, "Sign Up"))))))));
+});
+var OuterWrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__OuterWrapper",
+  componentId: "teytsb-0"
+})(["background-color:", ";"], function (props) {
+  return props.theme.foreground;
 });
 var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
   displayName: "pages__Wrapper",
-  componentId: "teytsb-0"
-})(["display:flex;align-items:flex-start;margin:0 10vw;@media (max-width:1024px){margin:0 5vw;}@media (max-width:768px){display:block;margin:0;}"]);
+  componentId: "teytsb-1"
+})(["display:flex;margin:0 10vw;height:100%;background-color:", ";@media (max-width:1024px){margin:0 5vw;}@media (max-width:768px){display:block;margin:0;}"], function (props) {
+  return props.theme.foreground;
+});
+var SignUpButton = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.button.withConfig({
+  displayName: "pages__SignUpButton",
+  componentId: "teytsb-2"
+})(["", " padding:8px 20px;border-radius:2px;"], _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__["smallFont"]);
+var TxtDiv = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__TxtDiv",
+  componentId: "teytsb-3"
+})(["", " max-width:350px;font-size:15px;text-align:center;margin:auto;"], _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__["wideFont"]);
+var TxtDivBlack = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__TxtDivBlack",
+  componentId: "teytsb-4"
+})(["", " max-width:550px;font-size:15px;color:#454f5b;text-align:center;margin:auto;margin-bottom:25px;"], _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__["wideFont"]);
+var TxtDivBlack2 = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__TxtDivBlack2",
+  componentId: "teytsb-5"
+})(["", " max-width:550px;font-size:15px;color:#454f5b;text-align:center;margin:auto;margin-top:25px;"], _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__["wideFont"]);
+var RowOne = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__RowOne",
+  componentId: "teytsb-6"
+})(["height:auto;width:100%;display:flex;flex-direction:column;margin-top:100px;background-color:", ";"], function (props) {
+  return props.theme.foreground;
+});
+var InnerRowContainer = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__InnerRowContainer",
+  componentId: "teytsb-7"
+})(["width:100%;margin-top:20px;margin-bottom:20px;"]);
+var InnerRowContainerBlack = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+  displayName: "pages__InnerRowContainerBlack",
+  componentId: "teytsb-8"
+})(["width:100%;min-height:400px;margin-top:100px;margin-bottom:80px;background:#1b1b1b;border-radius:2px;display:flex;flex-direction:column;"]);
 
 /***/ }),
 
@@ -790,17 +1332,22 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withC
 /*!*****************************!*\
   !*** ./stores/UserStore.ts ***!
   \*****************************/
-/*! exports provided: UserStoreContext */
+/*! exports provided: hydrate, userStore, UserStoreContext, hydrateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrate", function() { return hydrate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userStore", function() { return userStore; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserStoreContext", function() { return UserStoreContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrateUser", function() { return hydrateUser; });
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "mobx");
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-var _class, _descriptor, _descriptor2, _temp;
+/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-persist */ "mobx-persist");
+/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_persist__WEBPACK_IMPORTED_MODULE_2__);
+var _class, _descriptor, _temp;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -812,20 +1359,12 @@ function _initializerWarningHelper(descriptor, context) { throw new Error('Decor
 
 
 
+
 var UserStore = (_class = (_temp = function UserStore() {
   _classCallCheck(this, UserStore);
 
-  _initializerDefineProperty(this, "user", _descriptor, this);
-
-  _initializerDefineProperty(this, "isAuth", _descriptor2, this);
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "user", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: function initializer() {
-    return "";
-  }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  _initializerDefineProperty(this, "isAuth", _descriptor, this);
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -833,7 +1372,17 @@ var UserStore = (_class = (_temp = function UserStore() {
     return false;
   }
 })), _class);
-var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])(new UserStore());
+var hydrate = Object(mobx_persist__WEBPACK_IMPORTED_MODULE_2__["create"])();
+var userStore = new UserStore();
+var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])(userStore);
+hydrate("user", userStore).then(function () {
+  return console.log("has been hydrated");
+});
+function hydrateUser() {
+  hydrate("user", userStore).then(function () {
+    return console.log("has been hydrated and reset");
+  });
+}
 
 /***/ }),
 
@@ -879,6 +1428,17 @@ module.exports = require("graphql-tag");
 /***/ (function(module, exports) {
 
 module.exports = require("mobx");
+
+/***/ }),
+
+/***/ "mobx-persist":
+/*!*******************************!*\
+  !*** external "mobx-persist" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx-persist");
 
 /***/ }),
 
@@ -934,6 +1494,17 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-apollo");
+
+/***/ }),
+
+/***/ "react-pose":
+/*!*****************************!*\
+  !*** external "react-pose" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-pose");
 
 /***/ }),
 

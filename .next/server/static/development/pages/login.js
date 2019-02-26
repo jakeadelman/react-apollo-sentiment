@@ -106,11 +106,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _Header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header/Header */ "./components/Header/Header.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_2__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
-
 
 
 
@@ -119,7 +117,7 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 5
+      lineNumber: 4
     },
     __self: this
   }, children);
@@ -142,16 +140,14 @@ __webpack_require__.r(__webpack_exports__);
 var FormWrapper = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.div.withConfig({
   displayName: "FormWrapper",
   componentId: "sc-1970mg2-0"
-})(["position:relative;overflow:hidden;margin:0 auto;border:1px solid ", ";border-radius:2px;max-width:", ";padding:24px;background-color:", ";@media (max-width:768px){padding:16px;}@media (max-width:", "){border-radius:0;border-left:none;border-right:none;}"], function (props) {
+})(["position:relative;overflow:hidden;margin:0 auto;border:1px solid ", ";border-radius:2px;width:375px;padding:24px;background-color:", ";@media (max-width:768px){padding:16px;}@media (max-width:", "){border-radius:0;border-left:none;border-right:none;}"], function (props) {
   return props.theme.border;
-}, function (props) {
-  return props.wide ? "600px" : "375px";
 }, function (props) {
   return props.theme.foreground;
 }, function (props) {
   return props.wide ? "600px" : "375px";
 });
-/* harmony default export */ __webpack_exports__["default"] = (FormWrapper);
+/* harmony default export */ __webpack_exports__["default"] = (FormWrapper); // max-width: ${props => (props.wide ? "600px" : "375px")};
 
 /***/ }),
 
@@ -211,6 +207,15 @@ __webpack_require__.r(__webpack_exports__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Header.js";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
  // import Head from "Header/Head";
 
 
@@ -221,27 +226,35 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/H
 
 var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(function (_ref) {
   var pathname = _ref.router.pathname;
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(true),
+      _useState2 = _slicedToArray(_useState, 2),
+      loading = _useState2[0],
+      setLoading = _useState2[1];
+
   var userStore = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_stores_UserStore__WEBPACK_IMPORTED_MODULE_6__["UserStoreContext"]);
   console.log(userStore.isAuth);
+  var authOrNo = userStore.isAuth; // UserStoreContext.isAuth = false;
 
-  if (userStore.isAuth == false) {
+  if (!authOrNo) {
+    // console.log(authOrNo);
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
+        lineNumber: 21
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 18
+        lineNumber: 22
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 19
+        lineNumber: 23
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -249,14 +262,14 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       href: "/login",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21
+        lineNumber: 25
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 22
+        lineNumber: 26
       },
       __self: this
     }, "login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -264,14 +277,14 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       href: "/register",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 27
+        lineNumber: 31
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/register" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 28
+        lineNumber: 32
       },
       __self: this
     }, "register"))));
@@ -280,34 +293,34 @@ var Header2 = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__["observer"])(f
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 37
+        lineNumber: 41
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 38
+        lineNumber: 42
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 39
+        lineNumber: 43
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
       prefetch: true,
-      href: "/login",
+      href: "/logout",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 41
+        lineNumber: 45
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 42
+        lineNumber: 46
       },
       __self: this
     }, "logout"))));
@@ -649,6 +662,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Form2/FormWrapper */ "./components/Form2/FormWrapper.js");
 /* harmony import */ var _Form2_Input__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Form2/Input */ "./components/Form2/Input.js");
 /* harmony import */ var _form_Label__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./form/Label */ "./components/form/Label.js");
+/* harmony import */ var _shared_Button__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./shared/Button */ "./components/shared/Button.js");
 
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/LoginForm2.js";
 
@@ -688,6 +702,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])(function () {
   var userStore = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_stores_UserStore_ts__WEBPACK_IMPORTED_MODULE_8__["UserStoreContext"]);
 
@@ -709,6 +724,7 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
               formData = new window.FormData(form);
               email = formData.get("email");
               password = formData.get("password");
+              console.log(email, password);
               form.reset();
               res = client.mutate({
                 mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_3___default()(_templateObject()),
@@ -718,29 +734,30 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
                 }
               }); //check if login credentials are correct
 
-              _context.next = 9;
+              _context.next = 10;
               return res;
 
-            case 9:
+            case 10:
               r = _context.sent;
               r = r.data.login;
+              console.log(r);
               isTrue = r == "true";
 
               if (!(isTrue == true)) {
-                _context.next = 17;
+                _context.next = 19;
                 break;
               }
 
               userStore.isAuth = true;
               next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push("/dashboard");
-              _context.next = 19;
+              _context.next = 21;
               break;
 
-            case 17:
+            case 19:
               setWrongCredentials(true);
               return _context.abrupt("return");
 
-            case 19:
+            case 21:
             case "end":
               return _context.stop();
           }
@@ -758,47 +775,35 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
   return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["ApolloConsumer"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 50
+      lineNumber: 53
     },
     __self: this
   }, function (client) {
-    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 52
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 53
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(StyledForm, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 54
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
-      onSubmit: function onSubmit(event) {
-        return handleSubmit(event, client);
-      },
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_10__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 55
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", {
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(StyledForm, {
+      onSubmit: function onSubmit(event) {
+        return handleSubmit(event, client);
+      },
       __source: {
         fileName: _jsxFileName,
         lineNumber: 56
       },
       __self: this
-    }, "Login"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 57
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 58
       },
       __self: this
     }, "email"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_11__["default"], {
@@ -808,31 +813,53 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 58
+        lineNumber: 59
       },
       __self: this
-    }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+    })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(InputWrapper, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 61
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 62
+      },
+      __self: this
+    }, "password"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_11__["default"], {
       placeholder: "password",
       name: "password",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 59
+        lineNumber: 63
       },
       __self: this
-    }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      style: {
+        display: "flex",
+        width: "100%"
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 70
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SubmitButton, {
       type: "submit",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 65
+        lineNumber: 71
       },
       __self: this
-    }, "Submit"), wrongCredentials == true ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    }, "Submit")), wrongCredentials == true ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       className: "login-alert",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 67
+        lineNumber: 74
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Alert"], {
@@ -840,10 +867,10 @@ var LoginForm = Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])
       isOpen: wrongCredentials == true ? true : false,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 68
+        lineNumber: 75
       },
       __self: this
-    }, "Wrong login credentials")) : null))));
+    }, "Wrong login credentials")) : null));
   });
 });
 /* harmony default export */ __webpack_exports__["default"] = (LoginForm);
@@ -853,6 +880,14 @@ var StyledForm = styled_components__WEBPACK_IMPORTED_MODULE_9___default.a.form.w
 })(["display:flex;flex-direction:column;align-items:flex-start;", ";"], function (props) {
   return props.loading && "filter: grayscale(0.5) blur(5px) opacity(0.6); pointer-events: none";
 });
+var SubmitButton = styled_components__WEBPACK_IMPORTED_MODULE_9___default()(_shared_Button__WEBPACK_IMPORTED_MODULE_13__["default"]).withConfig({
+  displayName: "LoginForm2__SubmitButton",
+  componentId: "sc-1mwh11w-1"
+})(["align-self:flex-end;margin-right:0px;margin-left:auto;"]);
+var InputWrapper = styled_components__WEBPACK_IMPORTED_MODULE_9___default.a.div.withConfig({
+  displayName: "LoginForm2__InputWrapper",
+  componentId: "sc-1mwh11w-2"
+})(["position:relative;margin-bottom:24px;width:100%;"]);
 
 /***/ }),
 
@@ -877,6 +912,32 @@ var Label = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.label.withC
   return props.theme.mutedText;
 });
 /* harmony default export */ __webpack_exports__["default"] = (Label);
+
+/***/ }),
+
+/***/ "./components/shared/Button.js":
+/*!*************************************!*\
+  !*** ./components/shared/Button.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./components/shared/helpers.js");
+
+
+var Button = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.button.withConfig({
+  displayName: "Button",
+  componentId: "sc-1yqwkyz-0"
+})(["", ";", ";border:none;border-radius:3px;padding:8px 24px;background-color:", ";cursor:pointer;color:#ffffff;outline:none;:hover{filter:brightness(110%);}:active{filter:brightness(90%);}:focus{box-shadow:0 0 0 2px ", ";}"], Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["transition"])("filter", "box-shadow"), _helpers__WEBPACK_IMPORTED_MODULE_1__["wideFont"], function (props) {
+  return props.theme.accent;
+}, function (props) {
+  return props.theme.accent + "4d";
+});
+/* harmony default export */ __webpack_exports__["default"] = (Button);
 
 /***/ }),
 
@@ -1054,17 +1115,22 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withC
 /*!*****************************!*\
   !*** ./stores/UserStore.ts ***!
   \*****************************/
-/*! exports provided: UserStoreContext */
+/*! exports provided: hydrate, userStore, UserStoreContext, hydrateUser */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrate", function() { return hydrate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userStore", function() { return userStore; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserStoreContext", function() { return UserStoreContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrateUser", function() { return hydrateUser; });
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "mobx");
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-var _class, _descriptor, _descriptor2, _temp;
+/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-persist */ "mobx-persist");
+/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_persist__WEBPACK_IMPORTED_MODULE_2__);
+var _class, _descriptor, _temp;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -1076,20 +1142,12 @@ function _initializerWarningHelper(descriptor, context) { throw new Error('Decor
 
 
 
+
 var UserStore = (_class = (_temp = function UserStore() {
   _classCallCheck(this, UserStore);
 
-  _initializerDefineProperty(this, "user", _descriptor, this);
-
-  _initializerDefineProperty(this, "isAuth", _descriptor2, this);
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "user", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
-  configurable: true,
-  enumerable: true,
-  writable: true,
-  initializer: function initializer() {
-    return "";
-  }
-}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  _initializerDefineProperty(this, "isAuth", _descriptor, this);
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -1097,7 +1155,17 @@ var UserStore = (_class = (_temp = function UserStore() {
     return false;
   }
 })), _class);
-var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])(new UserStore());
+var hydrate = Object(mobx_persist__WEBPACK_IMPORTED_MODULE_2__["create"])();
+var userStore = new UserStore();
+var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])(userStore);
+hydrate("user", userStore).then(function () {
+  return console.log("has been hydrated");
+});
+function hydrateUser() {
+  hydrate("user", userStore).then(function () {
+    return console.log("has been hydrated and reset");
+  });
+}
 
 /***/ }),
 
@@ -1143,6 +1211,17 @@ module.exports = require("graphql-tag");
 /***/ (function(module, exports) {
 
 module.exports = require("mobx");
+
+/***/ }),
+
+/***/ "mobx-persist":
+/*!*******************************!*\
+  !*** external "mobx-persist" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx-persist");
 
 /***/ }),
 
