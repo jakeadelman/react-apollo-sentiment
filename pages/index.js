@@ -16,7 +16,7 @@ export default () => (
             <InnerRowContainer>
               <div style={{ width: "200px", height: "auto", margin: "auto" }}>
                 <img
-                  src="/static/brain.svg"
+                  src="/static/ai2.svg"
                   style={{ margin: "auto", maxWidth: "200px" }}
                 />
               </div>
@@ -28,8 +28,8 @@ export default () => (
             </InnerRowContainer>
             <InnerRowContainerBlack>
               <TxtDivBlack>
-                Get access to meaningful metrics by state of the art machine
-                learning classifiers to supercharge your crypto trading.
+                Get access to state of the art machine learning classifiers to
+                supercharge your crypto trading.
               </TxtDivBlack>
               <TxtDivBlack2>
                 <SignUpButton>Sign Up</SignUpButton>
@@ -75,7 +75,7 @@ const TxtDiv = styled.div`
 `;
 const TxtDivBlack = styled.div`
   ${wideFont}
-  max-width: 550px;
+  max-width: 450px;
   font-size: 15px;
   color: #454f5b;
   text-align: center;
@@ -110,7 +110,7 @@ const InnerRowContainerBlack = styled.div`
   width: 100%;
   min-height: 400px;
   margin-top: 100px;
-  margin-bottom: 80px;
+  margin-bottom: 45px;
   background: #1b1b1b;
   border-radius: 2px;
   display: flex;

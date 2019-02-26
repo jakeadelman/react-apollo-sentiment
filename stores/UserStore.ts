@@ -1,18 +1,28 @@
-import { observable } from "mobx";
 import { createContext } from "react";
-import { create, persist } from "mobx-persist";
+import { observable } from "mobx";
+// import * as mobby from "mobx-sync";
+// import { create, persist } from "mobx-persist";
 
 class UserStore {
-  @persist @observable isAuth = false;
+  @observable isAuth = false;
 }
 
-export const hydrate = create();
+// const store = observable({ foo: "the" });
+
 export const userStore = new UserStore();
 export const UserStoreContext = createContext(userStore);
-hydrate("user", userStore).then(() => console.log("has been hydrated"));
+// let trunk = new mobby.AsyncTrunk(store);
+// trunk.init().then(() => {
+//   // do any staff with loaded store
+//   console.log("userStore.isAuth");
+// });
 
-export function hydrateUser() {
-  hydrate("user", userStore).then(() =>
-    console.log("has been hydrated and reset")
-  );
-}
+// if (process.browser) {
+// const hydrate = create();
+// hydrate("user", userStore).then(() => console.log("has been hydrated"));
+
+// export function hydrateUser() {
+//   hydrate("user", userStore).then(() =>
+//     console.log("has been hydrated and reset")
+//   );
+// }

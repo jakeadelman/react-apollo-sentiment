@@ -1235,7 +1235,7 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/index.js";
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-    src: "/static/brain.svg",
+    src: "/static/ai2.svg",
     style: {
       margin: "auto",
       maxWidth: "200px"
@@ -1269,7 +1269,7 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/index.js";
       lineNumber: 30
     },
     __self: this
-  }, "Get access to meaningful metrics by state of the art machine learning classifiers to supercharge your crypto trading."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TxtDivBlack2, {
+  }, "Get access to state of the art machine learning classifiers to supercharge your crypto trading."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TxtDivBlack2, {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 34
@@ -1306,7 +1306,7 @@ var TxtDiv = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withCo
 var TxtDivBlack = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
   displayName: "pages__TxtDivBlack",
   componentId: "teytsb-4"
-})(["", " max-width:550px;font-size:15px;color:#454f5b;text-align:center;margin:auto;margin-bottom:25px;"], _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__["wideFont"]);
+})(["", " max-width:450px;font-size:15px;color:#454f5b;text-align:center;margin:auto;margin-bottom:25px;"], _components_shared_helpers__WEBPACK_IMPORTED_MODULE_7__["wideFont"]);
 var TxtDivBlack2 = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
   displayName: "pages__TxtDivBlack2",
   componentId: "teytsb-5"
@@ -1324,7 +1324,7 @@ var InnerRowContainer = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a
 var InnerRowContainerBlack = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
   displayName: "pages__InnerRowContainerBlack",
   componentId: "teytsb-8"
-})(["width:100%;min-height:400px;margin-top:100px;margin-bottom:80px;background:#1b1b1b;border-radius:2px;display:flex;flex-direction:column;"]);
+})(["width:100%;min-height:400px;margin-top:100px;margin-bottom:45px;background:#1b1b1b;border-radius:2px;display:flex;flex-direction:column;"]);
 
 /***/ }),
 
@@ -1332,21 +1332,17 @@ var InnerRowContainerBlack = styled_components__WEBPACK_IMPORTED_MODULE_4___defa
 /*!*****************************!*\
   !*** ./stores/UserStore.ts ***!
   \*****************************/
-/*! exports provided: hydrate, userStore, UserStoreContext, hydrateUser */
+/*! exports provided: userStore, UserStoreContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrate", function() { return hydrate; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "userStore", function() { return userStore; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserStoreContext", function() { return UserStoreContext; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrateUser", function() { return hydrateUser; });
-/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "mobx");
-/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-persist */ "mobx-persist");
-/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_persist__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx */ "mobx");
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_1__);
 var _class, _descriptor, _temp;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
@@ -1358,31 +1354,36 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
 function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
 
 
-
+ // import * as mobby from "mobx-sync";
+// import { create, persist } from "mobx-persist";
 
 var UserStore = (_class = (_temp = function UserStore() {
   _classCallCheck(this, UserStore);
 
   _initializerDefineProperty(this, "isAuth", _descriptor, this);
-}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+}, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx__WEBPACK_IMPORTED_MODULE_1__["observable"]], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
     return false;
   }
-})), _class);
-var hydrate = Object(mobx_persist__WEBPACK_IMPORTED_MODULE_2__["create"])();
+})), _class); // const store = observable({ foo: "the" });
+
 var userStore = new UserStore();
-var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_1__["createContext"])(userStore);
-hydrate("user", userStore).then(function () {
-  return console.log("has been hydrated");
-});
-function hydrateUser() {
-  hydrate("user", userStore).then(function () {
-    return console.log("has been hydrated and reset");
-  });
-}
+var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])(userStore); // let trunk = new mobby.AsyncTrunk(store);
+// trunk.init().then(() => {
+//   // do any staff with loaded store
+//   console.log("userStore.isAuth");
+// });
+// if (process.browser) {
+// const hydrate = create();
+// hydrate("user", userStore).then(() => console.log("has been hydrated"));
+// export function hydrateUser() {
+//   hydrate("user", userStore).then(() =>
+//     console.log("has been hydrated and reset")
+//   );
+// }
 
 /***/ }),
 
@@ -1428,17 +1429,6 @@ module.exports = require("graphql-tag");
 /***/ (function(module, exports) {
 
 module.exports = require("mobx");
-
-/***/ }),
-
-/***/ "mobx-persist":
-/*!*******************************!*\
-  !*** external "mobx-persist" ***!
-  \*******************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("mobx-persist");
 
 /***/ }),
 
