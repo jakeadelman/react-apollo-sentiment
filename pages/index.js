@@ -5,12 +5,19 @@ import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
 import HomeSvg from "../components/HomepageSvg";
 import { smallFont, wideFont } from "../components/shared/helpers";
+// import Typing from "react-typing-animation";
+import Typist from "react-typist";
+import TypistLoop from "react-typist-loop";
+
+let cursor = {
+  blink: true
+};
 
 export default () => (
   <App>
-    <Header />
+    <Header style={{ margin: "0" }} />
     <ThemeProvider theme={theme}>
-      <OuterWrapper>
+      <OuterWrapper style={{ margin: "0" }}>
         <Wrapper>
           <RowOne>
             <InnerRowContainer>
@@ -23,7 +30,15 @@ export default () => (
             </InnerRowContainer>
             <InnerRowContainer>
               <TxtDiv>
-                Outperform the market with better data at your fingertips
+                <TypistLoop interval={1500}>
+                  {["beat", "outperform", "dominate"].map(text => (
+                    <Typist key={text} stdTypingDelay={35} cursor={cursor}>
+                      <span>{text}</span>
+                      <Typist.Backspace count={text.length} delay={2200} />
+                    </Typist>
+                  ))}
+                </TypistLoop>
+                <div style={{ marginLeft: "1px" }}>the market</div>
               </TxtDiv>
             </InnerRowContainer>
             <InnerRowContainerBlack>
@@ -44,18 +59,19 @@ export default () => (
 
 const OuterWrapper = styled.div`
   background-color: ${props => props.theme.foreground};
+  height: 100%;
+  margin-bottom: 0;
 `;
 const Wrapper = styled.div`
   display: flex;
   margin: 0 10vw;
-  height: 100%;
+  height: auto;
   background-color: ${props => props.theme.foreground};
 
   @media (max-width: 1024px) {
     margin: 0 5vw;
   }
   @media (max-width: 768px) {
-    display: block;
     margin: 0;
   }
 `;
@@ -68,16 +84,18 @@ const SignUpButton = styled.button`
 
 const TxtDiv = styled.div`
   ${wideFont}
-  max-width: 350px;
+  max-width: 230px;
   font-size: 15px;
   text-align: center;
   margin: auto;
+  display: flex;
+  flex-direction: row;
 `;
 const TxtDivBlack = styled.div`
   ${wideFont}
   max-width: 450px;
   font-size: 15px;
-  color: #454f5b;
+  color: #ffffff;
   text-align: center;
   margin: auto;
   margin-bottom: 25px;
@@ -86,7 +104,7 @@ const TxtDivBlack2 = styled.div`
   ${wideFont}
   max-width: 550px;
   font-size: 15px;
-  color: #454f5b;
+  color: #ffffff;
   text-align: center;
   margin: auto;
   margin-top: 25px;
@@ -110,9 +128,15 @@ const InnerRowContainerBlack = styled.div`
   width: 100%;
   min-height: 400px;
   margin-top: 100px;
-  margin-bottom: 45px;
+  margin-bottom: 65px;
   background: #1b1b1b;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
+  @media (max-width: 1024px) {
+    margin-bottom: 0;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 0;
+  }
 `;

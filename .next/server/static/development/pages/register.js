@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -680,11 +680,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Form2/FormWrapper */ "./components/Form2/FormWrapper.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! apollo-utilities */ "apollo-utilities");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(apollo_utilities__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/RegisterForm.js";
 
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        mutation register(\n          $firstName: String!\n          $lastName: String!\n          $email: String!\n          $password: String!\n        ) {\n          register(\n            data: {\n              firstName: $firstName\n              lastName: $lastName\n              email: $email\n              password: $password\n            }\n          ) {\n            id\n          }\n        }\n      "]);
+  var data = _taggedTemplateLiteral(["\n          mutation register(\n            $firstName: String!\n            $lastName: String!\n            $email: String!\n            $password: String!\n          ) {\n            register(\n              data: {\n                firstName: $firstName\n                lastName: $lastName\n                email: $email\n                password: $password\n              }\n            ) {\n              id\n            }\n          }\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -703,6 +707,11 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
+
+
+var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
+
 function RegisterForm() {
   function handleSubmit(event, client) {
     event.preventDefault();
@@ -719,21 +728,14 @@ function RegisterForm() {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        password: password // update: (proxy, { data: { createPost } }) => {
-        //   const data = proxy.readQuery({
-        //     query: allPostsQuery,
-        //     variables: allPostsQueryVars
-        //   });
-        //   proxy.writeQuery({
-        //     query: allPostsQuery,
-        //     data: {
-        //       ...data,
-        //       allPosts: [createPost, ...data.allPosts]
-        //     },
-        //     variables: allPostsQueryVars
-        //   });
-        // }
-
+        password: password
+      }
+    }).then(function (response) {
+      if (response.data) {
+        Cookie.set("uid", response.data.register.id);
+        next_router__WEBPACK_IMPORTED_MODULE_10___default.a.push("/signup");
+      } else {
+        console.log("there was an error");
       }
     });
   }
@@ -741,14 +743,14 @@ function RegisterForm() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["ApolloConsumer"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 60
+      lineNumber: 58
     },
     __self: this
   }, function (client) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 62
+        lineNumber: 60
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledForm, {
@@ -757,102 +759,102 @@ function RegisterForm() {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 63
+        lineNumber: 61
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 64
+        lineNumber: 62
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 65
+        lineNumber: 63
       },
       __self: this
     }, "firstname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "firstname",
+      placeholder: "",
       name: "firstName",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 66
+        lineNumber: 64
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 73
+        lineNumber: 66
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 74
+        lineNumber: 67
       },
       __self: this
     }, "lastname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "lastname",
+      placeholder: "",
       name: "lastName",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 75
+        lineNumber: 68
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 82
+        lineNumber: 70
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 83
+        lineNumber: 71
       },
       __self: this
     }, "email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "email",
+      placeholder: "",
       name: "email",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 84
+        lineNumber: 72
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 86
+        lineNumber: 74
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 87
+        lineNumber: 75
       },
       __self: this
     }, "password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "password",
+      placeholder: "",
       name: "password",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 88
+        lineNumber: 76
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubmitButton, {
       type: "submit",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 95
+        lineNumber: 78
       },
       __self: this
     }, "Submit")));
@@ -871,86 +873,7 @@ var SubmitButton = styled_components__WEBPACK_IMPORTED_MODULE_8___default()(_sha
 var InputWrapper = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.div.withConfig({
   displayName: "RegisterForm__InputWrapper",
   componentId: "sc-1jkrpw9-2"
-})(["position:relative;margin-bottom:24px;width:100%;"]); // import React, { useContext, useState } from "react";
-// import { ApolloConsumer } from "react-apollo";
-// import gql from "graphql-tag";
-// import Router from "next/router";
-// import { Alert } from "reactstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import { observer } from "mobx-react-lite";
-// import { UserStoreContext } from "../stores/UserStore.ts";
-// import styled from "styled-components";
-// import FormWrapper from "./Form2/FormWrapper";
-// const LoginForm = observer(() => {
-//   const userStore = useContext(UserStoreContext);
-//   async function handleSubmit(event, client) {
-//     event.preventDefault();
-//     const form = event.target;
-//     const formData = new window.FormData(form);
-//     const email = formData.get("email");
-//     const password = formData.get("password");
-//     console.log(email, password);
-//     form.reset();
-//     let res = client.mutate({
-//       mutation: gql`
-//         mutation login($email: String!, $password: String!) {
-//           login(email: $email, password: $password)
-//         }
-//       `,
-//       variables: { email, password }
-//     });
-//     //check if login credentials are correct
-//     let r = await res;
-//     r = r.data.login;
-//     console.log(r);
-//     let isTrue = r == "true";
-//     if (isTrue == true) {
-//       userStore.isAuth = true;
-//       Router.push("/dashboard");
-//     } else {
-//       setWrongCredentials(true);
-//       return;
-//     }
-//   }
-//   const [wrongCredentials, setWrongCredentials] = useState(false);
-//   return (
-//     <ApolloConsumer>
-//       {client => (
-//         <FormWrapper>
-//           <StyledForm onSubmit={event => handleSubmit(event, client)}>
-//             <InputWrapper>
-//               <Label>email</Label>
-//               <Input placeholder="email" name="email" type="text" required />
-//             </InputWrapper>
-//             <InputWrapper>
-//               <Label>password</Label>
-//               <Input
-//                 placeholder="password"
-//                 name="password"
-//                 type="text"
-//                 required
-//               />
-//             </InputWrapper>
-//             <div style={{ display: "flex", width: "100%" }}>
-//               <SubmitButton type="submit">Submit</SubmitButton>
-//             </div>
-//             {wrongCredentials == true ? (
-//               <div className="login-alert">
-//                 <Alert
-//                   color="secondary"
-//                   isOpen={wrongCredentials == true ? true : false}
-//                 >
-//                   Wrong login credentials
-//                 </Alert>
-//               </div>
-//             ) : null}
-//           </StyledForm>
-//         </FormWrapper>
-//       )}
-//     </ApolloConsumer>
-//   );
-// });
-// export default LoginForm;
+})(["position:relative;margin-bottom:24px;width:100%;"]);
 
 /***/ }),
 
@@ -1233,7 +1156,7 @@ var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"
 
 /***/ }),
 
-/***/ 7:
+/***/ 6:
 /*!*********************************!*\
   !*** multi ./pages/register.js ***!
   \*********************************/
@@ -1242,6 +1165,17 @@ var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"
 
 module.exports = __webpack_require__(/*! ./pages/register.js */"./pages/register.js");
 
+
+/***/ }),
+
+/***/ "apollo-utilities":
+/*!***********************************!*\
+  !*** external "apollo-utilities" ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("apollo-utilities");
 
 /***/ }),
 

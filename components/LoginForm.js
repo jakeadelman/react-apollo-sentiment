@@ -53,13 +53,8 @@ const LoginForm = observer(() => {
             <StyledForm>
               <form onSubmit={event => handleSubmit(event, client)}>
                 <h1>Login</h1>
-                <Input placeholder="email" name="email" type="text" required />
-                <input
-                  placeholder="password"
-                  name="password"
-                  type="text"
-                  required
-                />
+                <Input placeholder="" name="email" type="text" required />
+                <input placeholder="" name="password" type="text" required />
                 <button type="submit">Submit</button>
                 {wrongCredentials == true ? (
                   <div className="login-alert">

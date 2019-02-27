@@ -166,25 +166,40 @@ function (_Document) {
           lineNumber: 26
         },
         __self: this
-      }, this.props.styleTags), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
-        style: {
-          backgroundColor: "#f4f6f8"
-        },
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 27
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], {
+      }, this.props.styleTags, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("meta", {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
         __source: {
           fileName: _jsxFileName,
           lineNumber: 28
         },
         __self: this
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("script", {
+        src: "https://js.stripe.com/v3/",
         __source: {
           fileName: _jsxFileName,
           lineNumber: 29
+        },
+        __self: this
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
+        style: {
+          backgroundColor: "#f4f6f8"
+        },
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 31
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 32
+        },
+        __self: this
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 33
         },
         __self: this
       })));

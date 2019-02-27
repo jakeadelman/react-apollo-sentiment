@@ -3,55 +3,55 @@ import { withRouter } from "next/router";
 // import Head from "Header/Head";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
-import { observer } from "mobx-react-lite";
-import { UserStoreContext } from "../../stores/UserStore";
+// import { observer } from "mobx-react-lite";
+// import { UserStoreContext } from "../../stores/UserStore";
 import { useContext, useState } from "react";
 import HeaderLogo from "./Logo";
 
-const Header2 = observer(({ router: { pathname } }) => {
-  const [loading, setLoading] = useState(true);
-  const userStore = useContext(UserStoreContext);
-  console.log(userStore.isAuth);
-  let authOrNo = userStore.isAuth;
-  // UserStoreContext.isAuth = false;
+const Header2 = ({ router: { pathname } }) => {
+  // const [loading, setLoading] = useState(true);
+  // const userStore = useContext(UserStoreContext);
+  // console.log(userStore.isAuth);
+  // let authOrNo = userStore.isAuth;
+  // // UserStoreContext.isAuth = false;
 
-  if (!authOrNo) {
-    // console.log(authOrNo);
-    return (
-      <ThemeProvider theme={theme(false)}>
-        <Wrapper>
-          <HeaderLogo />
+  // if (!authOrNo) {
+  // console.log(authOrNo);
+  return (
+    <ThemeProvider theme={theme(false)}>
+      <Wrapper>
+        <HeaderLogo />
 
-          <Link prefetch href="/login">
-            <StyledLink className={pathname === "/login" ? "is-active" : ""}>
-              login
-            </StyledLink>
-          </Link>
+        <Link prefetch href="/login">
+          <StyledLink className={pathname === "/login" ? "is-active" : ""}>
+            login
+          </StyledLink>
+        </Link>
 
-          <Link prefetch href="/register">
-            <StyledLink className={pathname === "/register" ? "is-active" : ""}>
-              register
-            </StyledLink>
-          </Link>
-        </Wrapper>
-      </ThemeProvider>
-    );
-  } else {
-    return (
-      <ThemeProvider theme={theme(false)}>
-        <Wrapper>
-          <HeaderLogo />
+        <Link prefetch href="/register">
+          <StyledLink className={pathname === "/register" ? "is-active" : ""}>
+            register
+          </StyledLink>
+        </Link>
+      </Wrapper>
+    </ThemeProvider>
+  );
+  // } else {
+  //   return (
+  //     <ThemeProvider theme={theme(false)}>
+  //       <Wrapper>
+  //         <HeaderLogo />
 
-          <Link prefetch href="/logout">
-            <StyledLink className={pathname === "/login" ? "is-active" : ""}>
-              logout
-            </StyledLink>
-          </Link>
-        </Wrapper>
-      </ThemeProvider>
-    );
-  }
-});
+  //         <Link prefetch href="/logout">
+  //           <StyledLink className={pathname === "/login" ? "is-active" : ""}>
+  //             logout
+  //           </StyledLink>
+  //         </Link>
+  //       </Wrapper>
+  //     </ThemeProvider>
+  //   );
+  // }
+};
 
 export default withRouter(Header2);
 
@@ -103,8 +103,11 @@ const Wrapper = styled.header`
   user-select: none;
   @media (max-width: 425px) {
     height: 40px;
-  }
-  @media (max-width: 768px) {
-    padding: 0;
+    margin: 0;
   }
 `;
+
+// @media (max-width: 768px) {
+//   padding: 0;
+//   margin: 0;
+// }

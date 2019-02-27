@@ -580,11 +580,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/Button */ "./components/shared/Button.js");
 /* harmony import */ var _Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Form2/FormWrapper */ "./components/Form2/FormWrapper.js");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! apollo-utilities */ "./node_modules/apollo-utilities/lib/index.js");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/router */ "./node_modules/next/router.js");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/RegisterForm.js";
 
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n        mutation register(\n          $firstName: String!\n          $lastName: String!\n          $email: String!\n          $password: String!\n        ) {\n          register(\n            data: {\n              firstName: $firstName\n              lastName: $lastName\n              email: $email\n              password: $password\n            }\n          ) {\n            id\n          }\n        }\n      "]);
+  var data = _taggedTemplateLiteral(["\n          mutation register(\n            $firstName: String!\n            $lastName: String!\n            $email: String!\n            $password: String!\n          ) {\n            register(\n              data: {\n                firstName: $firstName\n                lastName: $lastName\n                email: $email\n                password: $password\n              }\n            ) {\n              id\n            }\n          }\n        "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -603,6 +606,11 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
+
+
+var Cookie = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+
 function RegisterForm() {
   function handleSubmit(event, client) {
     event.preventDefault();
@@ -619,21 +627,14 @@ function RegisterForm() {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        password: password // update: (proxy, { data: { createPost } }) => {
-        //   const data = proxy.readQuery({
-        //     query: allPostsQuery,
-        //     variables: allPostsQueryVars
-        //   });
-        //   proxy.writeQuery({
-        //     query: allPostsQuery,
-        //     data: {
-        //       ...data,
-        //       allPosts: [createPost, ...data.allPosts]
-        //     },
-        //     variables: allPostsQueryVars
-        //   });
-        // }
-
+        password: password
+      }
+    }).then(function (response) {
+      if (response.data) {
+        Cookie.set("uid", response.data.register.id);
+        next_router__WEBPACK_IMPORTED_MODULE_10___default.a.push("/signup");
+      } else {
+        console.log("there was an error");
       }
     });
   }
@@ -641,14 +642,14 @@ function RegisterForm() {
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["ApolloConsumer"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 60
+      lineNumber: 58
     },
     __self: this
   }, function (client) {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 62
+        lineNumber: 60
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledForm, {
@@ -657,102 +658,102 @@ function RegisterForm() {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 63
+        lineNumber: 61
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 64
+        lineNumber: 62
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 65
+        lineNumber: 63
       },
       __self: this
     }, "firstname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "firstname",
+      placeholder: "",
       name: "firstName",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 66
+        lineNumber: 64
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 73
+        lineNumber: 66
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 74
+        lineNumber: 67
       },
       __self: this
     }, "lastname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "lastname",
+      placeholder: "",
       name: "lastName",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 75
+        lineNumber: 68
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 82
+        lineNumber: 70
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 83
+        lineNumber: 71
       },
       __self: this
     }, "email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "email",
+      placeholder: "",
       name: "email",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 84
+        lineNumber: 72
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 86
+        lineNumber: 74
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 87
+        lineNumber: 75
       },
       __self: this
     }, "password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "password",
+      placeholder: "",
       name: "password",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 88
+        lineNumber: 76
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubmitButton, {
       type: "submit",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 95
+        lineNumber: 78
       },
       __self: this
     }, "Submit")));
@@ -771,86 +772,7 @@ var SubmitButton = Object(styled_components__WEBPACK_IMPORTED_MODULE_8__["defaul
 var InputWrapper = styled_components__WEBPACK_IMPORTED_MODULE_8__["default"].div.withConfig({
   displayName: "RegisterForm__InputWrapper",
   componentId: "sc-1jkrpw9-2"
-})(["position:relative;margin-bottom:24px;width:100%;"]); // import React, { useContext, useState } from "react";
-// import { ApolloConsumer } from "react-apollo";
-// import gql from "graphql-tag";
-// import Router from "next/router";
-// import { Alert } from "reactstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import { observer } from "mobx-react-lite";
-// import { UserStoreContext } from "../stores/UserStore.ts";
-// import styled from "styled-components";
-// import FormWrapper from "./Form2/FormWrapper";
-// const LoginForm = observer(() => {
-//   const userStore = useContext(UserStoreContext);
-//   async function handleSubmit(event, client) {
-//     event.preventDefault();
-//     const form = event.target;
-//     const formData = new window.FormData(form);
-//     const email = formData.get("email");
-//     const password = formData.get("password");
-//     console.log(email, password);
-//     form.reset();
-//     let res = client.mutate({
-//       mutation: gql`
-//         mutation login($email: String!, $password: String!) {
-//           login(email: $email, password: $password)
-//         }
-//       `,
-//       variables: { email, password }
-//     });
-//     //check if login credentials are correct
-//     let r = await res;
-//     r = r.data.login;
-//     console.log(r);
-//     let isTrue = r == "true";
-//     if (isTrue == true) {
-//       userStore.isAuth = true;
-//       Router.push("/dashboard");
-//     } else {
-//       setWrongCredentials(true);
-//       return;
-//     }
-//   }
-//   const [wrongCredentials, setWrongCredentials] = useState(false);
-//   return (
-//     <ApolloConsumer>
-//       {client => (
-//         <FormWrapper>
-//           <StyledForm onSubmit={event => handleSubmit(event, client)}>
-//             <InputWrapper>
-//               <Label>email</Label>
-//               <Input placeholder="email" name="email" type="text" required />
-//             </InputWrapper>
-//             <InputWrapper>
-//               <Label>password</Label>
-//               <Input
-//                 placeholder="password"
-//                 name="password"
-//                 type="text"
-//                 required
-//               />
-//             </InputWrapper>
-//             <div style={{ display: "flex", width: "100%" }}>
-//               <SubmitButton type="submit">Submit</SubmitButton>
-//             </div>
-//             {wrongCredentials == true ? (
-//               <div className="login-alert">
-//                 <Alert
-//                   color="secondary"
-//                   isOpen={wrongCredentials == true ? true : false}
-//                 >
-//                   Wrong login credentials
-//                 </Alert>
-//               </div>
-//             ) : null}
-//           </StyledForm>
-//         </FormWrapper>
-//       )}
-//     </ApolloConsumer>
-//   );
-// });
-// export default LoginForm;
+})(["position:relative;margin-bottom:24px;width:100%;"]);
 
 /***/ }),
 
@@ -10525,82 +10447,6 @@ module.exports = function (data, opts) {
     })(data);
 };
 
-
-/***/ }),
-
-/***/ "./node_modules/fbjs/lib/shallowEqual.js":
-/*!***********************************************!*\
-  !*** ./node_modules/fbjs/lib/shallowEqual.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @typechecks
- * 
- */
-
-/*eslint-disable no-self-compare */
-
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-/**
- * inlined Object.is polyfill to avoid requiring consumers ship their own
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
- */
-
-function is(x, y) {
-  // SameValue algorithm
-  if (x === y) {
-    // Steps 1-5, 7-10
-    // Steps 6.b-6.e: +0 != -0
-    // Added the nonzero y check to make Flow happy, but it is redundant
-    return x !== 0 || y !== 0 || 1 / x === 1 / y;
-  } else {
-    // Step 6.a: NaN == NaN
-    return x !== x && y !== y;
-  }
-}
-/**
- * Performs equality by iterating through keys on an object and returning false
- * when any key has values which are not strictly equal between the arguments.
- * Returns true when the values of all keys are strictly equal.
- */
-
-
-function shallowEqual(objA, objB) {
-  if (is(objA, objB)) {
-    return true;
-  }
-
-  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-    return false;
-  }
-
-  var keysA = Object.keys(objA);
-  var keysB = Object.keys(objB);
-
-  if (keysA.length !== keysB.length) {
-    return false;
-  } // Test for A's keys different from B.
-
-
-  for (var i = 0; i < keysA.length; i++) {
-    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-module.exports = shallowEqual;
 
 /***/ }),
 
@@ -24285,6 +24131,82 @@ exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node
 
 /***/ }),
 
+/***/ "./node_modules/react-apollo/node_modules/fbjs/lib/shallowEqual.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/react-apollo/node_modules/fbjs/lib/shallowEqual.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @typechecks
+ * 
+ */
+
+/*eslint-disable no-self-compare */
+
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+/**
+ * inlined Object.is polyfill to avoid requiring consumers ship their own
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+ */
+
+function is(x, y) {
+  // SameValue algorithm
+  if (x === y) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    // Added the nonzero y check to make Flow happy, but it is redundant
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
+  } else {
+    // Step 6.a: NaN == NaN
+    return x !== x && y !== y;
+  }
+}
+/**
+ * Performs equality by iterating through keys on an object and returning false
+ * when any key has values which are not strictly equal between the arguments.
+ * Returns true when the values of all keys are strictly equal.
+ */
+
+
+function shallowEqual(objA, objB) {
+  if (is(objA, objB)) {
+    return true;
+  }
+
+  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+    return false;
+  }
+
+  var keysA = Object.keys(objA);
+  var keysB = Object.keys(objB);
+
+  if (keysA.length !== keysB.length) {
+    return false;
+  } // Test for A's keys different from B.
+
+
+  for (var i = 0; i < keysA.length; i++) {
+    if (!hasOwnProperty.call(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+module.exports = shallowEqual;
+
+/***/ }),
+
 /***/ "./node_modules/react-apollo/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
 /*!************************************************************************************************************!*\
   !*** ./node_modules/react-apollo/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
@@ -24933,7 +24855,7 @@ if (false) {} else {
                 t[p[i]] = s[p[i]];
         return t;
     };
-    var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ "./node_modules/fbjs/lib/shallowEqual.js");
+    var shallowEqual = __webpack_require__(/*! fbjs/lib/shallowEqual */ "./node_modules/react-apollo/node_modules/fbjs/lib/shallowEqual.js");
     var invariant$4 = __webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
     function compact(obj) {
         return Object.keys(obj).reduce(function (acc, key) {
@@ -25226,7 +25148,7 @@ if (false) {} else {
         return __assign$2.apply(this, arguments);
     };
     var invariant$5 = __webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
-    var shallowEqual$1 = __webpack_require__(/*! fbjs/lib/shallowEqual */ "./node_modules/fbjs/lib/shallowEqual.js");
+    var shallowEqual$1 = __webpack_require__(/*! fbjs/lib/shallowEqual */ "./node_modules/react-apollo/node_modules/fbjs/lib/shallowEqual.js");
     var initialState = {
         loading: false,
         called: false,
@@ -25390,7 +25312,7 @@ if (false) {} else {
             d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
     })();
-    var shallowEqual$2 = __webpack_require__(/*! fbjs/lib/shallowEqual */ "./node_modules/fbjs/lib/shallowEqual.js");
+    var shallowEqual$2 = __webpack_require__(/*! fbjs/lib/shallowEqual */ "./node_modules/react-apollo/node_modules/fbjs/lib/shallowEqual.js");
     var invariant$6 = __webpack_require__(/*! invariant */ "./node_modules/invariant/browser.js");
     var Subscription = (function (_super) {
         __extends$4(Subscription, _super);
@@ -36037,7 +35959,7 @@ var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"
 
 /***/ }),
 
-/***/ 10:
+/***/ 7:
 /*!*********************************!*\
   !*** multi ./pages/register.js ***!
   \*********************************/
@@ -36062,5 +35984,5 @@ module.exports = dll_27b5d34cc2d6e91265fa;
 
 /***/ })
 
-},[[10,"static/runtime/webpack.js","styles"]]]));;
+},[[7,"static/runtime/webpack.js","styles"]]]));;
 //# sourceMappingURL=register.js.map

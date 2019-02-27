@@ -23,7 +23,11 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html>
-        <Head>{this.props.styleTags}</Head>
+        <Head>
+          {this.props.styleTags}
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <script src="https://js.stripe.com/v3/" />
+        </Head>
         <body style={{ backgroundColor: "#f4f6f8" }}>
           <Main />
           <NextScript />

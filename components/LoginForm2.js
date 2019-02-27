@@ -59,16 +59,11 @@ const LoginForm = () => {
           <StyledForm onSubmit={event => handleSubmit(event, client)}>
             <InputWrapper>
               <Label>email</Label>
-              <Input placeholder="email" name="email" type="text" required />
+              <Input placeholder="" name="email" type="text" required />
             </InputWrapper>
             <InputWrapper>
               <Label>password</Label>
-              <Input
-                placeholder="password"
-                name="password"
-                type="text"
-                required
-              />
+              <Input placeholder="" name="password" type="text" required />
             </InputWrapper>
             <div style={{ display: "flex", width: "100%" }}>
               <SubmitButton type="submit">Submit</SubmitButton>

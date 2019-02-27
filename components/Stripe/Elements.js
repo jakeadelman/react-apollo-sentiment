@@ -1,6 +1,8 @@
 import React from "react";
 import { StripeProvider, Elements } from "react-stripe-elements";
 import InjectedCheckoutForm from "./CheckoutForm";
+import styled, { ThemeProvider } from "styled-components";
+import theme from "../theme";
 
 export default class App extends React.Component {
   constructor() {
@@ -16,11 +18,13 @@ export default class App extends React.Component {
   }
   render() {
     return (
-      <StripeProvider stripe={this.state.stripe}>
-        <Elements>
-          <InjectedCheckoutForm />
-        </Elements>
-      </StripeProvider>
+      <ThemeProvider theme={theme(false)}>
+        <StripeProvider stripe={this.state.stripe}>
+          <Elements>
+            <InjectedCheckoutForm />
+          </Elements>
+        </StripeProvider>
+      </ThemeProvider>
     );
   }
 }
