@@ -545,13 +545,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -575,16 +575,12 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(DashInitialTerms).call(this, props));
     _this.state = {};
-    _this.onTheClick = _this.onTheClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.check = _this.check.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(DashInitialTerms, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
       var cook = Cookie.get("isAuth") == "true";
 
       if (!cook) {
@@ -594,34 +590,6 @@ function (_React$Component) {
           isAuth: cook
         });
       }
-
-      setTimeout(function () {
-        console.log("isAuth is ".concat(_this2.props.store.isAuth, " on initial load"));
-      }, 1000); // this.props.store.isAuth = true;
-      // setTimeout(() => {
-      //   this.props.store.isAuth = true;
-      // }, 3000);
-      // this.setState({ iStore: this.props.store.isAuth });
-    }
-  }, {
-    key: "onTheClick",
-    value: function onTheClick() {
-      // let st = new Store();
-      // hydrate("some", st).then(() => {
-      //   this.props.store.isAuth = true;
-      //   console.log("someStore has been hydrated");
-      // });
-      this.props.store.isAuth = !this.props.store.isAuth; // const result = hydrate("some", st, this.state.iStore);
-      // const rehydrate = result.rehydrate;
-      // result.then(() => console.log("some hydrated"));
-      // setTimeout(() => {
-      //   rehydrate().then(() => console.log("rehydrated"));
-      // }, 3000);
-    }
-  }, {
-    key: "check",
-    value: function check() {
-      console.log("isAuth is ".concat(this.props.store.isAuth));
     }
   }, {
     key: "render",
@@ -630,44 +598,17 @@ function (_React$Component) {
         theme: _theme__WEBPACK_IMPORTED_MODULE_2__["default"],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65
+          lineNumber: 30
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FetchQuery__WEBPACK_IMPORTED_MODULE_3__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 66
+          lineNumber: 31
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.onTheClick,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 67
-        },
-        __self: this
-      }, "rehydrate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.check,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 68
-        },
-        __self: this
-      }, "check"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FetchQuery__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 69
-        },
-        __self: this
-      })));
-    } // render() {
-    //   return (
-    //     <ThemeProvider theme={theme}>
-    //       <FetchQuery />
-    //     </ThemeProvider>
-    //   );
-    // }
-
+      }));
+    }
   }]);
 
   return DashInitialTerms;
@@ -694,9 +635,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! graphql-tag */ "./node_modules/graphql-tag/src/index.js");
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/store */ "./stores/store.js");
-/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/dist/index.module.js");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/FetchQuery.js";
 
 
@@ -717,20 +656,19 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-
-
-
  // import { storesContext } from "../../stores/UserStore";
 
-var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("store")(Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])(function (_ref) {
+var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["inject"])("store")(Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["observer"])(function (_ref) {
   var store = _ref.store;
-  // const store = useContext(storesContext);
-  // console.log(store);
-  var theStore = store;
+
+  if (store) {
+    var theStore = store;
+    console.log(theStore.isAuth);
+  }
 
   var clicked = function clicked() {
-    theStore.isAuth = !theStore.isAuth;
-    console.log(theStore.isAuth);
+    store.isAuth = !store.isAuth;
+    console.log(store.isAuth);
   };
 
   var fetchFourHourSentVariables = {
@@ -741,7 +679,7 @@ var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("stor
     variables: fetchFourHourSentVariables,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 25
     },
     __self: this
   }, function (_ref2) {
@@ -751,47 +689,47 @@ var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("stor
     if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 33
+        lineNumber: 30
       },
       __self: this
     }, "no data loaded");
     if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 34
+        lineNumber: 31
       },
       __self: this
     }, "Loading");
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 37
+        lineNumber: 34
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: clicked,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 38
+        lineNumber: 35
       },
       __self: this
     }, "click in query"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 39
+        lineNumber: 36
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
       data: data,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 40
+        lineNumber: 37
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 42
+        lineNumber: 39
       },
       __self: this
     }));
@@ -33079,255 +33017,6 @@ function map(s) {
     return serializr_1.map(object(s));
 }
 exports.types = { object: object, list: list, map: map };
-
-
-/***/ }),
-
-/***/ "./node_modules/mobx-react-lite/dist/index.module.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/mobx-react-lite/dist/index.module.js ***!
-  \***********************************************************/
-/*! exports provided: useObservable, useComputed, useDisposable, isUsingStaticRendering, useStaticRendering, observer, useObserver, Observer */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useObservable", function() { return useObservable; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useComputed", function() { return useComputed; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useDisposable", function() { return useDisposable; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUsingStaticRendering", function() { return isUsingStaticRendering; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useStaticRendering", function() { return useStaticRendering; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "observer", function() { return observer; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "useObserver", function() { return useObserver; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Observer", function() { return ObserverComponent; });
-/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-
-
-
-if (!react__WEBPACK_IMPORTED_MODULE_1__["useState"]) {
-    throw new Error("mobx-react-lite requires React with Hooks support");
-}
-if (!mobx__WEBPACK_IMPORTED_MODULE_0__["spy"]) {
-    throw new Error("mobx-react-lite requires mobx at least version 4 to be available");
-}
-
-function useObservable(initialValue) {
-    var observableRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])(null);
-    if (!observableRef.current) {
-        observableRef.current = Object(mobx__WEBPACK_IMPORTED_MODULE_0__["observable"])(initialValue);
-    }
-    return observableRef.current;
-}
-
-function useComputed(func, inputs) {
-    if (inputs === void 0) { inputs = []; }
-    var computed$$1 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useMemo"])(function () { return Object(mobx__WEBPACK_IMPORTED_MODULE_0__["computed"])(func); }, inputs);
-    return computed$$1.get();
-}
-
-var doNothingDisposer = function () {
-    // empty
-};
-/**
- * Adds an observable effect (reaction, autorun, or anything else that returns a disposer) that will be registered upon component creation and disposed upon unmounting.
- * Returns the generated disposer for early disposal.
- *
- * @export
- * @template D
- * @param {() => D} disposerGenerator A function that returns the disposer of the wanted effect.
- * @param {ReadonlyArray<any>} [inputs=[]] If you want the effect to be automatically re-created when some variable(s) are changed then pass them in this array.
- * @returns {D}
- */
-function useDisposable(disposerGenerator, inputs) {
-    if (inputs === void 0) { inputs = []; }
-    var disposerRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])(null);
-    var earlyDisposedRef = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])(false);
-    Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () {
-        return lazyCreateDisposer(false);
-    }, inputs);
-    function lazyCreateDisposer(earlyDisposal) {
-        // ensure that we won't create a new disposer if it was early disposed
-        if (earlyDisposedRef.current) {
-            return doNothingDisposer;
-        }
-        if (!disposerRef.current) {
-            var newDisposer = disposerGenerator();
-            if (typeof newDisposer !== "function") {
-                var error = new Error("generated disposer must be a function");
-                {
-                    // tslint:disable-next-line:no-console
-                    console.error(error);
-                    return doNothingDisposer;
-                }
-            }
-            disposerRef.current = newDisposer;
-        }
-        return function () {
-            if (disposerRef.current) {
-                disposerRef.current();
-                disposerRef.current = null;
-            }
-            if (earlyDisposal) {
-                earlyDisposedRef.current = true;
-            }
-        };
-    }
-    return lazyCreateDisposer(true);
-}
-
-var globalIsUsingStaticRendering = false;
-function useStaticRendering(enable) {
-    globalIsUsingStaticRendering = enable;
-}
-function isUsingStaticRendering() {
-    return globalIsUsingStaticRendering;
-}
-
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
-function __read(o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-}
-
-var EMPTY_ARRAY = [];
-function useUnmount(fn) {
-    Object(react__WEBPACK_IMPORTED_MODULE_1__["useEffect"])(function () { return fn; }, EMPTY_ARRAY);
-}
-function useForceUpdate() {
-    var _a = __read(Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0), 2), setTick = _a[1];
-    var update = Object(react__WEBPACK_IMPORTED_MODULE_1__["useCallback"])(function () {
-        setTick(function (tick) { return tick + 1; });
-    }, []);
-    return update;
-}
-
-function useObserver(fn, baseComponentName) {
-    if (baseComponentName === void 0) { baseComponentName = "observed"; }
-    if (isUsingStaticRendering()) {
-        return fn();
-    }
-    var forceUpdate = useForceUpdate();
-    var reaction = Object(react__WEBPACK_IMPORTED_MODULE_1__["useRef"])(null);
-    if (!reaction.current) {
-        reaction.current = new mobx__WEBPACK_IMPORTED_MODULE_0__["Reaction"]("observer(" + baseComponentName + ")", function () {
-            forceUpdate();
-        });
-    }
-    useUnmount(function () {
-        reaction.current.dispose();
-    });
-    // render the original component, but have the
-    // reaction track the observables, so that rendering
-    // can be invalidated (see above) once a dependency changes
-    var rendering;
-    reaction.current.track(function () {
-        rendering = fn();
-    });
-    return rendering;
-}
-
-// n.b. base case is not used for actual typings or exported in the typing files
-function observer(baseComponent, options) {
-    // The working of observer is explaind step by step in this talk: https://www.youtube.com/watch?v=cPF4iBedoF0&feature=youtu.be&t=1307
-    if (isUsingStaticRendering()) {
-        return baseComponent;
-    }
-    var realOptions = __assign({ forwardRef: false }, options);
-    var baseComponentName = baseComponent.displayName || baseComponent.name;
-    var wrappedComponent = function (props, ref) {
-        return useObserver(function () { return baseComponent(props, ref); }, baseComponentName);
-    };
-    // memo; we are not intested in deep updates
-    // in props; we assume that if deep objects are changed,
-    // this is in observables, which would have been tracked anyway
-    var memoComponent;
-    if (realOptions.forwardRef) {
-        // we have to use forwardRef here because:
-        // 1. it cannot go before memo, only after it
-        // 2. forwardRef converts the function into an actual component, so we can't let the baseComponent do it
-        //    since it wouldn't be a callable function anymore
-        memoComponent = Object(react__WEBPACK_IMPORTED_MODULE_1__["memo"])(Object(react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"])(wrappedComponent));
-    }
-    else {
-        memoComponent = Object(react__WEBPACK_IMPORTED_MODULE_1__["memo"])(wrappedComponent);
-    }
-    memoComponent.displayName = baseComponentName;
-    return memoComponent;
-}
-
-function ObserverComponent(_a) {
-    var children = _a.children, render = _a.render;
-    var component = children || render;
-    if (typeof component !== "function") {
-        return null;
-    }
-    return useObserver(component);
-}
-ObserverComponent.propTypes = {
-    children: ObserverPropsCheck,
-    render: ObserverPropsCheck
-};
-ObserverComponent.displayName = "Observer";
-function ObserverPropsCheck(props, key, componentName, location, propFullName) {
-    var extraKey = key === "children" ? "render" : "children";
-    var hasProp = typeof props[key] === "function";
-    var hasExtraProp = typeof props[extraKey] === "function";
-    if (hasProp && hasExtraProp) {
-        return new Error("MobX Observer: Do not use children and render in the same time in`" + componentName);
-    }
-    if (hasProp || hasExtraProp) {
-        return null;
-    }
-    return new Error("Invalid prop `" +
-        propFullName +
-        "` of type `" +
-        typeof props[key] +
-        "` supplied to" +
-        " `" +
-        componentName +
-        "`, expected `function`.");
-}
-
-
 
 
 /***/ }),
@@ -88289,8 +87978,8 @@ function initializeStore(initialData) {
     store = new Store(isServer, initialData);
   }
 
-  hydrate("some", store).then(function () {
-    return console.log("someStore has been hydrated");
+  hydrate("store", store).then(function () {
+    console.log("someStore has been hydrated");
   });
   return store;
 }

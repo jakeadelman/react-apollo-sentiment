@@ -3,22 +3,19 @@ import ReChart from "../Charts/ReChart";
 import Sidebar from "../Categories/Menu";
 import gql from "graphql-tag";
 import styled from "styled-components";
-import { StoreContext } from "../../stores/store";
-import { useContext } from "react";
-import { observer } from "mobx-react-lite";
-import { inject } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 // import { storesContext } from "../../stores/UserStore";
 
 const FetchQuery = inject("store")(
   observer(({ store }) => {
-    // const store = useContext(storesContext);
-    // console.log(store);
-    let theStore = store;
-
-    const clicked = () => {
-      theStore.isAuth = !theStore.isAuth;
+    if (store) {
+      let theStore = store;
       console.log(theStore.isAuth);
+    }
+    const clicked = () => {
+      store.isAuth = !store.isAuth;
+      console.log(store.isAuth);
     };
 
     let fetchFourHourSentVariables = {

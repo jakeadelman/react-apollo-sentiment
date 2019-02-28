@@ -646,13 +646,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 
 
@@ -676,16 +676,12 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(DashInitialTerms).call(this, props));
     _this.state = {};
-    _this.onTheClick = _this.onTheClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.check = _this.check.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(DashInitialTerms, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
-
       var cook = Cookie.get("isAuth") == "true";
 
       if (!cook) {
@@ -695,34 +691,6 @@ function (_React$Component) {
           isAuth: cook
         });
       }
-
-      setTimeout(function () {
-        console.log("isAuth is ".concat(_this2.props.store.isAuth, " on initial load"));
-      }, 1000); // this.props.store.isAuth = true;
-      // setTimeout(() => {
-      //   this.props.store.isAuth = true;
-      // }, 3000);
-      // this.setState({ iStore: this.props.store.isAuth });
-    }
-  }, {
-    key: "onTheClick",
-    value: function onTheClick() {
-      // let st = new Store();
-      // hydrate("some", st).then(() => {
-      //   this.props.store.isAuth = true;
-      //   console.log("someStore has been hydrated");
-      // });
-      this.props.store.isAuth = !this.props.store.isAuth; // const result = hydrate("some", st, this.state.iStore);
-      // const rehydrate = result.rehydrate;
-      // result.then(() => console.log("some hydrated"));
-      // setTimeout(() => {
-      //   rehydrate().then(() => console.log("rehydrated"));
-      // }, 3000);
-    }
-  }, {
-    key: "check",
-    value: function check() {
-      console.log("isAuth is ".concat(this.props.store.isAuth));
     }
   }, {
     key: "render",
@@ -731,44 +699,17 @@ function (_React$Component) {
         theme: _theme__WEBPACK_IMPORTED_MODULE_2__["default"],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 65
+          lineNumber: 30
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FetchQuery__WEBPACK_IMPORTED_MODULE_3__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 66
+          lineNumber: 31
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.onTheClick,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 67
-        },
-        __self: this
-      }, "rehydrate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        onClick: this.check,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 68
-        },
-        __self: this
-      }, "check"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FetchQuery__WEBPACK_IMPORTED_MODULE_3__["default"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 69
-        },
-        __self: this
-      })));
-    } // render() {
-    //   return (
-    //     <ThemeProvider theme={theme}>
-    //       <FetchQuery />
-    //     </ThemeProvider>
-    //   );
-    // }
-
+      }));
+    }
   }]);
 
   return DashInitialTerms;
@@ -796,11 +737,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/store */ "./stores/store.js");
-/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! mobx-react-lite */ "mobx-react-lite");
-/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "mobx-react");
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_6__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/FetchQuery.js";
 
 
@@ -821,20 +759,19 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
-
-
-
  // import { storesContext } from "../../stores/UserStore";
 
-var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("store")(Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])(function (_ref) {
+var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["inject"])("store")(Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["observer"])(function (_ref) {
   var store = _ref.store;
-  // const store = useContext(storesContext);
-  // console.log(store);
-  var theStore = store;
+
+  if (store) {
+    var theStore = store;
+    console.log(theStore.isAuth);
+  }
 
   var clicked = function clicked() {
-    theStore.isAuth = !theStore.isAuth;
-    console.log(theStore.isAuth);
+    store.isAuth = !store.isAuth;
+    console.log(store.isAuth);
   };
 
   var fetchFourHourSentVariables = {
@@ -845,7 +782,7 @@ var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("stor
     variables: fetchFourHourSentVariables,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 28
+      lineNumber: 25
     },
     __self: this
   }, function (_ref2) {
@@ -855,47 +792,47 @@ var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("stor
     if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 33
+        lineNumber: 30
       },
       __self: this
     }, "no data loaded");
     if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 34
+        lineNumber: 31
       },
       __self: this
     }, "Loading");
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 37
+        lineNumber: 34
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       onClick: clicked,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 38
+        lineNumber: 35
       },
       __self: this
     }, "click in query"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 39
+        lineNumber: 36
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
       data: data,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 40
+        lineNumber: 37
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 42
+        lineNumber: 39
       },
       __self: this
     }));
@@ -1417,8 +1354,8 @@ function initializeStore(initialData) {
     store = new Store(isServer, initialData);
   }
 
-  hydrate("some", store).then(function () {
-    return console.log("someStore has been hydrated");
+  hydrate("store", store).then(function () {
+    console.log("someStore has been hydrated");
   });
   return store;
 }
@@ -1500,17 +1437,6 @@ module.exports = require("mobx-persist");
 /***/ (function(module, exports) {
 
 module.exports = require("mobx-react");
-
-/***/ }),
-
-/***/ "mobx-react-lite":
-/*!**********************************!*\
-  !*** external "mobx-react-lite" ***!
-  \**********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("mobx-react-lite");
 
 /***/ }),
 

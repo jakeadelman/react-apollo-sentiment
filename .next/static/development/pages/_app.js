@@ -56029,10 +56029,7 @@ function (_App) {
               case 0:
                 // Get or Create the store with `undefined` as initialState
                 // This allows you to set a custom default initialState
-                mobxStore = Object(_stores_store__WEBPACK_IMPORTED_MODULE_6__["initializeStore"])(); // hydrate("some", mobxStore).then(() =>
-                //   console.log("mobx has been hydrated")
-                // );
-                // Provide the store to getInitialProps of pages
+                mobxStore = Object(_stores_store__WEBPACK_IMPORTED_MODULE_6__["initializeStore"])(); // Provide the store to getInitialProps of pages
 
                 appContext.ctx.mobxStore = mobxStore;
                 _context.next = 4;
@@ -56081,27 +56078,27 @@ function (_App) {
       return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_1__["Container"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 39
+          lineNumber: 35
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_4__["ApolloProvider"], {
         client: apolloClient,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 40
+          lineNumber: 36
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(mobx_react__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
         store: this.mobxStore,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 41
+          lineNumber: 37
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, _extends({}, pageProps, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 42
+          lineNumber: 38
         },
         __self: this
       })))));
@@ -56224,8 +56221,8 @@ function initializeStore(initialData) {
     store = new Store(isServer, initialData);
   }
 
-  hydrate("some", store).then(function () {
-    return console.log("someStore has been hydrated");
+  hydrate("store", store).then(function () {
+    console.log("someStore has been hydrated");
   });
   return store;
 }

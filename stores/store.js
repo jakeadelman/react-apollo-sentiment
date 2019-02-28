@@ -39,7 +39,10 @@ export function initializeStore(initialData) {
   if (store === null) {
     store = new Store(isServer, initialData);
   }
-  hydrate("some", store).then(() => console.log("someStore has been hydrated"));
+
+  hydrate("store", store).then(() => {
+    console.log("someStore has been hydrated");
+  });
 
   return store;
 }

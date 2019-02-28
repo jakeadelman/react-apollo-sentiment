@@ -10,13 +10,9 @@ class MyApp extends App {
     // Get or Create the store with `undefined` as initialState
     // This allows you to set a custom default initialState
     const mobxStore = initializeStore();
-    // hydrate("some", mobxStore).then(() =>
-    //   console.log("mobx has been hydrated")
-    // );
 
     // Provide the store to getInitialProps of pages
     appContext.ctx.mobxStore = mobxStore;
-
     let appProps = await App.getInitialProps(appContext);
 
     return {
