@@ -73,17 +73,17 @@ export default class Example extends PureComponent {
   }
 
   updateWindowDimensions() {
-    if (window.innerWidth < 1024) {
+    if (window.innerWidth < 768) {
+      this.setState({
+        width: window.innerWidth,
+        height: window.innerHeight,
+        chartWidth: window.innerWidth * 0.9
+      });
+    } else if (window.innerWidth < 1024) {
       this.setState({
         width: window.innerWidth,
         height: window.innerHeight,
         chartWidth: window.innerWidth * 0.9 - 179
-      });
-    } else if (window.innerWidth < 750) {
-      this.setState({
-        width: window.innerWidth,
-        height: window.innerHeight,
-        chartWidth: window.innerWidth - 179
       });
     } else if (window.innerWidth >= 1024) {
       this.setState({

@@ -43,6 +43,7 @@
     "mobx": "^5.9.0",
     "mobx-persist": "^0.4.1",
     "mobx-react-lite": "^1.0.1",
+    "mobx-sync": "^2.0.0",
     "next": "^7.0.2",
     "next-auth": "^1.12.1",
     "node-sass": "^4.11.0",

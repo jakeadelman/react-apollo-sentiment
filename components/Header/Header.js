@@ -4,8 +4,6 @@ import { withRouter } from "next/router";
 // import Head from "Header/Head";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
-import { observer } from "mobx-react-lite";
-import { UserStoreContext } from "../../stores/UserStore";
 import { useContext, useState } from "react";
 import HeaderLogo from "./Logo";
 import "./header.scss";
