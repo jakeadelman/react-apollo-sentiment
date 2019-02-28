@@ -1,6 +1,5 @@
 import App from "../components/App";
 import Header from "../components/Header/HomeHeader";
-import LoginForm from "../components/LoginForm";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
 import HomeSvg from "../components/HomepageSvg";

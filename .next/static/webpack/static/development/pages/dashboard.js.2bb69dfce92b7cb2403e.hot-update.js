@@ -9,7 +9,6 @@ webpackHotUpdate("static/development/pages/dashboard.js",{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FetchQuery; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/react-apollo.browser.umd.js");
@@ -19,6 +18,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! graphql-tag */ "./node_modules/graphql-tag/src/index.js");
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/store */ "./stores/store.js");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! mobx-react-lite */ "./node_modules/mobx-react-lite/dist/index.module.js");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/FetchQuery.js";
 
 
@@ -38,11 +40,23 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
+
+
+
  // import { storesContext } from "../../stores/UserStore";
 
-function FetchQuery() {
+var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("store")(Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])(function (_ref) {
+  var store = _ref.store;
   // const store = useContext(storesContext);
   // console.log(store);
+  var theStore = store;
+
+  var clicked = function clicked() {
+    theStore.isAuth = theStore.isAuth;
+    console.log(theStore.isAuth);
+  };
+
   var fetchFourHourSentVariables = {
     term: "bitcoin"
   };
@@ -51,55 +65,63 @@ function FetchQuery() {
     variables: fetchFourHourSentVariables,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 28
     },
     __self: this
-  }, function (_ref) {
-    var loading = _ref.loading,
-        error = _ref.error,
-        data = _ref.data;
+  }, function (_ref2) {
+    var loading = _ref2.loading,
+        error = _ref2.error,
+        data = _ref2.data;
     if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21
+        lineNumber: 33
       },
       __self: this
     }, "no data loaded");
     if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 22
+        lineNumber: 34
       },
       __self: this
     }, "Loading");
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 25
+        lineNumber: 37
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: clicked,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 26
+        lineNumber: 38
+      },
+      __self: this
+    }, "click in query"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 39
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
       data: data,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 27
+        lineNumber: 40
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 29
+        lineNumber: 42
       },
       __self: this
     }));
   });
-}
+}));
+/* harmony default export */ __webpack_exports__["default"] = (FetchQuery);
 var fetchFourHourSentQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_4___default()(_templateObject());
 var ChartWrapper = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "FetchQuery__ChartWrapper",
@@ -110,13 +132,7 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.with
   componentId: "sc-1g6l220-1"
 })(["display:flex;align-items:flex-align;"]);
 
-/***/ }),
-
-/***/ "./node_modules/mobx/lib/mobx.module.js":
-false,
-
-/***/ "./stores/UserStore.js":
-false
+/***/ })
 
 })
-//# sourceMappingURL=dashboard.js.25e0ac13382b6407c67f.hot-update.js.map
+//# sourceMappingURL=dashboard.js.2bb69dfce92b7cb2403e.hot-update.js.map

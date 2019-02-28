@@ -629,7 +629,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FetchQuery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FetchQuery */ "./components/Dashboard/FetchQuery.js");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! next/router */ "next/router");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_4__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/DashInitialTerms.js";
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/store */ "./stores/store.js");
+var _dec,
+    _class,
+    _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/DashInitialTerms.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -641,13 +646,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+
 
 
 
@@ -657,7 +664,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
 
-var DashInitialTerms =
+var DashInitialTerms = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_5__["inject"])("store"), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_5__["observer"])(_class =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(DashInitialTerms, _React$Component);
@@ -669,12 +676,16 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(DashInitialTerms).call(this, props));
     _this.state = {};
+    _this.onTheClick = _this.onTheClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.check = _this.check.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(DashInitialTerms, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
       var cook = Cookie.get("isAuth") == "true";
 
       if (!cook) {
@@ -684,6 +695,34 @@ function (_React$Component) {
           isAuth: cook
         });
       }
+
+      setTimeout(function () {
+        console.log("isAuth is ".concat(_this2.props.store.isAuth, " on initial load"));
+      }, 1000); // this.props.store.isAuth = true;
+      // setTimeout(() => {
+      //   this.props.store.isAuth = true;
+      // }, 3000);
+      // this.setState({ iStore: this.props.store.isAuth });
+    }
+  }, {
+    key: "onTheClick",
+    value: function onTheClick() {
+      // let st = new Store();
+      // hydrate("some", st).then(() => {
+      //   this.props.store.isAuth = true;
+      //   console.log("someStore has been hydrated");
+      // });
+      this.props.store.isAuth = !this.props.store.isAuth; // const result = hydrate("some", st, this.state.iStore);
+      // const rehydrate = result.rehydrate;
+      // result.then(() => console.log("some hydrated"));
+      // setTimeout(() => {
+      //   rehydrate().then(() => console.log("rehydrated"));
+      // }, 3000);
+    }
+  }, {
+    key: "check",
+    value: function check() {
+      console.log("isAuth is ".concat(this.props.store.isAuth));
     }
   }, {
     key: "render",
@@ -692,22 +731,48 @@ function (_React$Component) {
         theme: _theme__WEBPACK_IMPORTED_MODULE_2__["default"],
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 25
+          lineNumber: 65
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FetchQuery__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 26
+          lineNumber: 66
         },
         __self: this
-      }));
-    }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.onTheClick,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 67
+        },
+        __self: this
+      }, "rehydrate"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.check,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 68
+        },
+        __self: this
+      }, "check"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FetchQuery__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 69
+        },
+        __self: this
+      })));
+    } // render() {
+    //   return (
+    //     <ThemeProvider theme={theme}>
+    //       <FetchQuery />
+    //     </ThemeProvider>
+    //   );
+    // }
+
   }]);
 
   return DashInitialTerms;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component)) || _class) || _class);
 
 
 /***/ }),
@@ -721,7 +786,6 @@ function (_React$Component) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FetchQuery; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
@@ -732,6 +796,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "styled-components");
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/store */ "./stores/store.js");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! mobx-react-lite */ "mobx-react-lite");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_8__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/FetchQuery.js";
 
 
@@ -751,11 +820,23 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 
 
+
+
+
+
  // import { storesContext } from "../../stores/UserStore";
 
-function FetchQuery() {
+var FetchQuery = Object(mobx_react__WEBPACK_IMPORTED_MODULE_8__["inject"])("store")(Object(mobx_react_lite__WEBPACK_IMPORTED_MODULE_7__["observer"])(function (_ref) {
+  var store = _ref.store;
   // const store = useContext(storesContext);
   // console.log(store);
+  var theStore = store;
+
+  var clicked = function clicked() {
+    theStore.isAuth = !theStore.isAuth;
+    console.log(theStore.isAuth);
+  };
+
   var fetchFourHourSentVariables = {
     term: "bitcoin"
   };
@@ -764,55 +845,63 @@ function FetchQuery() {
     variables: fetchFourHourSentVariables,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 16
+      lineNumber: 28
     },
     __self: this
-  }, function (_ref) {
-    var loading = _ref.loading,
-        error = _ref.error,
-        data = _ref.data;
+  }, function (_ref2) {
+    var loading = _ref2.loading,
+        error = _ref2.error,
+        data = _ref2.data;
     if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21
+        lineNumber: 33
       },
       __self: this
     }, "no data loaded");
     if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 22
+        lineNumber: 34
       },
       __self: this
     }, "Loading");
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 25
+        lineNumber: 37
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      onClick: clicked,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 26
+        lineNumber: 38
+      },
+      __self: this
+    }, "click in query"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 39
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
       data: data,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 27
+        lineNumber: 40
       },
       __self: this
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 29
+        lineNumber: 42
       },
       __self: this
     }));
   });
-}
+}));
+/* harmony default export */ __webpack_exports__["default"] = (FetchQuery);
 var fetchFourHourSentQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_4___default()(_templateObject());
 var ChartWrapper = styled_components__WEBPACK_IMPORTED_MODULE_5___default.a.div.withConfig({
   displayName: "FetchQuery__ChartWrapper",
@@ -1236,6 +1325,106 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withC
 
 /***/ }),
 
+/***/ "./stores/store.js":
+/*!*************************!*\
+  !*** ./stores/store.js ***!
+  \*************************/
+/*! exports provided: Store, hydrate, StoreContext, initializeStore */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hydrate", function() { return hydrate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreContext", function() { return StoreContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initializeStore", function() { return initializeStore; });
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! mobx */ "mobx");
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! mobx-persist */ "mobx-persist");
+/* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_persist__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
+var _class, _descriptor, _descriptor2, _descriptor3, _temp;
+
+function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object['ke' + 'ys'](descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object['define' + 'Property'](target, property, desc); desc = null; } return desc; }
+
+function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and set to use loose mode. ' + 'To use proposal-class-properties in spec mode with decorators, wait for ' + 'the next major version of decorators in stage 2.'); }
+
+
+
+
+
+var isServer = !false;
+Object(mobx_react__WEBPACK_IMPORTED_MODULE_1__["useStaticRendering"])(isServer);
+var Store = (_class = (_temp = function Store() {
+  _classCallCheck(this, Store);
+
+  _initializerDefineProperty(this, "lastUpdate", _descriptor, this);
+
+  _initializerDefineProperty(this, "light", _descriptor2, this);
+
+  _initializerDefineProperty(this, "isAuth", _descriptor3, this);
+} //   constructor(isServer, initialData = {}) {
+//     this.lastUpdate =
+//       initialData.lastUpdate != null ? initialData.lastUpdate : Date.now();
+//     this.light = !!initialData.light;
+//   }
+//   @action start = () => {
+//     this.timer = setInterval(() => {
+//       this.lastUpdate = Date.now();
+//       this.light = true;
+//     }, 1000);
+//   };
+//   stop = () => clearInterval(this.timer);
+, _temp), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "lastUpdate", [mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _descriptor2 = _applyDecoratedDescriptor(_class.prototype, "light", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return true;
+  }
+}), _descriptor3 = _applyDecoratedDescriptor(_class.prototype, "isAuth", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return false;
+  }
+})), _class);
+var store = null;
+var hydrate = Object(mobx_persist__WEBPACK_IMPORTED_MODULE_2__["create"])();
+var StoreContext = Object(react__WEBPACK_IMPORTED_MODULE_3__["createContext"])(new Store());
+function initializeStore(initialData) {
+  // Always make a new store if server, otherwise state is shared between requests
+  if (isServer) {
+    return new Store(isServer, initialData);
+  }
+
+  if (store === null) {
+    store = new Store(isServer, initialData);
+  }
+
+  hydrate("some", store).then(function () {
+    return console.log("someStore has been hydrated");
+  });
+  return store;
+}
+
+/***/ }),
+
 /***/ "./styles.css":
 /*!********************!*\
   !*** ./styles.css ***!
@@ -1278,6 +1467,50 @@ module.exports = require("graphql-tag");
 /***/ (function(module, exports) {
 
 module.exports = require("js-cookie");
+
+/***/ }),
+
+/***/ "mobx":
+/*!***********************!*\
+  !*** external "mobx" ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx");
+
+/***/ }),
+
+/***/ "mobx-persist":
+/*!*******************************!*\
+  !*** external "mobx-persist" ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx-persist");
+
+/***/ }),
+
+/***/ "mobx-react":
+/*!*****************************!*\
+  !*** external "mobx-react" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx-react");
+
+/***/ }),
+
+/***/ "mobx-react-lite":
+/*!**********************************!*\
+  !*** external "mobx-react-lite" ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("mobx-react-lite");
 
 /***/ }),
 

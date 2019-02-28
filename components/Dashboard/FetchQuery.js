@@ -3,36 +3,52 @@ import ReChart from "../Charts/ReChart";
 import Sidebar from "../Categories/Menu";
 import gql from "graphql-tag";
 import styled from "styled-components";
+import { StoreContext } from "../../stores/store";
+import { useContext } from "react";
+import { observer } from "mobx-react-lite";
+import { inject } from "mobx-react";
+
 // import { storesContext } from "../../stores/UserStore";
 
-export default function FetchQuery() {
-  // const store = useContext(storesContext);
-  // console.log(store);
+const FetchQuery = inject("store")(
+  observer(({ store }) => {
+    // const store = useContext(storesContext);
+    // console.log(store);
+    let theStore = store;
 
-  let fetchFourHourSentVariables = {
-    term: "bitcoin"
-  };
-  return (
-    <Query
-      query={fetchFourHourSentQuery}
-      variables={fetchFourHourSentVariables}
-    >
-      {({ loading, error, data }) => {
-        if (error) return <div>no data loaded</div>;
-        if (loading) return <div>Loading</div>;
+    const clicked = () => {
+      theStore.isAuth = !theStore.isAuth;
+      console.log(theStore.isAuth);
+    };
 
-        return (
-          <Wrapper>
-            <ChartWrapper>
-              <ReChart data={data} />
-            </ChartWrapper>
-            <Sidebar />
-          </Wrapper>
-        );
-      }}
-    </Query>
-  );
-}
+    let fetchFourHourSentVariables = {
+      term: "bitcoin"
+    };
+    return (
+      <Query
+        query={fetchFourHourSentQuery}
+        variables={fetchFourHourSentVariables}
+      >
+        {({ loading, error, data }) => {
+          if (error) return <div>no data loaded</div>;
+          if (loading) return <div>Loading</div>;
+
+          return (
+            <Wrapper>
+              <button onClick={clicked}>click in query</button>
+              <ChartWrapper>
+                <ReChart data={data} />
+              </ChartWrapper>
+              <Sidebar />
+            </Wrapper>
+          );
+        }}
+      </Query>
+    );
+  })
+);
+
+export default FetchQuery;
 
 const fetchFourHourSentQuery = gql`
   query fetchFourHourSent($term: String!) {
