@@ -16,7 +16,7 @@ let cursor = {
 export default () => (
   <App>
     <Header style={{ margin: "0" }} />
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme(false)}>
       <OuterWrapper style={{ margin: "0" }}>
         <Wrapper>
           <RowOne>
@@ -30,7 +30,7 @@ export default () => (
             </InnerRowContainer>
             <InnerRowContainer>
               <TxtDiv>
-                <TypistLoop interval={1500}>
+                <TypistLoop interval={500}>
                   {["beat", "outperform", "dominate"].map(text => (
                     <Typist key={text} stdTypingDelay={35} cursor={cursor}>
                       <span>{text}</span>
@@ -43,10 +43,10 @@ export default () => (
             </InnerRowContainer>
             <InnerRowContainerBlack>
               <TxtDivBlack>
-                Get access to state of the art machine learning classifiers to
-                supercharge your crypto trading.
+                Supercharge your crypto trading with state of the art machine
+                learning classifiers.
               </TxtDivBlack>
-              <TxtDivBlack2>
+              <TxtDivBlack2 className="hello">
                 <SignUpButton>Sign Up</SignUpButton>
               </TxtDivBlack2>
             </InnerRowContainerBlack>
@@ -61,6 +61,7 @@ const OuterWrapper = styled.div`
   background-color: ${props => props.theme.foreground};
   height: 100%;
   margin-bottom: 0;
+  padding-bottom: 0;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -128,13 +129,13 @@ const InnerRowContainerBlack = styled.div`
   width: 100%;
   min-height: 400px;
   margin-top: 100px;
-  margin-bottom: 65px;
+  margin-bottom: 60px;
   background: #1b1b1b;
   border-radius: 2px;
   display: flex;
   flex-direction: column;
   @media (max-width: 1024px) {
-    margin-bottom: 0;
+    margin-bottom: 60px;
   }
   @media (max-width: 768px) {
     margin-bottom: 0;

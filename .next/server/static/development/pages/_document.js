@@ -102,7 +102,6 @@ module.exports =
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MyDocument; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var next_document__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/document */ "next/document");
@@ -138,7 +137,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
  // Import styled components ServerStyleSheet
 
-
+ // import { withRouter } from "next/router";
 
 var MyDocument =
 /*#__PURE__*/
@@ -157,13 +156,13 @@ function (_Document) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("html", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 25
+          lineNumber: 18
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["Head"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 26
+          lineNumber: 19
         },
         __self: this
       }, this.props.styleTags, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("meta", {
@@ -171,14 +170,14 @@ function (_Document) {
         content: "width=device-width, initial-scale=1",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 28
+          lineNumber: 21
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("script", {
         src: "https://js.stripe.com/v3/",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 29
+          lineNumber: 22
         },
         __self: this
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("body", {
@@ -187,19 +186,19 @@ function (_Document) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 31
+          lineNumber: 24
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 32
+          lineNumber: 25
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 33
+          lineNumber: 26
         },
         __self: this
       })));
@@ -208,24 +207,19 @@ function (_Document) {
     key: "getInitialProps",
     value: function getInitialProps(_ref) {
       var renderPage = _ref.renderPage;
-      // Step 1: Create an instance of ServerStyleSheet
-      var sheet = new styled_components__WEBPACK_IMPORTED_MODULE_2__["ServerStyleSheet"](); // const initialProps = await Document.getInitialProps(ctx)
-      // Step 2: Retrieve styles from components in the page
-
+      var sheet = new styled_components__WEBPACK_IMPORTED_MODULE_2__["ServerStyleSheet"]();
       var page = renderPage(function (App) {
         return function (props) {
           return sheet.collectStyles(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, _extends({}, props, {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 13
+              lineNumber: 10
             },
             __self: this
           })));
         };
-      }); // Step 3: Extract the styles as <style> tags
-
-      var styleTags = sheet.getStyleElement(); // Step 4: Pass styleTags as a prop
-
+      });
+      var styleTags = sheet.getStyleElement();
       return _objectSpread({}, page, {
         styleTags: styleTags
       });
@@ -235,7 +229,7 @@ function (_Document) {
   return MyDocument;
 }(next_document__WEBPACK_IMPORTED_MODULE_1___default.a);
 
-
+/* harmony default export */ __webpack_exports__["default"] = (MyDocument);
 
 /***/ }),
 

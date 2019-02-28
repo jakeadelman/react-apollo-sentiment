@@ -91,16 +91,16 @@ class DashInitialTerms extends React.Component {
       return (
         <Query query={fetchTweetsQuery}>
           {({ loading, error, data }) => {
-            if (error) return <div>no data loaded</div>;
-            if (loading) return <div>Loading</div>;
+            // if (error) return <div>no data loaded</div>;
+            // if (loading) return <div>Loading</div>;
 
             console.log(data);
 
-            if (!this.state.allTerms[0]) {
-              this.toggleTerm(data.fetchTerms[0].term);
-              this.mapTerms(data.fetchTerms);
-              return <div>loading</div>;
-            }
+            // if (!this.state.allTerms[0]) {
+            //   this.toggleTerm(data.fetchTerms[0].term);
+            //   this.mapTerms(data.fetchTerms);
+            //   return <div>loading</div>;
+            // }
             return (
               <ThemeProvider theme={theme}>
                 <Wrapper>

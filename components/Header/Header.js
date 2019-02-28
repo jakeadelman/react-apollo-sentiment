@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { withRouter } from "next/router";
+import Dropdown from "./Dropdown";
 // import Head from "Header/Head";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
@@ -7,11 +8,15 @@ import { observer } from "mobx-react-lite";
 import { UserStoreContext } from "../../stores/UserStore";
 import { useContext, useState } from "react";
 import HeaderLogo from "./Logo";
+import "./header.scss";
+
+import { headerItem, wideFont, link, transition } from "../shared/helpers";
 const Cookie = require("js-cookie");
 
-const Header2 = observer(({ router: { pathname } }) => {
+const Header2 = ({ router }) => {
   const cook = Cookie.get("isAuth");
   console.log(cook);
+  console.log(router.pathname);
 
   let authOrNo = cook == "true";
 
@@ -22,13 +27,17 @@ const Header2 = observer(({ router: { pathname } }) => {
           <HeaderLogo />
 
           <Link prefetch href="/login">
-            <StyledLink className={pathname === "/login" ? "is-active" : ""}>
+            <StyledLink
+              className={router.pathname === "/login" ? "is-active" : ""}
+            >
               login
             </StyledLink>
           </Link>
 
           <Link prefetch href="/register">
-            <StyledLink className={pathname === "/register" ? "is-active" : ""}>
+            <StyledLink
+              className={router.pathname === "/register" ? "is-active" : ""}
+            >
               register
             </StyledLink>
           </Link>
@@ -41,27 +50,28 @@ const Header2 = observer(({ router: { pathname } }) => {
         <Wrapper>
           <HeaderLogo />
 
-          <Link prefetch href="/logout">
-            <StyledLink className={pathname === "/login" ? "is-active" : ""}>
-              logout
-            </StyledLink>
-          </Link>
+          <Dropdown />
         </Wrapper>
       </ThemeProvider>
     );
   }
-});
+};
 
 export default withRouter(Header2);
 
 const StyledLink = styled.div`
-  margin: auto 10px;
+  ${headerItem};
+  ${wideFont};
+  ${link};
+  margin: 0;
   color: ${props => props.theme.mutedText};
 
   position: relative;
   cursor: pointer;
 
   ::after {
+    ${transition("opacity", "border-bottom-width")};
+
     content: "";
     position: absolute;
     left: 0;
@@ -74,6 +84,10 @@ const StyledLink = styled.div`
   :hover {
     opacity: 1;
     color: ${props => props.theme.accent};
+  }
+  :hover::after {
+    opacity: 1;
+    border-bottom: 1px solid ${props => props.theme.accent};
   }
 
   &.active::after {

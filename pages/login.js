@@ -4,17 +4,38 @@ import LoginForm from "../components/LoginForm";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
 import LoginForm2 from "../components/LoginForm2";
+import Router from "next/router";
+let Cookie = require("js-cookie");
 
-export default () => (
-  <App>
-    <Header />
-    <ThemeProvider theme={theme}>
-      <Wrapper>
-        <LoginForm2 />
-      </Wrapper>
-    </ThemeProvider>
-  </App>
-);
+export default function LoginPage() {
+  let cook = Cookie.get("isAuth") === "true";
+  console.log(cook);
+  if (!!cook) {
+    Router.push("/dashboard");
+  } else {
+    return (
+      <App>
+        <Header />
+        <ThemeProvider theme={theme(false)}>
+          <Wrapper>
+            <LoginForm2 />
+          </Wrapper>
+        </ThemeProvider>
+      </App>
+    );
+  }
+}
+
+// export default () => (
+//   <App>
+//     <Header />
+//     <ThemeProvider theme={theme(false)}>
+//       <Wrapper>
+//         <LoginForm2 />
+//       </Wrapper>
+//     </ThemeProvider>
+//   </App>
+// );
 
 const Wrapper = styled.div`
   display: flex;

@@ -3,11 +3,13 @@ import React from "react";
 import { injectStripe, CardElement } from "react-stripe-elements";
 import { ApolloConsumer } from "react-apollo";
 import gql from "graphql-tag";
-// import AddressSection from "./AddressSection";
-import CardSection from "./CardSection";
 import styled from "styled-components";
 import Button from "../shared/Button";
 import FormWrapper from "../Form2/FormWrapper";
+import { smallFont } from "../shared/helpers";
+import register from "../../pages/register";
+import { removeArgumentsFromDocument } from "apollo-utilities";
+import Router from "next/router";
 const Cookie = require("js-cookie");
 
 function CheckoutForm({ stripe }) {
@@ -24,10 +26,6 @@ function CheckoutForm({ stripe }) {
         return source.id.toString();
       })
       .then(async source => {
-        console.log(uid, source);
-        console.log(typeof source);
-        console.log(typeof source);
-
         await client
           .mutate({
             mutation: gql`
@@ -37,19 +35,27 @@ function CheckoutForm({ stripe }) {
             `,
             variables: { uid, source }
           })
-          .then(res => console.log(res));
+          .then(res => {
+            Cookie.set("isAuth", "true");
+            Router.push("/dashboard");
+          });
       });
   }
 
   return (
     <ApolloConsumer>
       {client => (
-        <FormWrapper>
+        <FormWrapper style={{ marginTop: "20vw" }}>
           <StyledForm onSubmit={e => handleSubmit(e, client)}>
             <label style={{ width: "100%" }}>
               <CardElement style={{ base: { fontSize: "18px" } }} />
             </label>
-            <Button>Start your free trial</Button>
+            <div style={{ display: "flex", width: "100%" }}>
+              <SubmitButton>Start your free trial</SubmitButton>
+            </div>
+            <div style={{ display: "flex", width: "100%" }}>
+              <NoteDiv>*free for 7 days then $29USD/month</NoteDiv>
+            </div>
           </StyledForm>
         </FormWrapper>
       )}
@@ -58,6 +64,13 @@ function CheckoutForm({ stripe }) {
 }
 
 export default injectStripe(CheckoutForm);
+
+const NoteDiv = styled.div`
+  ${smallFont}
+  font-size: 11px;
+  margin: auto;
+  margin-top: 7px;
+`;
 
 const StyledForm = styled.form`
   display: flex;
@@ -70,9 +83,9 @@ const StyledForm = styled.form`
 `;
 
 const SubmitButton = styled(Button)`
-  align-self: flex-end;
-  margin-right: 0px;
-  margin-left: auto;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #333333;
 `;
 
 const InputWrapper = styled.div`

@@ -4,17 +4,31 @@ import RegisterSubmit from "../components/RegisterForm";
 import PostList from "../components/PostList";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
+import Router from "next/router";
+const Cookie = require("js-cookie");
 
-export default () => (
-  <App>
-    <Header />
-    <ThemeProvider theme={theme}>
-      <Wrapper>
-        <RegisterSubmit />
-      </Wrapper>
-    </ThemeProvider>
-  </App>
-);
+export default function RegisterPage() {
+  let cook = Cookie.get("isAuth") === "true";
+  console.log(cook);
+  if (!!cook) {
+    Router.push("/dashboard");
+  } else {
+    return (
+      <App>
+        <Header />
+        <ThemeProvider theme={theme(false)}>
+          <Wrapper>
+            <RegisterSubmit />
+          </Wrapper>
+        </ThemeProvider>
+      </App>
+    );
+  }
+}
+
+// export default () => (
+
+// );
 
 const Wrapper = styled.div`
   display: flex;
