@@ -55,11 +55,15 @@ const data = [
 export default class Example extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { width: 0, height: 0 };
+    this.state = { width: 0, height: 0, data: [] };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
   }
 
   componentDidMount() {
+    this.props.data.fetchFourHourSent.map(dat => {
+      this.state.data.unshift(dat);
+    });
+
     this.updateWindowDimensions();
     window.addEventListener("resize", this.updateWindowDimensions);
   }
@@ -96,7 +100,7 @@ export default class Example extends PureComponent {
         <AreaChart
           width={this.state.chartWidth}
           height={200}
-          data={data.slice(0, 7)}
+          data={this.state.data.slice(0, 7)}
           margin={{
             top: 20,
             right: 35,
@@ -111,7 +115,7 @@ export default class Example extends PureComponent {
             </linearGradient>
           </defs>
           <CartesianGrid stroke="#eee" opacity={0.4} strokeDasharray="5 5" />
-          <XAxis dataKey="name" style={{ fontSize: "13px" }} />
+          <XAxis dataKey="hour" style={{ fontSize: "13px" }} />
           <YAxis style={{ fontSize: "13px" }} />
           <Tooltip />
 
@@ -136,7 +140,7 @@ export default class Example extends PureComponent {
 
 const renderLegend = props => {
   const { payload } = props;
-  console.log(payload);
+  // console.log(payload);
 
   return (
     <StyledUl>

@@ -34,12 +34,11 @@ class DashInitialTerms extends React.Component {
     this.mapTerms = this.mapTerms.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.push = this.push.bind(this);
+    // this.push = this.push.bind(this);
   }
 
   componentDidMount() {
     let cook = Cookie.get("isAuth") == "true";
-    console.log(cook);
     if (!cook) {
       Router.push("/");
     } else if (!!cook) {
@@ -55,7 +54,7 @@ class DashInitialTerms extends React.Component {
 
   updateWindowDimensions() {
     this.setState({ width: window.innerWidth, height: window.innerHeight });
-    console.log(this.state.width);
+    // console.log(this.state.width);
   }
 
   toggleTerm(term) {
@@ -68,14 +67,10 @@ class DashInitialTerms extends React.Component {
       this.state.allTerms.push(term.term);
     });
   }
-  push() {
-    Router.push("/");
-  }
 
   handleClick(e) {
     // console.log(e.target.value);
     this.setState({ term: e.target.value });
-    console.log(this.state);
   }
 
   render() {
@@ -85,42 +80,43 @@ class DashInitialTerms extends React.Component {
       top: 20,
       bottom: 20
     };
-    if (!this.state.isAuth) {
-      return null;
-    } else {
-      return (
-        <Query query={fetchTweetsQuery}>
-          {({ loading, error, data }) => {
-            // if (error) return <div>no data loaded</div>;
-            // if (loading) return <div>Loading</div>;
+    let fetchFourHourSentVariables = {
+      term: "bitcoin"
+    };
 
-            console.log(data);
+    return (
+      <Query
+        query={fetchFourHourSentQuery}
+        variables={fetchFourHourSentVariables}
+      >
+        {({ loading, error, data }) => {
+          if (error) {
+            console.log(error);
+            return <div>no data loaded</div>;
+          }
+          if (loading) {
+            return <div>Loading</div>;
+          }
 
-            // if (!this.state.allTerms[0]) {
-            //   this.toggleTerm(data.fetchTerms[0].term);
-            //   this.mapTerms(data.fetchTerms);
-            //   return <div>loading</div>;
-            // }
-            return (
-              <ThemeProvider theme={theme}>
-                <Wrapper>
-                  <div
-                    style={{
-                      background: "white",
-                      border: "1px solid #ebedf0",
-                      padding: "5px"
-                    }}
-                  >
-                    <ReChart />
-                  </div>
-                  <Sidebar />
-                </Wrapper>
-              </ThemeProvider>
-            );
-          }}
-        </Query>
-      );
-    }
+          return (
+            <ThemeProvider theme={theme}>
+              <Wrapper>
+                <div
+                  style={{
+                    background: "white",
+                    border: "1px solid #ebedf0",
+                    padding: "5px"
+                  }}
+                >
+                  <ReChart data={data} />
+                </div>
+                <Sidebar />
+              </Wrapper>
+            </ThemeProvider>
+          );
+        }}
+      </Query>
+    );
   }
 }
 const Menu = styled.nav`
@@ -130,11 +126,13 @@ const Menu = styled.nav`
   }
 `;
 
-export const fetchTweetsQuery = gql`
-  query fetchTerms {
-    fetchTerms {
+export const fetchFourHourSentQuery = gql`
+  query fetchFourHourSent($term: String!) {
+    fetchFourHourSent(term: $term) {
       id
       term
+      sentiment
+      hour
     }
   }
 `;

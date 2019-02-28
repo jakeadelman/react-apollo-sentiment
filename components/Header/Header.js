@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { withRouter } from "next/router";
-import Dropdown from "./Dropdown";
+// import Dropdown from "./Dropdown";
 // import Head from "Header/Head";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
@@ -13,12 +13,12 @@ import "./header.scss";
 import { headerItem, wideFont, link, transition } from "../shared/helpers";
 const Cookie = require("js-cookie");
 
-const Header2 = ({ router }) => {
+const Header = ({ router }) => {
   const cook = Cookie.get("isAuth");
   console.log(cook);
   console.log(router.pathname);
 
-  let authOrNo = cook == "true";
+  let authOrNo = cook === "true";
 
   if (!authOrNo) {
     return (
@@ -50,14 +50,24 @@ const Header2 = ({ router }) => {
         <Wrapper>
           <HeaderLogo />
 
-          <Dropdown />
+          <Link prefetch href="/settings">
+            <StyledLink
+              className={router.pathname === "/settings" ? "is-active" : ""}
+            >
+              settings
+            </StyledLink>
+          </Link>
+
+          <Link prefetch href="/logout">
+            <StyledLink>logout</StyledLink>
+          </Link>
         </Wrapper>
       </ThemeProvider>
     );
   }
 };
 
-export default withRouter(Header2);
+export default withRouter(Header);
 
 const StyledLink = styled.div`
   ${headerItem};

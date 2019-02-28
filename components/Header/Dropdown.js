@@ -60,7 +60,8 @@ const DropdownDiv = styled.div`
   display: block;
   background-color: ${props => props.theme.foreground};
   margin-top: 45px;
-  border: 1px solid black;
+  border: 1px solid ${props => props.theme.border};
+  border-top: none;
 `;
 
 const StyledLink = styled.div`

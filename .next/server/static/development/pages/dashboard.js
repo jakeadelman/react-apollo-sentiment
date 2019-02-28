@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2128,7 +2128,8 @@ function (_PureComponent) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Example).call(this, props));
     _this.state = {
       width: 0,
-      height: 0
+      height: 0,
+      data: []
     };
     _this.updateWindowDimensions = _this.updateWindowDimensions.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -2137,6 +2138,11 @@ function (_PureComponent) {
   _createClass(Example, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this2 = this;
+
+      this.props.data.fetchFourHourSent.map(function (dat) {
+        _this2.state.data.unshift(dat);
+      });
       this.updateWindowDimensions();
       window.addEventListener("resize", this.updateWindowDimensions);
     }
@@ -2175,13 +2181,13 @@ function (_PureComponent) {
         theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 95
+          lineNumber: 99
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["AreaChart"], {
         width: this.state.chartWidth,
         height: 200,
-        data: data.slice(0, 7),
+        data: this.state.data.slice(0, 7),
         margin: {
           top: 20,
           right: 35,
@@ -2190,13 +2196,13 @@ function (_PureComponent) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 96
+          lineNumber: 100
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("defs", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 107
+          lineNumber: 111
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("linearGradient", {
@@ -2207,7 +2213,7 @@ function (_PureComponent) {
         y2: "1",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 108
+          lineNumber: 112
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
@@ -2216,7 +2222,7 @@ function (_PureComponent) {
         stopOpacity: 0.7,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 109
+          lineNumber: 113
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("stop", {
@@ -2225,7 +2231,7 @@ function (_PureComponent) {
         stopOpacity: 0,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 110
+          lineNumber: 114
         },
         __self: this
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["CartesianGrid"], {
@@ -2234,17 +2240,17 @@ function (_PureComponent) {
         strokeDasharray: "5 5",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 113
+          lineNumber: 117
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["XAxis"], {
-        dataKey: "name",
+        dataKey: "hour",
         style: {
           fontSize: "13px"
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 114
+          lineNumber: 118
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["YAxis"], {
@@ -2253,13 +2259,13 @@ function (_PureComponent) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 115
+          lineNumber: 119
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Tooltip"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 116
+          lineNumber: 120
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Area"], {
@@ -2270,14 +2276,14 @@ function (_PureComponent) {
         fill: "url(#colorPv)",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 118
+          lineNumber: 122
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(recharts__WEBPACK_IMPORTED_MODULE_1__["Legend"], {
         content: renderLegend,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 128
+          lineNumber: 132
         },
         __self: this
       })));
@@ -2290,12 +2296,12 @@ function (_PureComponent) {
 
 
 var renderLegend = function renderLegend(props) {
-  var payload = props.payload;
-  console.log(payload);
+  var payload = props.payload; // console.log(payload);
+
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledUl, {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 142
+      lineNumber: 146
     },
     __self: this
   }, payload.map(function (entry, index) {
@@ -2307,14 +2313,14 @@ var renderLegend = function renderLegend(props) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 144
+        lineNumber: 148
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Sv, {
       color: entry.color,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 145
+        lineNumber: 149
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -2323,7 +2329,7 @@ var renderLegend = function renderLegend(props) {
       },
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 146
+        lineNumber: 150
       },
       __self: this
     }, entry.value));
@@ -2347,7 +2353,7 @@ var Sv = function Sv(_ref) {
     },
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 164
+      lineNumber: 168
     },
     __self: this
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("rect", {
@@ -2356,7 +2362,7 @@ var Sv = function Sv(_ref) {
     fill: color,
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 165
+      lineNumber: 169
     },
     __self: this
   }));
@@ -2615,12 +2621,12 @@ var AddTodo = function AddTodo() {
 /*!**************************************************!*\
   !*** ./components/Dashboard/DashInitialTerms.js ***!
   \**************************************************/
-/*! exports provided: fetchTweetsQuery, default */
+/*! exports provided: fetchFourHourSentQuery, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchTweetsQuery", function() { return fetchTweetsQuery; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchFourHourSentQuery", function() { return fetchFourHourSentQuery; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
@@ -2653,7 +2659,7 @@ __webpack_require__.r(__webpack_exports__);
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Dashboard/DashInitialTerms.js";
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query fetchTerms {\n    fetchTerms {\n      id\n      term\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query fetchFourHourSent($term: String!) {\n    fetchFourHourSent(term: $term) {\n      id\n      term\n      sentiment\n      hour\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -2726,8 +2732,8 @@ function (_React$Component) {
     _this.toggleTerm = _this.toggleTerm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.mapTerms = _this.mapTerms.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.updateWindowDimensions = _this.updateWindowDimensions.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.push = _this.push.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.push = this.push.bind(this);
+
     return _this;
   }
 
@@ -2735,7 +2741,6 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var cook = Cookie.get("isAuth") == "true";
-      console.log(cook);
 
       if (!cook) {
         next_router__WEBPACK_IMPORTED_MODULE_20___default.a.push("/");
@@ -2759,8 +2764,7 @@ function (_React$Component) {
       this.setState({
         width: window.innerWidth,
         height: window.innerHeight
-      });
-      console.log(this.state.width);
+      }); // console.log(this.state.width);
     }
   }, {
     key: "toggleTerm",
@@ -2780,18 +2784,12 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "push",
-    value: function push() {
-      next_router__WEBPACK_IMPORTED_MODULE_20___default.a.push("/");
-    }
-  }, {
     key: "handleClick",
     value: function handleClick(e) {
       // console.log(e.target.value);
       this.setState({
         term: e.target.value
       });
-      console.log(this.state);
     }
   }, {
     key: "render",
@@ -2802,68 +2800,82 @@ function (_React$Component) {
         top: 20,
         bottom: 20
       };
+      var fetchFourHourSentVariables = {
+        term: "bitcoin"
+      };
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["Query"], {
+        query: fetchFourHourSentQuery,
+        variables: fetchFourHourSentVariables,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 88
+        },
+        __self: this
+      }, function (_ref) {
+        var loading = _ref.loading,
+            error = _ref.error,
+            data = _ref.data;
 
-      if (!this.state.isAuth) {
-        return null;
-      } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["Query"], {
-          query: fetchTweetsQuery,
+        if (error) {
+          console.log(error);
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 95
+            },
+            __self: this
+          }, "no data loaded");
+        }
+
+        if (loading) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 98
+            },
+            __self: this
+          }, "Loading");
+        }
+
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_8__["ThemeProvider"], {
+          theme: _theme__WEBPACK_IMPORTED_MODULE_9__["default"],
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 92
+            lineNumber: 102
           },
           __self: this
-        }, function (_ref) {
-          var loading = _ref.loading,
-              error = _ref.error,
-              data = _ref.data;
-          // if (error) return <div>no data loaded</div>;
-          // if (loading) return <div>Loading</div>;
-          console.log(data); // if (!this.state.allTerms[0]) {
-          //   this.toggleTerm(data.fetchTerms[0].term);
-          //   this.mapTerms(data.fetchTerms);
-          //   return <div>loading</div>;
-          // }
-
-          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_8__["ThemeProvider"], {
-            theme: _theme__WEBPACK_IMPORTED_MODULE_9__["default"],
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 105
-            },
-            __self: this
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 106
-            },
-            __self: this
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-            style: {
-              background: "white",
-              border: "1px solid #ebedf0",
-              padding: "5px"
-            },
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 107
-            },
-            __self: this
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_17__["default"], {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 114
-            },
-            __self: this
-          })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_18__["default"], {
-            __source: {
-              fileName: _jsxFileName,
-              lineNumber: 116
-            },
-            __self: this
-          })));
-        });
-      }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 103
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          style: {
+            background: "white",
+            border: "1px solid #ebedf0",
+            padding: "5px"
+          },
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 104
+          },
+          __self: this
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_17__["default"], {
+          data: data,
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 111
+          },
+          __self: this
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_18__["default"], {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 113
+          },
+          __self: this
+        })));
+      });
     }
   }]);
 
@@ -2876,7 +2888,7 @@ var Menu = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.nav.withConf
 })(["border:1px solid ", ";@media (max-width:768px){display:flex;}"], function (props) {
   return props.theme.border;
 });
-var fetchTweetsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
+var fetchFourHourSentQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
 /* harmony default export */ __webpack_exports__["default"] = (DashInitialTerms);
 var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.div.withConfig({
   displayName: "DashInitialTerms__Wrapper",
@@ -3288,32 +3300,6 @@ function (_Component) {
 
 /***/ }),
 
-/***/ "./components/ErrorMessage.js":
-/*!************************************!*\
-  !*** ./components/ErrorMessage.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/ErrorMessage.js";
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var message = _ref.message;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 2
-    },
-    __self: this
-  }, message);
-});
-
-/***/ }),
-
 /***/ "./components/Form2/FormWrapper.js":
 /*!*****************************************!*\
   !*** ./components/Form2/FormWrapper.js ***!
@@ -3371,194 +3357,6 @@ var Input = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.input.withC
 
 /***/ }),
 
-/***/ "./components/Header/Dropdown.js":
-/*!***************************************!*\
-  !*** ./components/Header/Dropdown.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Dropdown; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _RegisterForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../RegisterForm */ "./components/RegisterForm.js");
-/* harmony import */ var react_fontawesome__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-fontawesome */ "react-fontawesome");
-/* harmony import */ var react_fontawesome__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_fontawesome__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! next/link */ "next/link");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_5__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Dropdown.js";
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-
-
-
-
-
-var Dropdown =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Dropdown, _React$Component);
-
-  function Dropdown(props) {
-    var _this;
-
-    _classCallCheck(this, Dropdown);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Dropdown).call(this, props));
-    _this.state = {
-      listOpen: false
-    };
-    _this.toggleList = _this.toggleList.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
-  }
-
-  _createClass(Dropdown, [{
-    key: "handleClickOutside",
-    value: function handleClickOutside() {
-      this.setState({
-        listOpen: false
-      });
-    }
-  }, {
-    key: "toggleList",
-    value: function toggleList() {
-      this.setState(function (prevState) {
-        return {
-          listOpen: !prevState.listOpen
-        };
-      });
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      var list = this.props.list;
-      var listOpen = this.state.listOpen;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        style: {
-          display: "flex"
-        },
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 31
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
-        onClick: function onClick() {
-          return _this2.toggleList();
-        },
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 32
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "dd-header-title",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 33
-        },
-        __self: this
-      }, "settings"), listOpen ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_fontawesome__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        name: "angle-up",
-        size: "2x",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 35
-        },
-        __self: this
-      }) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_fontawesome__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        name: "angle-down",
-        size: "2x",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 37
-        },
-        __self: this
-      })), listOpen && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropdownDiv, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 41
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropdownListItem, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 42
-        },
-        __self: this
-      }, "account"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_5___default.a, {
-        prefetch: true,
-        href: "/logout",
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 43
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(DropdownListItem, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 44
-        },
-        __self: this
-      }, "logout"))));
-    }
-  }]);
-
-  return Dropdown;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-
-var DropdownListItem = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
-  displayName: "Dropdown__DropdownListItem",
-  componentId: "a2l2xv-0"
-})(["", " padding:16px;"], _shared_helpers__WEBPACK_IMPORTED_MODULE_4__["smallFont"]);
-var DropdownDiv = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
-  displayName: "Dropdown__DropdownDiv",
-  componentId: "a2l2xv-1"
-})(["position:absolute;display:block;background-color:", ";margin-top:45px;border:1px solid black;"], function (props) {
-  return props.theme.foreground;
-});
-var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
-  displayName: "Dropdown__StyledLink",
-  componentId: "a2l2xv-2"
-})(["margin:auto 10px;color:", ";position:relative;cursor:pointer;::after{content:\"\";position:absolute;left:0;right:0;bottom:0;opacity:0;border-bottom:1px solid ", ";}:hover{opacity:1;color:", ";}&.active::after{left:0;right:0;bottom:0;border-bottom:3px solid ", ";}font-weight:700;letter-spacing:0.05em;font-size:12px;text-transform:uppercase;"], function (props) {
-  return props.theme.mutedText;
-}, function (props) {
-  return props.theme.accent;
-}, function (props) {
-  return props.theme.accent;
-}, function (props) {
-  return props.theme.accent;
-});
-
-/***/ }),
-
 /***/ "./components/Header/Header.js":
 /*!*************************************!*\
   !*** ./components/Header/Header.js ***!
@@ -3574,22 +3372,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/router */ "next/router");
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Dropdown__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dropdown */ "./components/Header/Dropdown.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
-/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mobx-react-lite */ "mobx-react-lite");
-/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../stores/UserStore */ "./stores/UserStore.ts");
-/* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Logo */ "./components/Header/Logo.js");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./header.scss */ "./components/Header/header.scss");
-/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_header_scss__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react-lite */ "mobx-react-lite");
+/* harmony import */ var mobx_react_lite__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react_lite__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _stores_UserStore__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../stores/UserStore */ "./stores/UserStore.ts");
+/* harmony import */ var _Logo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Logo */ "./components/Header/Logo.js");
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./header.scss */ "./components/Header/header.scss");
+/* harmony import */ var _header_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_header_scss__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
 var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/Header.js";
 
 
-
- // import Head from "Header/Head";
+ // import Dropdown from "./Dropdown";
+// import Head from "Header/Head";
 
 
 
@@ -3602,16 +3399,16 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/Header/H
 
 var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
 
-var Header2 = function Header2(_ref) {
+var Header = function Header(_ref) {
   var router = _ref.router;
   var cook = Cookie.get("isAuth");
   console.log(cook);
   console.log(router.pathname);
-  var authOrNo = cook == "true";
+  var authOrNo = cook === "true";
 
   if (!authOrNo) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_4__["ThemeProvider"], {
-      theme: Object(_theme__WEBPACK_IMPORTED_MODULE_5__["default"])(false),
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
+      theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
         lineNumber: 25
@@ -3623,7 +3420,7 @@ var Header2 = function Header2(_ref) {
         lineNumber: 26
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 27
@@ -3661,8 +3458,8 @@ var Header2 = function Header2(_ref) {
       __self: this
     }, "register"))));
   } else {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_4__["ThemeProvider"], {
-      theme: Object(_theme__WEBPACK_IMPORTED_MODULE_5__["default"])(false),
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
+      theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
         lineNumber: 49
@@ -3674,29 +3471,52 @@ var Header2 = function Header2(_ref) {
         lineNumber: 50
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_7__["default"], {
       __source: {
         fileName: _jsxFileName,
         lineNumber: 51
       },
       __self: this
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Dropdown__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/settings",
       __source: {
         fileName: _jsxFileName,
         lineNumber: 53
       },
       __self: this
-    })));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      className: router.pathname === "/settings" ? "is-active" : "",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 54
+      },
+      __self: this
+    }, "settings")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
+      prefetch: true,
+      href: "/logout",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 61
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 62
+      },
+      __self: this
+    }, "logout"))));
   }
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header2));
-var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.withConfig({
+/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(Header));
+var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
   displayName: "Header__StyledLink",
   componentId: "sc-19c2vr5-0"
-})(["", ";", ";", ";margin:0;color:", ";position:relative;cursor:pointer;::after{", ";content:\"\";position:absolute;left:0;right:0;bottom:0;opacity:0;border-bottom:1px solid ", ";}:hover{opacity:1;color:", ";}:hover::after{opacity:1;border-bottom:1px solid ", ";}&.active::after{left:0;right:0;bottom:0;border-bottom:3px solid ", ";}font-weight:700;letter-spacing:0.05em;font-size:12px;text-transform:uppercase;"], _shared_helpers__WEBPACK_IMPORTED_MODULE_10__["headerItem"], _shared_helpers__WEBPACK_IMPORTED_MODULE_10__["wideFont"], _shared_helpers__WEBPACK_IMPORTED_MODULE_10__["link"], function (props) {
+})(["", ";", ";", ";margin:0;color:", ";position:relative;cursor:pointer;::after{", ";content:\"\";position:absolute;left:0;right:0;bottom:0;opacity:0;border-bottom:1px solid ", ";}:hover{opacity:1;color:", ";}:hover::after{opacity:1;border-bottom:1px solid ", ";}&.active::after{left:0;right:0;bottom:0;border-bottom:3px solid ", ";}font-weight:700;letter-spacing:0.05em;font-size:12px;text-transform:uppercase;"], _shared_helpers__WEBPACK_IMPORTED_MODULE_9__["headerItem"], _shared_helpers__WEBPACK_IMPORTED_MODULE_9__["wideFont"], _shared_helpers__WEBPACK_IMPORTED_MODULE_9__["link"], function (props) {
   return props.theme.mutedText;
-}, Object(_shared_helpers__WEBPACK_IMPORTED_MODULE_10__["transition"])("opacity", "border-bottom-width"), function (props) {
+}, Object(_shared_helpers__WEBPACK_IMPORTED_MODULE_9__["transition"])("opacity", "border-bottom-width"), function (props) {
   return props.theme.accent;
 }, function (props) {
   return props.theme.accent;
@@ -3705,7 +3525,7 @@ var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.div.wi
 }, function (props) {
   return props.theme.accent;
 });
-var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_4___default.a.header.withConfig({
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.header.withConfig({
   displayName: "Header__Wrapper",
   componentId: "sc-19c2vr5-1"
 })(["position:sticky;z-index:10;top:0;display:flex;align-items:stretch;margin-bottom:24px;box-shadow:0 4px 12px ", ";border-bottom:1px solid ", ";height:48px;padding:0 10vw;background-color:", ";user-select:none;@media (max-width:425px){margin-bottom:16px;height:40px;}@media (max-width:768px){padding:0;}"], function (props) {
@@ -4088,519 +3908,6 @@ var StyledForm = styled_components__WEBPACK_IMPORTED_MODULE_9___default.a.form.w
 
 /***/ }),
 
-/***/ "./components/PostList.js":
-/*!********************************!*\
-  !*** ./components/PostList.js ***!
-  \********************************/
-/*! exports provided: allPostsQuery, allPostsQueryVars, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allPostsQuery", function() { return allPostsQuery; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allPostsQueryVars", function() { return allPostsQueryVars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PostList; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ErrorMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ErrorMessage */ "./components/ErrorMessage.js");
-/* harmony import */ var _PostUpvoter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PostUpvoter */ "./components/PostUpvoter.js");
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/PostList.js";
-
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query allPosts($first: Int!, $skip: Int!) {\n    allPosts(orderBy: createdAt_DESC, first: $first, skip: $skip) {\n      id\n      title\n      votes\n      url\n      createdAt\n    }\n    _allPostsMeta {\n      count\n    }\n  }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-
-
-
-
-var allPostsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
-var allPostsQueryVars = {
-  skip: 0,
-  first: 10
-};
-function PostList() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["Query"], {
-    query: allPostsQuery,
-    variables: allPostsQueryVars,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 27
-    },
-    __self: this
-  }, function (_ref) {
-    var loading = _ref.loading,
-        error = _ref.error,
-        _ref$data = _ref.data,
-        allPosts = _ref$data.allPosts,
-        _allPostsMeta = _ref$data._allPostsMeta,
-        fetchMore = _ref.fetchMore;
-    if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      message: "Error loading posts.",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 29
-      },
-      __self: this
-    });
-    if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 30
-      },
-      __self: this
-    }, "Loading");
-    var areMorePosts = allPosts.length < _allPostsMeta.count;
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 34
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 35
-      },
-      __self: this
-    }, allPosts.map(function (post, index) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        key: post.id,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 37
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 38
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 39
-        },
-        __self: this
-      }, index + 1, ". "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: post.url,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 40
-        },
-        __self: this
-      }, post.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PostUpvoter__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        id: post.id,
-        votes: post.votes,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 41
-        },
-        __self: this
-      })));
-    })), areMorePosts ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        return loadMorePosts(allPosts, fetchMore);
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 47
-      },
-      __self: this
-    }, loading ? "Loading..." : "Show More", " ") : "");
-  });
-}
-
-function loadMorePosts(allPosts, fetchMore) {
-  fetchMore({
-    variables: {
-      skip: allPosts.length
-    },
-    updateQuery: function updateQuery(previousResult, _ref2) {
-      var fetchMoreResult = _ref2.fetchMoreResult;
-
-      if (!fetchMoreResult) {
-        return previousResult;
-      }
-
-      return Object.assign({}, previousResult, {
-        // Append the new posts results to the old one
-        allPosts: [].concat(_toConsumableArray(previousResult.allPosts), _toConsumableArray(fetchMoreResult.allPosts))
-      });
-    }
-  });
-}
-
-/***/ }),
-
-/***/ "./components/PostUpvoter.js":
-/*!***********************************!*\
-  !*** ./components/PostUpvoter.js ***!
-  \***********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PostUpvoter; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/PostUpvoter.js";
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n      mutation updatePost($id: ID!, $votes: Int) {\n        updatePost(id: $id, votes: $votes) {\n          id\n          __typename\n          votes\n        }\n      }\n    "]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-
-
-
-function PostUpvoter(_ref) {
-  var votes = _ref.votes,
-      id = _ref.id;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["ApolloConsumer"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 7
-    },
-    __self: this
-  }, function (client) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        return upvotePost(votes, id, client);
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 9
-      },
-      __self: this
-    }, votes);
-  });
-}
-
-function upvotePost(votes, id, client) {
-  client.mutate({
-    mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject()),
-    variables: {
-      id: id,
-      votes: votes + 1
-    },
-    optimisticResponse: {
-      __typename: "Mutation",
-      updatePost: {
-        __typename: "Post",
-        id: id,
-        votes: votes + 1
-      }
-    }
-  });
-}
-
-/***/ }),
-
-/***/ "./components/RegisterForm.js":
-/*!************************************!*\
-  !*** ./components/RegisterForm.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RegisterForm; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _PostList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PostList */ "./components/PostList.js");
-/* harmony import */ var _Form2_Input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Form2/Input */ "./components/Form2/Input.js");
-/* harmony import */ var _form_Label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./form/Label */ "./components/form/Label.js");
-/* harmony import */ var _shared_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/Button */ "./components/shared/Button.js");
-/* harmony import */ var _Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Form2/FormWrapper */ "./components/Form2/FormWrapper.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! apollo-utilities */ "apollo-utilities");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(apollo_utilities__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/router */ "next/router");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/RegisterForm.js";
-
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n          mutation register(\n            $firstName: String!\n            $lastName: String!\n            $email: String!\n            $password: String!\n          ) {\n            register(\n              data: {\n                firstName: $firstName\n                lastName: $lastName\n                email: $email\n                password: $password\n              }\n            ) {\n              id\n            }\n          }\n        "]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-
-
-
-
-
-
-
-
-
-
-
-var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
-
-function RegisterForm() {
-  function handleSubmit(event, client) {
-    event.preventDefault();
-    var form = event.target;
-    var formData = new window.FormData(form);
-    var firstName = formData.get("firstName");
-    var lastName = formData.get("lastName");
-    var email = formData.get("email");
-    var password = formData.get("password");
-    form.reset();
-    client.mutate({
-      mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject()),
-      variables: {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password
-      }
-    }).then(function (response) {
-      if (response.data) {
-        Cookie.set("uid", response.data.register.id);
-        next_router__WEBPACK_IMPORTED_MODULE_10___default.a.push("/signup");
-      } else {
-        console.log("there was an error");
-      }
-    });
-  }
-
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["ApolloConsumer"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 58
-    },
-    __self: this
-  }, function (client) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 60
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledForm, {
-      onSubmit: function onSubmit(event) {
-        return handleSubmit(event, client);
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 61
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 62
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 63
-      },
-      __self: this
-    }, "firstname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "",
-      name: "firstName",
-      type: "text",
-      required: true,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 64
-      },
-      __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 66
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 67
-      },
-      __self: this
-    }, "lastname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "",
-      name: "lastName",
-      type: "text",
-      required: true,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 68
-      },
-      __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 70
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 71
-      },
-      __self: this
-    }, "email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "",
-      name: "email",
-      type: "text",
-      required: true,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 72
-      },
-      __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 74
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 75
-      },
-      __self: this
-    }, "password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "",
-      name: "password",
-      type: "text",
-      required: true,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 76
-      },
-      __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubmitButton, {
-      type: "submit",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 78
-      },
-      __self: this
-    }, "Submit")));
-  });
-}
-var StyledForm = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.form.withConfig({
-  displayName: "RegisterForm__StyledForm",
-  componentId: "sc-1jkrpw9-0"
-})(["display:flex;flex-direction:column;align-items:flex-start;", ";"], function (props) {
-  return props.loading && "filter: grayscale(0.5) blur(5px) opacity(0.6); pointer-events: none";
-});
-var SubmitButton = styled_components__WEBPACK_IMPORTED_MODULE_8___default()(_shared_Button__WEBPACK_IMPORTED_MODULE_6__["default"]).withConfig({
-  displayName: "RegisterForm__SubmitButton",
-  componentId: "sc-1jkrpw9-1"
-})(["align-self:flex-end;margin-right:0px;margin-left:auto;"]);
-var InputWrapper = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.div.withConfig({
-  displayName: "RegisterForm__InputWrapper",
-  componentId: "sc-1jkrpw9-2"
-})(["position:relative;margin-bottom:24px;width:100%;"]);
-
-/***/ }),
-
-/***/ "./components/form/Label.js":
-/*!**********************************!*\
-  !*** ./components/form/Label.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
-
-
-var Label = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.label.withConfig({
-  displayName: "Label",
-  componentId: "sc-1n443xe-0"
-})(["", ";display:block;margin-bottom:8px;color:", ";"], _shared_helpers__WEBPACK_IMPORTED_MODULE_1__["smallFont"], function (props) {
-  return props.theme.mutedText;
-});
-/* harmony default export */ __webpack_exports__["default"] = (Label);
-
-/***/ }),
-
-/***/ "./components/shared/Button.js":
-/*!*************************************!*\
-  !*** ./components/shared/Button.js ***!
-  \*************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./components/shared/helpers.js");
-
-
-var Button = styled_components__WEBPACK_IMPORTED_MODULE_0___default.a.button.withConfig({
-  displayName: "Button",
-  componentId: "sc-1yqwkyz-0"
-})(["", ";", ";border:none;border-radius:3px;padding:8px 24px;background-color:", ";cursor:pointer;color:#ffffff;outline:none;:hover{filter:brightness(110%);}:active{filter:brightness(90%);}:focus{box-shadow:0 0 0 2px ", ";}"], Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["transition"])("filter", "box-shadow"), _helpers__WEBPACK_IMPORTED_MODULE_1__["wideFont"], function (props) {
-  return props.theme.accent;
-}, function (props) {
-  return props.theme.accent + "4d";
-});
-/* harmony default export */ __webpack_exports__["default"] = (Button);
-
-/***/ }),
-
 /***/ "./components/shared/helpers.js":
 /*!**************************************!*\
   !*** ./components/shared/helpers.js ***!
@@ -4848,7 +4155,7 @@ var UserStoreContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!**********************************!*\
   !*** multi ./pages/dashboard.js ***!
   \**********************************/
@@ -5132,17 +4439,6 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-apollo");
-
-/***/ }),
-
-/***/ "react-fontawesome":
-/*!************************************!*\
-  !*** external "react-fontawesome" ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = require("react-fontawesome");
 
 /***/ }),
 
