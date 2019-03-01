@@ -21,6 +21,7 @@ const FetchQuery = inject("store")(
     let fetchFourHourSentVariables = {
       term: "bitcoin"
     };
+
     return (
       <Query
         query={fetchFourHourSentQuery}
@@ -32,7 +33,6 @@ const FetchQuery = inject("store")(
 
           return (
             <Wrapper>
-              <button onClick={clicked}>click in query</button>
               <ChartWrapper>
                 <ReChart data={data} />
               </ChartWrapper>
