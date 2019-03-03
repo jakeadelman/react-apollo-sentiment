@@ -2,9 +2,7 @@ import App from "../components/App";
 import Header from "../components/Header/HomeHeader";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../components/theme";
-import HomeSvg from "../components/HomepageSvg";
 import { smallFont, wideFont } from "../components/shared/helpers";
-// import Typing from "react-typing-animation";
 import Typist from "react-typist";
 import TypistLoop from "react-typist-loop";
 

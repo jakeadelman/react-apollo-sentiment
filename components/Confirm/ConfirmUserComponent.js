@@ -2,6 +2,7 @@ import React from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 import Router from "next/router";
+import Button from "../shared/Button";
 
 const confirmUserMutation = gql`
   mutation confirmUser($token: String!) {
@@ -19,34 +20,32 @@ class ConfirmUser extends React.Component {
   }
 }
 
-// export default props => {
-//   let token = props.token;
-//   let newDat;
-//   return (
-//     <Mutation mutation={confirmUserMutation} variables={{ token }}>
-//       {(confirmUser, { data }) => (
-//         <ConfirmUser confirm={confirmUser}>
-//           <div>thank you for confirming your email</div>
-//         </ConfirmUser>
-//       )}
-//     </Mutation>
-//   );
-// };
-
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = { confirmed: false };
     this.userConfirmed = this.userConfirmed.bind(this);
+    this.buttonClicked = this.buttonClicked.bind(this);
+  }
+
+  buttonClicked() {
+    Router.push("/login");
   }
 
   userConfirmed() {
     this.setState({ confirmed: true });
-    Router.push("/login");
+    // Router.push("/login");
   }
 
   render() {
     let token = this.props.token;
+    if (token == undefined) {
+      return (
+        <div style={{ fontSize: "14px" }}>
+          We've sent you an email. Please confirm your email to login.
+        </div>
+      );
+    }
     return (
       <div>
         {this.state.confirmed == false ? (
@@ -54,14 +53,25 @@ export default class extends React.Component {
             <Mutation mutation={confirmUserMutation} variables={{ token }}>
               {(confirmUser, { data }) => (
                 <ConfirmUser confirm={confirmUser}>
-                  <div>thank you for confirming your email</div>
                   <div>{data ? this.userConfirmed() : null}</div>
                 </ConfirmUser>
               )}
             </Mutation>
           </div>
         ) : (
-          <div>now confirmed</div>
+          <div>
+            <div style={{ fontSize: "14px" }}>
+              Thank you for confirming your email. You may now login.
+            </div>
+            <div style={{ display: "flex", marginTop: "12px" }}>
+              <Button
+                style={{ marginRight: "auto", marginLeft: "auto" }}
+                onClick={this.buttonClicked}
+              >
+                Login
+              </Button>
+            </div>
+          </div>
         )}
       </div>
     );

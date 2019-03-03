@@ -13,8 +13,6 @@ const Cookie = require("js-cookie");
 
 const Header = ({ router }) => {
   const cook = Cookie.get("isAuth");
-  console.log(cook);
-  console.log(router.pathname);
 
   let authOrNo = cook === "true";
 

@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -121,32 +121,6 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/App.js";
     },
     __self: this
   }, children);
-});
-
-/***/ }),
-
-/***/ "./components/ErrorMessage.js":
-/*!************************************!*\
-  !*** ./components/ErrorMessage.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/ErrorMessage.js";
-
-/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
-  var message = _ref.message;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("aside", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 2
-    },
-    __self: this
-  }, message);
 });
 
 /***/ }),
@@ -248,8 +222,6 @@ var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
 var Header = function Header(_ref) {
   var router = _ref.router;
   var cook = Cookie.get("isAuth");
-  console.log(cook);
-  console.log(router.pathname);
   var authOrNo = cook === "true";
 
   if (!authOrNo) {
@@ -257,19 +229,19 @@ var Header = function Header(_ref) {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 23
+        lineNumber: 21
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 24
+        lineNumber: 22
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 25
+        lineNumber: 23
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -277,14 +249,14 @@ var Header = function Header(_ref) {
       href: "/login",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 27
+        lineNumber: 25
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: router.pathname === "/login" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 28
+        lineNumber: 26
       },
       __self: this
     }, "login")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -292,14 +264,14 @@ var Header = function Header(_ref) {
       href: "/register",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 35
+        lineNumber: 33
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: router.pathname === "/register" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 36
+        lineNumber: 34
       },
       __self: this
     }, "register"))));
@@ -308,19 +280,19 @@ var Header = function Header(_ref) {
       theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 47
+        lineNumber: 45
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 48
+        lineNumber: 46
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Logo__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 49
+        lineNumber: 47
       },
       __self: this
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -328,14 +300,14 @@ var Header = function Header(_ref) {
       href: "/settings",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 51
+        lineNumber: 49
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       className: router.pathname === "/settings" ? "is-active" : "",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 52
+        lineNumber: 50
       },
       __self: this
     }, "settings")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(next_link__WEBPACK_IMPORTED_MODULE_1___default.a, {
@@ -343,13 +315,13 @@ var Header = function Header(_ref) {
       href: "/logout",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 59
+        lineNumber: 57
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 60
+        lineNumber: 58
       },
       __self: this
     }, "logout"))));
@@ -444,193 +416,40 @@ var Logo = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConf
 
 /***/ }),
 
-/***/ "./components/PostList.js":
-/*!********************************!*\
-  !*** ./components/PostList.js ***!
-  \********************************/
-/*! exports provided: allPostsQuery, allPostsQueryVars, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allPostsQuery", function() { return allPostsQuery; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allPostsQueryVars", function() { return allPostsQueryVars; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PostList; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ErrorMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ErrorMessage */ "./components/ErrorMessage.js");
-/* harmony import */ var _PostUpvoter__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PostUpvoter */ "./components/PostUpvoter.js");
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/PostList.js";
-
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query allPosts($first: Int!, $skip: Int!) {\n    allPosts(orderBy: createdAt_DESC, first: $first, skip: $skip) {\n      id\n      title\n      votes\n      url\n      createdAt\n    }\n    _allPostsMeta {\n      count\n    }\n  }\n"]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-
-
-
-
-var allPostsQuery = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject());
-var allPostsQueryVars = {
-  skip: 0,
-  first: 10
-};
-function PostList() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["Query"], {
-    query: allPostsQuery,
-    variables: allPostsQueryVars,
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 27
-    },
-    __self: this
-  }, function (_ref) {
-    var loading = _ref.loading,
-        error = _ref.error,
-        _ref$data = _ref.data,
-        allPosts = _ref$data.allPosts,
-        _allPostsMeta = _ref$data._allPostsMeta,
-        fetchMore = _ref.fetchMore;
-    if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ErrorMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      message: "Error loading posts.",
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 29
-      },
-      __self: this
-    });
-    if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 30
-      },
-      __self: this
-    }, "Loading");
-    var areMorePosts = allPosts.length < _allPostsMeta.count;
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 34
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 35
-      },
-      __self: this
-    }, allPosts.map(function (post, index) {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-        key: post.id,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 37
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 38
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 39
-        },
-        __self: this
-      }, index + 1, ". "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: post.url,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 40
-        },
-        __self: this
-      }, post.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_PostUpvoter__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        id: post.id,
-        votes: post.votes,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 41
-        },
-        __self: this
-      })));
-    })), areMorePosts ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        return loadMorePosts(allPosts, fetchMore);
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 47
-      },
-      __self: this
-    }, loading ? "Loading..." : "Show More", " ") : "");
-  });
-}
-
-function loadMorePosts(allPosts, fetchMore) {
-  fetchMore({
-    variables: {
-      skip: allPosts.length
-    },
-    updateQuery: function updateQuery(previousResult, _ref2) {
-      var fetchMoreResult = _ref2.fetchMoreResult;
-
-      if (!fetchMoreResult) {
-        return previousResult;
-      }
-
-      return Object.assign({}, previousResult, {
-        // Append the new posts results to the old one
-        allPosts: [].concat(_toConsumableArray(previousResult.allPosts), _toConsumableArray(fetchMoreResult.allPosts))
-      });
-    }
-  });
-}
-
-/***/ }),
-
-/***/ "./components/PostUpvoter.js":
-/*!***********************************!*\
-  !*** ./components/PostUpvoter.js ***!
-  \***********************************/
+/***/ "./components/LoginForm2.js":
+/*!**********************************!*\
+  !*** ./components/LoginForm2.js ***!
+  \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PostUpvoter; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/PostUpvoter.js";
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "@babel/runtime/regenerator");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-apollo */ "react-apollo");
+/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
+/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! reactstrap */ "reactstrap");
+/* harmony import */ var reactstrap__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(reactstrap__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
+/* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Form2/FormWrapper */ "./components/Form2/FormWrapper.js");
+/* harmony import */ var _Form2_Input__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Form2/Input */ "./components/Form2/Input.js");
+/* harmony import */ var _form_Label__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./form/Label */ "./components/form/Label.js");
+/* harmony import */ var _shared_Button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./shared/Button */ "./components/shared/Button.js");
+
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/LoginForm2.js";
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n      mutation updatePost($id: ID!, $votes: Int) {\n        updatePost(id: $id, votes: $votes) {\n          id\n          __typename\n          votes\n        }\n      }\n    "]);
+  var data = _taggedTemplateLiteral(["\n        mutation login($email: String!, $password: String!) {\n          login(email: $email, password: $password)\n        }\n      "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -641,98 +460,25 @@ function _templateObject() {
 
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
 
+function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function PostUpvoter(_ref) {
-  var votes = _ref.votes,
-      id = _ref.id;
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["ApolloConsumer"], {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 7
-    },
-    __self: this
-  }, function (client) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-      onClick: function onClick() {
-        return upvotePost(votes, id, client);
-      },
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 9
-      },
-      __self: this
-    }, votes);
-  });
-}
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function upvotePost(votes, id, client) {
-  client.mutate({
-    mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject()),
-    variables: {
-      id: id,
-      votes: votes + 1
-    },
-    optimisticResponse: {
-      __typename: "Mutation",
-      updatePost: {
-        __typename: "Post",
-        id: id,
-        votes: votes + 1
-      }
-    }
-  });
-}
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
-/***/ }),
-
-/***/ "./components/RegisterForm.js":
-/*!************************************!*\
-  !*** ./components/RegisterForm.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RegisterForm; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-apollo */ "react-apollo");
-/* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! graphql-tag */ "graphql-tag");
-/* harmony import */ var graphql_tag__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(graphql_tag__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _PostList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PostList */ "./components/PostList.js");
-/* harmony import */ var _Form2_Input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Form2/Input */ "./components/Form2/Input.js");
-/* harmony import */ var _form_Label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./form/Label */ "./components/form/Label.js");
-/* harmony import */ var _shared_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/Button */ "./components/shared/Button.js");
-/* harmony import */ var _Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Form2/FormWrapper */ "./components/Form2/FormWrapper.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! apollo-utilities */ "apollo-utilities");
-/* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(apollo_utilities__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! next/router */ "next/router");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/components/RegisterForm.js";
-
-
-function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n          mutation register(\n            $firstName: String!\n            $lastName: String!\n            $email: String!\n            $password: String!\n          ) {\n            register(\n              data: {\n                firstName: $firstName\n                lastName: $lastName\n                email: $email\n                password: $password\n              }\n            ) {\n              id\n            }\n          }\n        "]);
-
-  _templateObject = function _templateObject() {
-    return data;
-  };
-
-  return data;
-}
-
-function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
 
 
 
+
+ // import { observer } from "mobx-react-lite";
+// import { UserStoreContext } from "../stores/UserStore.ts";
 
 
 
@@ -742,167 +488,191 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 
 var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
 
-function RegisterForm() {
-  function handleSubmit(event, client) {
-    event.preventDefault();
-    var form = event.target;
-    var formData = new window.FormData(form);
-    var firstName = formData.get("firstName");
-    var lastName = formData.get("lastName");
-    var email = formData.get("email");
-    var password = formData.get("password");
-    form.reset();
-    client.mutate({
-      mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObject()),
-      variables: {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password
-      }
-    }).then(function (response) {
-      if (response.data) {
-        Cookie.set("uid", response.data.register.id);
-        next_router__WEBPACK_IMPORTED_MODULE_10___default.a.push("/signup");
-      } else {
-        console.log("there was an error");
-      }
-    });
+var LoginForm = function LoginForm() {
+  // const userStore = useContext(UserStoreContext);
+  function handleSubmit(_x, _x2) {
+    return _handleSubmit.apply(this, arguments);
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_1__["ApolloConsumer"], {
+  function _handleSubmit() {
+    _handleSubmit = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(event, client) {
+      var form, formData, email, password, res, r, isTrue;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              event.preventDefault();
+              form = event.target;
+              formData = new window.FormData(form);
+              email = formData.get("email");
+              password = formData.get("password");
+              console.log(email, password);
+              form.reset();
+              res = client.mutate({
+                mutation: graphql_tag__WEBPACK_IMPORTED_MODULE_3___default()(_templateObject()),
+                variables: {
+                  email: email,
+                  password: password
+                }
+              }); //check if login credentials are correct
+
+              _context.next = 10;
+              return res;
+
+            case 10:
+              r = _context.sent;
+              r = r.data.login;
+              console.log(r);
+              isTrue = r == "true";
+
+              if (!(isTrue == true)) {
+                _context.next = 19;
+                break;
+              }
+
+              Cookie.set("isAuth", "true"); // userStore.isAuth = true;
+
+              next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push("/dashboard");
+              _context.next = 21;
+              break;
+
+            case 19:
+              setWrongCredentials(true);
+              return _context.abrupt("return");
+
+            case 21:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+    return _handleSubmit.apply(this, arguments);
+  }
+
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
+      _useState2 = _slicedToArray(_useState, 2),
+      wrongCredentials = _useState2[0],
+      setWrongCredentials = _useState2[1];
+
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_2__["ApolloConsumer"], {
     __source: {
       fileName: _jsxFileName,
-      lineNumber: 58
+      lineNumber: 56
     },
     __self: this
   }, function (client) {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_FormWrapper__WEBPACK_IMPORTED_MODULE_8__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 60
+        lineNumber: 58
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledForm, {
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(StyledForm, {
       onSubmit: function onSubmit(event) {
         return handleSubmit(event, client);
       },
       __source: {
         fileName: _jsxFileName,
+        lineNumber: 59
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(InputWrapper, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 60
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      __source: {
+        fileName: _jsxFileName,
         lineNumber: 61
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 62
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 63
-      },
-      __self: this
-    }, "firstname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "",
-      name: "firstName",
-      type: "text",
-      required: true,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 64
-      },
-      __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 66
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 67
-      },
-      __self: this
-    }, "lastname"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
-      placeholder: "",
-      name: "lastName",
-      type: "text",
-      required: true,
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 68
-      },
-      __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 70
-      },
-      __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
-      __source: {
-        fileName: _jsxFileName,
-        lineNumber: 71
-      },
-      __self: this
-    }, "email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, "email"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_9__["default"], {
       placeholder: "",
       name: "email",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 72
+        lineNumber: 62
       },
       __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InputWrapper, {
+    })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(InputWrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 74
+        lineNumber: 64
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_form_Label__WEBPACK_IMPORTED_MODULE_10__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 75
+        lineNumber: 65
       },
       __self: this
-    }, "password"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }, "password"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Form2_Input__WEBPACK_IMPORTED_MODULE_9__["default"], {
       placeholder: "",
       name: "password",
       type: "text",
       required: true,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 76
+        lineNumber: 66
       },
       __self: this
-    })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(SubmitButton, {
+    })), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      style: {
+        display: "flex",
+        width: "100%"
+      },
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 68
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SubmitButton, {
       type: "submit",
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 78
+        lineNumber: 69
       },
       __self: this
-    }, "Submit")));
+    }, "Submit")), wrongCredentials == true ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      className: "login-alert",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 72
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(reactstrap__WEBPACK_IMPORTED_MODULE_5__["Alert"], {
+      color: "secondary",
+      isOpen: wrongCredentials == true ? true : false,
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 73
+      },
+      __self: this
+    }, "Wrong login credentials")) : null));
   });
-}
-var StyledForm = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.form.withConfig({
-  displayName: "RegisterForm__StyledForm",
-  componentId: "sc-1jkrpw9-0"
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (LoginForm);
+var StyledForm = styled_components__WEBPACK_IMPORTED_MODULE_7___default.a.form.withConfig({
+  displayName: "LoginForm2__StyledForm",
+  componentId: "sc-1mwh11w-0"
 })(["display:flex;flex-direction:column;align-items:flex-start;", ";"], function (props) {
   return props.loading && "filter: grayscale(0.5) blur(5px) opacity(0.6); pointer-events: none";
 });
-var SubmitButton = styled_components__WEBPACK_IMPORTED_MODULE_8___default()(_shared_Button__WEBPACK_IMPORTED_MODULE_6__["default"]).withConfig({
-  displayName: "RegisterForm__SubmitButton",
-  componentId: "sc-1jkrpw9-1"
+var SubmitButton = styled_components__WEBPACK_IMPORTED_MODULE_7___default()(_shared_Button__WEBPACK_IMPORTED_MODULE_11__["default"]).withConfig({
+  displayName: "LoginForm2__SubmitButton",
+  componentId: "sc-1mwh11w-1"
 })(["align-self:flex-end;margin-right:0px;margin-left:auto;"]);
-var InputWrapper = styled_components__WEBPACK_IMPORTED_MODULE_8___default.a.div.withConfig({
-  displayName: "RegisterForm__InputWrapper",
-  componentId: "sc-1jkrpw9-2"
+var InputWrapper = styled_components__WEBPACK_IMPORTED_MODULE_7___default.a.div.withConfig({
+  displayName: "LoginForm2__InputWrapper",
+  componentId: "sc-1mwh11w-2"
 })(["position:relative;margin-bottom:24px;width:100%;"]);
 
 /***/ }),
@@ -1060,29 +830,27 @@ var theme = function theme(isDark) {
 
 /***/ }),
 
-/***/ "./pages/register.js":
-/*!***************************!*\
-  !*** ./pages/register.js ***!
-  \***************************/
+/***/ "./pages/login.js":
+/*!************************!*\
+  !*** ./pages/login.js ***!
+  \************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RegisterPage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LoginPage; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/App */ "./components/App.js");
 /* harmony import */ var _components_Header_Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Header/Header */ "./components/Header/Header.js");
-/* harmony import */ var _components_RegisterForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/RegisterForm */ "./components/RegisterForm.js");
-/* harmony import */ var _components_PostList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/PostList */ "./components/PostList.js");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "styled-components");
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _components_theme__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/theme */ "./components/theme.js");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! next/router */ "next/router");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_7__);
-var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/register.js";
-
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/theme */ "./components/theme.js");
+/* harmony import */ var _components_LoginForm2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/LoginForm2 */ "./components/LoginForm2.js");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! next/router */ "next/router");
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_6__);
+var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/login.js";
 
 
 
@@ -1093,76 +861,74 @@ var _jsxFileName = "/Users/manx/projects/instagauge/frontend/pages/register.js";
 
 var Cookie = __webpack_require__(/*! js-cookie */ "js-cookie");
 
-function RegisterPage() {
+function LoginPage() {
   var cook = Cookie.get("isAuth") === "true";
   console.log(cook);
 
   if (!!cook) {
-    next_router__WEBPACK_IMPORTED_MODULE_7___default.a.push("/dashboard");
+    next_router__WEBPACK_IMPORTED_MODULE_6___default.a.push("/dashboard");
   } else {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_App__WEBPACK_IMPORTED_MODULE_1__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 17
+        lineNumber: 16
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Header_Header__WEBPACK_IMPORTED_MODULE_2__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 18
+        lineNumber: 17
       },
       __self: this
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_5__["ThemeProvider"], {
-      theme: Object(_components_theme__WEBPACK_IMPORTED_MODULE_6__["default"])(false),
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_3__["ThemeProvider"], {
+      theme: Object(_components_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false),
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 19
+        lineNumber: 18
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 20
+        lineNumber: 19
       },
       __self: this
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_RegisterForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_LoginForm2__WEBPACK_IMPORTED_MODULE_5__["default"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 21
+        lineNumber: 20
       },
       __self: this
     }))));
   }
-} // export default () => (
-// );
-
-var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_5___default.a.div.withConfig({
-  displayName: "register__Wrapper",
-  componentId: "sc-128t810-0"
+}
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_3___default.a.div.withConfig({
+  displayName: "login__Wrapper",
+  componentId: "ljat1g-0"
 })(["display:flex;align-items:flex-start;margin:0 10vw;@media (max-width:1024px){margin:0 5vw;}@media (max-width:768px){display:block;margin:0;}"]);
 
 /***/ }),
 
-/***/ 7:
-/*!*********************************!*\
-  !*** multi ./pages/register.js ***!
-  \*********************************/
+/***/ 4:
+/*!******************************!*\
+  !*** multi ./pages/login.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! ./pages/register.js */"./pages/register.js");
+module.exports = __webpack_require__(/*! ./pages/login.js */"./pages/login.js");
 
 
 /***/ }),
 
-/***/ "apollo-utilities":
-/*!***********************************!*\
-  !*** external "apollo-utilities" ***!
-  \***********************************/
+/***/ "@babel/runtime/regenerator":
+/*!*********************************************!*\
+  !*** external "@babel/runtime/regenerator" ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("apollo-utilities");
+module.exports = require("@babel/runtime/regenerator");
 
 /***/ }),
 
@@ -1232,6 +998,17 @@ module.exports = require("react-apollo");
 
 /***/ }),
 
+/***/ "reactstrap":
+/*!*****************************!*\
+  !*** external "reactstrap" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("reactstrap");
+
+/***/ }),
+
 /***/ "styled-components":
 /*!************************************!*\
   !*** external "styled-components" ***!
@@ -1244,4 +1021,4 @@ module.exports = require("styled-components");
 /***/ })
 
 /******/ });
-//# sourceMappingURL=register.js.map
+//# sourceMappingURL=login.js.map

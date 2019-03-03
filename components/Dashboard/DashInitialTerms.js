@@ -14,6 +14,7 @@ export default class DashInitialTerms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.wasClicked = this.wasClicked.bind(this);
   }
 
   componentDidMount() {
@@ -23,12 +24,29 @@ export default class DashInitialTerms extends React.Component {
     } else if (!!cook) {
       this.setState({ isAuth: cook });
     }
+
+    this.setState({ currency: this.props.store.currency });
+  }
+
+  wasClicked() {
+    if (this.props.store.currency == "bitcoin") {
+      this.props.store.currency = "ethereum";
+      this.setState({ currency: "ethereum" });
+    } else if (this.props.store.currency == "ethereum") {
+      this.props.store.currency = "bitcoin";
+      this.setState({ currency: "bitcoin" });
+    }
+    console.log(this.state.currency);
+    // console.log(this.props.store.currency);
   }
 
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <FetchQuery />
+        <div>
+          <button onClick={this.wasClicked}>clickdis</button>
+          <FetchQuery currency={this.state.currency} />
+        </div>
       </ThemeProvider>
     );
   }

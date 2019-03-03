@@ -47,7 +47,7 @@ export default function RegisterForm() {
       .then(response => {
         if (response.data) {
           Cookie.set("uid", response.data.register.id);
-          Router.push("/signup");
+          Router.push("/confirm");
         } else {
           console.log("there was an error");
         }
