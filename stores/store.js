@@ -11,6 +11,7 @@ export class Store {
   @persist @observable light = true;
   @persist @observable isAuth = false;
   @persist @observable currency = "bitcoin";
+  @persist @observable hoursBack = 24;
 
   //   constructor(isServer, initialData = {}) {
   //     this.lastUpdate =

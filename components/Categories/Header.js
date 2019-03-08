@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { wideFont } from "../shared/helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SidebarCategoryListHeader = () => <Header>cryptocurrencies</Header>;
+const SidebarCategoryListHeader = () => (
+  <Header>
+    cryptocurrencies
+    <FontAwesomeIcon icon="angle-down" style={{ marginLeft: "5px" }} />
+  </Header>
+);
 
 export default SidebarCategoryListHeader;
 

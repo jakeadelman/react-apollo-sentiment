@@ -99,11 +99,10 @@ const Wrapper = styled.header`
   display: flex;
   align-items: stretch;
   margin-bottom: 0px;
-  box-shadow: 0 4px 12px ${props => props.theme.shadow};
-  border-bottom: 1px solid ${props => props.theme.border};
+
   height: 48px;
   padding: 0 10vw;
-  background-color: ${props => props.theme.foreground};
+  background: none;
   user-select: none;
   @media (max-width: 425px) {
     margin-bottom: 0px;
@@ -114,3 +113,7 @@ const Wrapper = styled.header`
     margin-bottom: 0px;
   }
 `;
+
+// border-bottom: 1px solid ${props => props.theme.border};
+// box-shadow: 0 4px 12px ${props => props.theme.shadow};
+// background-color: ${props => props.theme.foreground};

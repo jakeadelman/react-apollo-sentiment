@@ -2,9 +2,11 @@ import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import theme from "../theme";
 import FetchQuery from "./FetchQuery";
+import FetchGoogleQuery from "./FetchGoogleQuery";
 import Router from "next/router";
 import { inject, observer } from "mobx-react";
 import { Store, hydrate } from "../../stores/store";
+import Sidebar from "../Categories/Menu";
 
 const Cookie = require("js-cookie");
 
@@ -44,10 +46,23 @@ export default class DashInitialTerms extends React.Component {
     return (
       <ThemeProvider theme={theme}>
         <div>
-          <button onClick={this.wasClicked}>clickdis</button>
-          <FetchQuery currency={this.state.currency} />
+          <Wrapper>
+            <FetchQuery currency={this.state.currency} />
+            <Sidebar />
+          </Wrapper>
+          <div style={{ marginTop: "25px" }}>
+            <FetchGoogleQuery
+              currency={this.state.currency}
+              style={{ width: "auto" }}
+            />
+          </div>
         </div>
       </ThemeProvider>
     );
   }
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: flex-align;
+`;

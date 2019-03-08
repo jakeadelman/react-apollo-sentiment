@@ -1,13 +1,19 @@
 {
-  "bootstrap/dist/css/bootstrap.min.css": [
+  "./cats.css": [
     {
-      "id": "./node_modules/bootstrap/dist/css/bootstrap.min.css",
-      "name": "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "id": "./components/Categories/cats.css",
+      "name": "./components/Categories/cats.css",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }
   ],
   "undefined": [
+    {
+      "id": 4,
+      "name": null,
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    },
     {
       "id": 5,
       "name": null,
@@ -19,12 +25,40 @@
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
+    },
+    {
+      "id": 7,
+      "name": null,
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    },
+    {
+      "id": 8,
+      "name": null,
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    }
+  ],
+  "bootstrap/dist/css/bootstrap.min.css": [
+    {
+      "id": "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "name": "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
     }
   ],
   "./header.scss": [
     {
       "id": "./components/Header/header.scss",
       "name": "./components/Header/header.scss",
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    }
+  ],
+  "../styles.css": [
+    {
+      "id": "./styles.css",
+      "name": "./styles.css",
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"
     }

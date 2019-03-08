@@ -3,7 +3,6 @@
   "version": "2.0.0",
   "scripts": {
     "dev": "next",
-    "dev-local": "node dev.server.js",
     "dev-next": "node server.js",
     "build": "next build",
     "start": "next start",
@@ -12,6 +11,9 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "@now/static-build": "^0.4.18",
     "@types/react": "^16.8.4",
     "@vx/axis": "^0.0.184",
