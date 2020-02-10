@@ -9,10 +9,9 @@ const Lapper = styled.aside`
   flex-direction: column;
   flex-basis: 240px;
   margin-left: 24px;
-  border: 1px solid ${props => props.theme.border};
   border-radius: 2px;
   background-color: ${props => props.theme.foreground};
-
+  background-color: #212529;
   @media (max-width: 768px) {
     display: none;
   }
@@ -21,7 +20,6 @@ const Lapper = styled.aside`
 const Sidebar = () => (
   <ThemeProvider theme={theme(false)}>
     <Lapper>
-      <Header />
       <CategoryList />
     </Lapper>
   </ThemeProvider>

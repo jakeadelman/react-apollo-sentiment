@@ -2,8 +2,21 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import { headerItem } from "../shared/helpers";
+import bitcoinLogo from "../../static/bitcoin.svg";
 
-const HeaderLogo = () => <Logo href="/">tradrr</Logo>;
+const HeaderLogo = () => (
+  <Logo>
+    <Link prefetch href="/">
+      <img
+        src="/static/bitcoin-logo.svg"
+        style={{ margin: "auto", maxWidth: "30px" }}
+      />
+    </Link>
+    <Link prefetch href="/">
+      <span style={{ marginLeft: "-2px" }}>its Journal</span>
+    </Link>
+  </Logo>
+);
 
 export default HeaderLogo;
 

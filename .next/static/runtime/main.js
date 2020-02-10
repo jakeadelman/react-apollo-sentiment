@@ -1626,7 +1626,7 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.6.3' };
+var core = module.exports = { version: '2.6.11' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -2455,6 +2455,7 @@ module.exports.f = function (C) {
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
+var DESCRIPTORS = __webpack_require__(/*! ./_descriptors */ "./node_modules/core-js/library/modules/_descriptors.js");
 var getKeys = __webpack_require__(/*! ./_object-keys */ "./node_modules/core-js/library/modules/_object-keys.js");
 var gOPS = __webpack_require__(/*! ./_object-gops */ "./node_modules/core-js/library/modules/_object-gops.js");
 var pIE = __webpack_require__(/*! ./_object-pie */ "./node_modules/core-js/library/modules/_object-pie.js");
@@ -2484,7 +2485,10 @@ module.exports = !$assign || __webpack_require__(/*! ./_fails */ "./node_modules
     var length = keys.length;
     var j = 0;
     var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+    while (length > j) {
+      key = keys[j++];
+      if (!DESCRIPTORS || isEnum.call(S, key)) T[key] = S[key];
+    }
   } return T;
 } : $assign;
 
@@ -4174,12 +4178,14 @@ var enumKeys = __webpack_require__(/*! ./_enum-keys */ "./node_modules/core-js/l
 var isArray = __webpack_require__(/*! ./_is-array */ "./node_modules/core-js/library/modules/_is-array.js");
 var anObject = __webpack_require__(/*! ./_an-object */ "./node_modules/core-js/library/modules/_an-object.js");
 var isObject = __webpack_require__(/*! ./_is-object */ "./node_modules/core-js/library/modules/_is-object.js");
+var toObject = __webpack_require__(/*! ./_to-object */ "./node_modules/core-js/library/modules/_to-object.js");
 var toIObject = __webpack_require__(/*! ./_to-iobject */ "./node_modules/core-js/library/modules/_to-iobject.js");
 var toPrimitive = __webpack_require__(/*! ./_to-primitive */ "./node_modules/core-js/library/modules/_to-primitive.js");
 var createDesc = __webpack_require__(/*! ./_property-desc */ "./node_modules/core-js/library/modules/_property-desc.js");
 var _create = __webpack_require__(/*! ./_object-create */ "./node_modules/core-js/library/modules/_object-create.js");
 var gOPNExt = __webpack_require__(/*! ./_object-gopn-ext */ "./node_modules/core-js/library/modules/_object-gopn-ext.js");
 var $GOPD = __webpack_require__(/*! ./_object-gopd */ "./node_modules/core-js/library/modules/_object-gopd.js");
+var $GOPS = __webpack_require__(/*! ./_object-gops */ "./node_modules/core-js/library/modules/_object-gops.js");
 var $DP = __webpack_require__(/*! ./_object-dp */ "./node_modules/core-js/library/modules/_object-dp.js");
 var $keys = __webpack_require__(/*! ./_object-keys */ "./node_modules/core-js/library/modules/_object-keys.js");
 var gOPD = $GOPD.f;
@@ -4196,7 +4202,7 @@ var SymbolRegistry = shared('symbol-registry');
 var AllSymbols = shared('symbols');
 var OPSymbols = shared('op-symbols');
 var ObjectProto = Object[PROTOTYPE];
-var USE_NATIVE = typeof $Symbol == 'function';
+var USE_NATIVE = typeof $Symbol == 'function' && !!$GOPS.f;
 var QObject = global.QObject;
 // Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
 var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
@@ -4306,7 +4312,7 @@ if (!USE_NATIVE) {
   $DP.f = $defineProperty;
   __webpack_require__(/*! ./_object-gopn */ "./node_modules/core-js/library/modules/_object-gopn.js").f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(/*! ./_object-pie */ "./node_modules/core-js/library/modules/_object-pie.js").f = $propertyIsEnumerable;
-  __webpack_require__(/*! ./_object-gops */ "./node_modules/core-js/library/modules/_object-gops.js").f = $getOwnPropertySymbols;
+  $GOPS.f = $getOwnPropertySymbols;
 
   if (DESCRIPTORS && !__webpack_require__(/*! ./_library */ "./node_modules/core-js/library/modules/_library.js")) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
@@ -4355,6 +4361,16 @@ $export($export.S + $export.F * !USE_NATIVE, 'Object', {
   getOwnPropertyNames: $getOwnPropertyNames,
   // 19.1.2.8 Object.getOwnPropertySymbols(O)
   getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// Chrome 38 and 39 `Object.getOwnPropertySymbols` fails on primitives
+// https://bugs.chromium.org/p/v8/issues/detail?id=3443
+var FAILS_ON_PRIMITIVES = $fails(function () { $GOPS.f(1); });
+
+$export($export.S + $export.F * FAILS_ON_PRIMITIVES, 'Object', {
+  getOwnPropertySymbols: function getOwnPropertySymbols(it) {
+    return $GOPS.f(toObject(it));
+  }
 });
 
 // 24.3.2 JSON.stringify(value [, replacer [, space]])
@@ -5269,86 +5285,6 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 /***/ }),
 
-/***/ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
-/*!**********************************************************************************!*\
-  !*** ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Copyright 2015, Yahoo! Inc.
- * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
- */
-var REACT_STATICS = {
-    childContextTypes: true,
-    contextTypes: true,
-    defaultProps: true,
-    displayName: true,
-    getDefaultProps: true,
-    getDerivedStateFromProps: true,
-    mixins: true,
-    propTypes: true,
-    type: true
-};
-
-var KNOWN_STATICS = {
-    name: true,
-    length: true,
-    prototype: true,
-    caller: true,
-    callee: true,
-    arguments: true,
-    arity: true
-};
-
-var defineProperty = Object.defineProperty;
-var getOwnPropertyNames = Object.getOwnPropertyNames;
-var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-var getPrototypeOf = Object.getPrototypeOf;
-var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
-
-function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-
-        if (objectPrototype) {
-            var inheritedComponent = getPrototypeOf(sourceComponent);
-            if (inheritedComponent && inheritedComponent !== objectPrototype) {
-                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
-            }
-        }
-
-        var keys = getOwnPropertyNames(sourceComponent);
-
-        if (getOwnPropertySymbols) {
-            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
-        }
-
-        for (var i = 0; i < keys.length; ++i) {
-            var key = keys[i];
-            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
-                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                try { // Avoid failures from read-only properties
-                    defineProperty(targetComponent, key, descriptor);
-                } catch (e) {}
-            }
-        }
-
-        return targetComponent;
-    }
-
-    return targetComponent;
-}
-
-module.exports = hoistNonReactStatics;
-
-
-/***/ }),
-
 /***/ "./node_modules/next/dist/client/dev-error-overlay/eventsource.js":
 /*!************************************************************************!*\
   !*** ./node_modules/next/dist/client/dev-error-overlay/eventsource.js ***!
@@ -5637,7 +5573,7 @@ var _stripAnsi = _interopRequireDefault(__webpack_require__(/*! strip-ansi */ ".
 
 var _sourceMapSupport = __webpack_require__(/*! ../source-map-support */ "./node_modules/next/dist/client/source-map-support.js");
 
-var _unfetch = _interopRequireDefault(__webpack_require__(/*! unfetch */ "./node_modules/unfetch/dist/unfetch.es.js"));
+var _unfetch = _interopRequireDefault(__webpack_require__(/*! unfetch */ "./node_modules/next/node_modules/unfetch/dist/unfetch.es.js"));
 
 // This alternative WebpackDevServer combines the functionality of:
 // https://github.com/webpack/webpack-dev-server/blob/webpack-1/client/index.js
@@ -5706,7 +5642,7 @@ function connect(options) {
       error.name = err.name;
       error.stack = err.stack; // __NEXT_DIST_DIR is provided by webpack
 
-      (0, _sourceMapSupport.rewriteStacktrace)(error, "/Users/manx/projects/instagauge/frontend/.next");
+      (0, _sourceMapSupport.rewriteStacktrace)(error, "/Users/manx/projects-2/bitsjournal/frontend/.next");
       return error;
     }
   };
@@ -6666,7 +6602,7 @@ var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/r
 
 var _router = _interopRequireDefault(__webpack_require__(/*! ../lib/router */ "./node_modules/next/dist/lib/router/index.js"));
 
-var _unfetch = _interopRequireDefault(__webpack_require__(/*! unfetch */ "./node_modules/unfetch/dist/unfetch.es.js"));
+var _unfetch = _interopRequireDefault(__webpack_require__(/*! unfetch */ "./node_modules/next/node_modules/unfetch/dist/unfetch.es.js"));
 
 /* global location */
 var _default = function _default(_ref) {
@@ -7111,7 +7047,7 @@ var _map = _interopRequireDefault(__webpack_require__(/*! @babel/runtime-corejs2
 
 var _react = _interopRequireDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
+var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/next/node_modules/prop-types/index.js"));
 
 /**
 @copyright (c) 2017-present James Kyle <me@thejameskyle.com>
@@ -7797,7 +7733,7 @@ function () {
 }();
 
 exports.default = PageLoader;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../node_modules/webpack/buildin/module.js */ "./node_modules/next/node_modules/webpack/buildin/module.js")(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
@@ -8257,9 +8193,11 @@ function () {
         }, _callee, this);
       }));
 
-      return function reload(_x) {
+      function reload(_x) {
         return _reload.apply(this, arguments);
-      };
+      }
+
+      return reload;
     }()
   }, {
     key: "back",
@@ -8388,9 +8326,11 @@ function () {
         }, _callee2, this);
       }));
 
-      return function change(_x2, _x3, _x4, _x5) {
+      function change(_x2, _x3, _x4, _x5) {
         return _change.apply(this, arguments);
-      };
+      }
+
+      return change;
     }()
   }, {
     key: "changeState",
@@ -8544,9 +8484,11 @@ function () {
         }, _callee3, this, [[1, 18], [29, 35]]);
       }));
 
-      return function getRouteInfo(_x6, _x7, _x8, _x9) {
+      function getRouteInfo(_x6, _x7, _x8, _x9) {
         return _getRouteInfo.apply(this, arguments);
-      };
+      }
+
+      return getRouteInfo;
     }()
   }, {
     key: "set",
@@ -8668,9 +8610,11 @@ function () {
         }, _callee4, this);
       }));
 
-      return function prefetch(_x10) {
+      function prefetch(_x10) {
         return _prefetch.apply(this, arguments);
-      };
+      }
+
+      return prefetch;
     }()
   }, {
     key: "fetchComponent",
@@ -8719,9 +8663,11 @@ function () {
         }, _callee5, this);
       }));
 
-      return function fetchComponent(_x11, _x12) {
+      function fetchComponent(_x11, _x12) {
         return _fetchComponent.apply(this, arguments);
-      };
+      }
+
+      return fetchComponent;
     }()
   }, {
     key: "getInitialProps",
@@ -8776,9 +8722,11 @@ function () {
         }, _callee6, this);
       }));
 
-      return function getInitialProps(_x13, _x14) {
+      function getInitialProps(_x13, _x14) {
         return _getInitialProps.apply(this, arguments);
-      };
+      }
+
+      return getInitialProps;
     }()
   }, {
     key: "fetchRoute",
@@ -8800,9 +8748,11 @@ function () {
         }, _callee7, this);
       }));
 
-      return function fetchRoute(_x15) {
+      function fetchRoute(_x15) {
         return _fetchRoute.apply(this, arguments);
-      };
+      }
+
+      return fetchRoute;
     }()
   }, {
     key: "abortComponentLoad",
@@ -8881,9 +8831,9 @@ var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/run
 
 var _react = _interopRequireWildcard(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
-var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js"));
+var _propTypes = _interopRequireDefault(__webpack_require__(/*! prop-types */ "./node_modules/next/node_modules/prop-types/index.js"));
 
-var _hoistNonReactStatics = _interopRequireDefault(__webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"));
+var _hoistNonReactStatics = _interopRequireDefault(__webpack_require__(/*! hoist-non-react-statics */ "./node_modules/next/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js"));
 
 var _utils = __webpack_require__(/*! ../utils */ "./node_modules/next/dist/lib/utils.js");
 
@@ -9120,607 +9070,101 @@ function getURL() {
 
 /***/ }),
 
-/***/ "./node_modules/next/node_modules/webpack/buildin/global.js":
-/*!************************************************************************************************************************!*\
-  !*** delegated ./node_modules/next/node_modules/webpack/buildin/global.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
-  \************************************************************************************************************************/
+/***/ "./node_modules/next/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js":
+/*!****************************************************************************************************!*\
+  !*** ./node_modules/next/node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/next/node_modules/webpack/buildin/global.js");
+"use strict";
 
-/***/ }),
 
-/***/ "./node_modules/next/node_modules/webpack/buildin/module.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    getDerivedStateFromProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
 };
 
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    callee: true,
+    arguments: true,
+    arity: true
+};
+
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
+var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+var getPrototypeOf = Object.getPrototypeOf;
+var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
+
+function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
+    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+
+        if (objectPrototype) {
+            var inheritedComponent = getPrototypeOf(sourceComponent);
+            if (inheritedComponent && inheritedComponent !== objectPrototype) {
+                hoistNonReactStatics(targetComponent, inheritedComponent, blacklist);
+            }
+        }
+
+        var keys = getOwnPropertyNames(sourceComponent);
+
+        if (getOwnPropertySymbols) {
+            keys = keys.concat(getOwnPropertySymbols(sourceComponent));
+        }
+
+        for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i];
+            if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
+            }
+        }
+
+        return targetComponent;
+    }
+
+    return targetComponent;
+}
+
+module.exports = hoistNonReactStatics;
+
 
 /***/ }),
 
-/***/ "./node_modules/node-libs-browser/node_modules/punycode/punycode.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/node-libs-browser/node_modules/punycode/punycode.js ***!
-  \**************************************************************************/
+/***/ "./node_modules/next/node_modules/prop-types/checkPropTypes.js":
+/*!***************************************************************************************************************************!*\
+  !*** delegated ./node_modules/next/node_modules/prop-types/checkPropTypes.js from dll-reference dll_8c5f8d517ea84ac209bb ***!
+  \***************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
-;(function(root) {
-
-	/** Detect free variables */
-	var freeExports = typeof exports == 'object' && exports &&
-		!exports.nodeType && exports;
-	var freeModule = typeof module == 'object' && module &&
-		!module.nodeType && module;
-	var freeGlobal = typeof global == 'object' && global;
-	if (
-		freeGlobal.global === freeGlobal ||
-		freeGlobal.window === freeGlobal ||
-		freeGlobal.self === freeGlobal
-	) {
-		root = freeGlobal;
-	}
-
-	/**
-	 * The `punycode` object.
-	 * @name punycode
-	 * @type Object
-	 */
-	var punycode,
-
-	/** Highest positive signed 32-bit float value */
-	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
-
-	/** Bootstring parameters */
-	base = 36,
-	tMin = 1,
-	tMax = 26,
-	skew = 38,
-	damp = 700,
-	initialBias = 72,
-	initialN = 128, // 0x80
-	delimiter = '-', // '\x2D'
-
-	/** Regular expressions */
-	regexPunycode = /^xn--/,
-	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
-	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
-
-	/** Error messages */
-	errors = {
-		'overflow': 'Overflow: input needs wider integers to process',
-		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
-		'invalid-input': 'Invalid input'
-	},
-
-	/** Convenience shortcuts */
-	baseMinusTMin = base - tMin,
-	floor = Math.floor,
-	stringFromCharCode = String.fromCharCode,
-
-	/** Temporary variable */
-	key;
-
-	/*--------------------------------------------------------------------------*/
-
-	/**
-	 * A generic error utility function.
-	 * @private
-	 * @param {String} type The error type.
-	 * @returns {Error} Throws a `RangeError` with the applicable error message.
-	 */
-	function error(type) {
-		throw new RangeError(errors[type]);
-	}
-
-	/**
-	 * A generic `Array#map` utility function.
-	 * @private
-	 * @param {Array} array The array to iterate over.
-	 * @param {Function} callback The function that gets called for every array
-	 * item.
-	 * @returns {Array} A new array of values returned by the callback function.
-	 */
-	function map(array, fn) {
-		var length = array.length;
-		var result = [];
-		while (length--) {
-			result[length] = fn(array[length]);
-		}
-		return result;
-	}
-
-	/**
-	 * A simple `Array#map`-like wrapper to work with domain name strings or email
-	 * addresses.
-	 * @private
-	 * @param {String} domain The domain name or email address.
-	 * @param {Function} callback The function that gets called for every
-	 * character.
-	 * @returns {Array} A new string of characters returned by the callback
-	 * function.
-	 */
-	function mapDomain(string, fn) {
-		var parts = string.split('@');
-		var result = '';
-		if (parts.length > 1) {
-			// In email addresses, only the domain name should be punycoded. Leave
-			// the local part (i.e. everything up to `@`) intact.
-			result = parts[0] + '@';
-			string = parts[1];
-		}
-		// Avoid `split(regex)` for IE8 compatibility. See #17.
-		string = string.replace(regexSeparators, '\x2E');
-		var labels = string.split('.');
-		var encoded = map(labels, fn).join('.');
-		return result + encoded;
-	}
-
-	/**
-	 * Creates an array containing the numeric code points of each Unicode
-	 * character in the string. While JavaScript uses UCS-2 internally,
-	 * this function will convert a pair of surrogate halves (each of which
-	 * UCS-2 exposes as separate characters) into a single code point,
-	 * matching UTF-16.
-	 * @see `punycode.ucs2.encode`
-	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
-	 * @memberOf punycode.ucs2
-	 * @name decode
-	 * @param {String} string The Unicode input string (UCS-2).
-	 * @returns {Array} The new array of code points.
-	 */
-	function ucs2decode(string) {
-		var output = [],
-		    counter = 0,
-		    length = string.length,
-		    value,
-		    extra;
-		while (counter < length) {
-			value = string.charCodeAt(counter++);
-			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
-				// high surrogate, and there is a next character
-				extra = string.charCodeAt(counter++);
-				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
-					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
-				} else {
-					// unmatched surrogate; only append this code unit, in case the next
-					// code unit is the high surrogate of a surrogate pair
-					output.push(value);
-					counter--;
-				}
-			} else {
-				output.push(value);
-			}
-		}
-		return output;
-	}
-
-	/**
-	 * Creates a string based on an array of numeric code points.
-	 * @see `punycode.ucs2.decode`
-	 * @memberOf punycode.ucs2
-	 * @name encode
-	 * @param {Array} codePoints The array of numeric code points.
-	 * @returns {String} The new Unicode string (UCS-2).
-	 */
-	function ucs2encode(array) {
-		return map(array, function(value) {
-			var output = '';
-			if (value > 0xFFFF) {
-				value -= 0x10000;
-				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
-				value = 0xDC00 | value & 0x3FF;
-			}
-			output += stringFromCharCode(value);
-			return output;
-		}).join('');
-	}
-
-	/**
-	 * Converts a basic code point into a digit/integer.
-	 * @see `digitToBasic()`
-	 * @private
-	 * @param {Number} codePoint The basic numeric code point value.
-	 * @returns {Number} The numeric value of a basic code point (for use in
-	 * representing integers) in the range `0` to `base - 1`, or `base` if
-	 * the code point does not represent a value.
-	 */
-	function basicToDigit(codePoint) {
-		if (codePoint - 48 < 10) {
-			return codePoint - 22;
-		}
-		if (codePoint - 65 < 26) {
-			return codePoint - 65;
-		}
-		if (codePoint - 97 < 26) {
-			return codePoint - 97;
-		}
-		return base;
-	}
-
-	/**
-	 * Converts a digit/integer into a basic code point.
-	 * @see `basicToDigit()`
-	 * @private
-	 * @param {Number} digit The numeric value of a basic code point.
-	 * @returns {Number} The basic code point whose value (when used for
-	 * representing integers) is `digit`, which needs to be in the range
-	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
-	 * used; else, the lowercase form is used. The behavior is undefined
-	 * if `flag` is non-zero and `digit` has no uppercase form.
-	 */
-	function digitToBasic(digit, flag) {
-		//  0..25 map to ASCII a..z or A..Z
-		// 26..35 map to ASCII 0..9
-		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
-	}
-
-	/**
-	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * https://tools.ietf.org/html/rfc3492#section-3.4
-	 * @private
-	 */
-	function adapt(delta, numPoints, firstTime) {
-		var k = 0;
-		delta = firstTime ? floor(delta / damp) : delta >> 1;
-		delta += floor(delta / numPoints);
-		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
-			delta = floor(delta / baseMinusTMin);
-		}
-		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
-	}
-
-	/**
-	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
-	 * symbols.
-	 * @memberOf punycode
-	 * @param {String} input The Punycode string of ASCII-only symbols.
-	 * @returns {String} The resulting string of Unicode symbols.
-	 */
-	function decode(input) {
-		// Don't use UCS-2
-		var output = [],
-		    inputLength = input.length,
-		    out,
-		    i = 0,
-		    n = initialN,
-		    bias = initialBias,
-		    basic,
-		    j,
-		    index,
-		    oldi,
-		    w,
-		    k,
-		    digit,
-		    t,
-		    /** Cached calculation results */
-		    baseMinusT;
-
-		// Handle the basic code points: let `basic` be the number of input code
-		// points before the last delimiter, or `0` if there is none, then copy
-		// the first basic code points to the output.
-
-		basic = input.lastIndexOf(delimiter);
-		if (basic < 0) {
-			basic = 0;
-		}
-
-		for (j = 0; j < basic; ++j) {
-			// if it's not a basic code point
-			if (input.charCodeAt(j) >= 0x80) {
-				error('not-basic');
-			}
-			output.push(input.charCodeAt(j));
-		}
-
-		// Main decoding loop: start just after the last delimiter if any basic code
-		// points were copied; start at the beginning otherwise.
-
-		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
-
-			// `index` is the index of the next character to be consumed.
-			// Decode a generalized variable-length integer into `delta`,
-			// which gets added to `i`. The overflow checking is easier
-			// if we increase `i` as we go, then subtract off its starting
-			// value at the end to obtain `delta`.
-			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
-
-				if (index >= inputLength) {
-					error('invalid-input');
-				}
-
-				digit = basicToDigit(input.charCodeAt(index++));
-
-				if (digit >= base || digit > floor((maxInt - i) / w)) {
-					error('overflow');
-				}
-
-				i += digit * w;
-				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-
-				if (digit < t) {
-					break;
-				}
-
-				baseMinusT = base - t;
-				if (w > floor(maxInt / baseMinusT)) {
-					error('overflow');
-				}
-
-				w *= baseMinusT;
-
-			}
-
-			out = output.length + 1;
-			bias = adapt(i - oldi, out, oldi == 0);
-
-			// `i` was supposed to wrap around from `out` to `0`,
-			// incrementing `n` each time, so we'll fix that now:
-			if (floor(i / out) > maxInt - n) {
-				error('overflow');
-			}
-
-			n += floor(i / out);
-			i %= out;
-
-			// Insert `n` at position `i` of the output
-			output.splice(i++, 0, n);
-
-		}
-
-		return ucs2encode(output);
-	}
-
-	/**
-	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
-	 * Punycode string of ASCII-only symbols.
-	 * @memberOf punycode
-	 * @param {String} input The string of Unicode symbols.
-	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
-	 */
-	function encode(input) {
-		var n,
-		    delta,
-		    handledCPCount,
-		    basicLength,
-		    bias,
-		    j,
-		    m,
-		    q,
-		    k,
-		    t,
-		    currentValue,
-		    output = [],
-		    /** `inputLength` will hold the number of code points in `input`. */
-		    inputLength,
-		    /** Cached calculation results */
-		    handledCPCountPlusOne,
-		    baseMinusT,
-		    qMinusT;
-
-		// Convert the input in UCS-2 to Unicode
-		input = ucs2decode(input);
-
-		// Cache the length
-		inputLength = input.length;
-
-		// Initialize the state
-		n = initialN;
-		delta = 0;
-		bias = initialBias;
-
-		// Handle the basic code points
-		for (j = 0; j < inputLength; ++j) {
-			currentValue = input[j];
-			if (currentValue < 0x80) {
-				output.push(stringFromCharCode(currentValue));
-			}
-		}
-
-		handledCPCount = basicLength = output.length;
-
-		// `handledCPCount` is the number of code points that have been handled;
-		// `basicLength` is the number of basic code points.
-
-		// Finish the basic string - if it is not empty - with a delimiter
-		if (basicLength) {
-			output.push(delimiter);
-		}
-
-		// Main encoding loop:
-		while (handledCPCount < inputLength) {
-
-			// All non-basic code points < n have been handled already. Find the next
-			// larger one:
-			for (m = maxInt, j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-				if (currentValue >= n && currentValue < m) {
-					m = currentValue;
-				}
-			}
-
-			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
-			// but guard against overflow
-			handledCPCountPlusOne = handledCPCount + 1;
-			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
-				error('overflow');
-			}
-
-			delta += (m - n) * handledCPCountPlusOne;
-			n = m;
-
-			for (j = 0; j < inputLength; ++j) {
-				currentValue = input[j];
-
-				if (currentValue < n && ++delta > maxInt) {
-					error('overflow');
-				}
-
-				if (currentValue == n) {
-					// Represent delta as a generalized variable-length integer
-					for (q = delta, k = base; /* no condition */; k += base) {
-						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
-						if (q < t) {
-							break;
-						}
-						qMinusT = q - t;
-						baseMinusT = base - t;
-						output.push(
-							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
-						);
-						q = floor(qMinusT / baseMinusT);
-					}
-
-					output.push(stringFromCharCode(digitToBasic(q, 0)));
-					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
-					delta = 0;
-					++handledCPCount;
-				}
-			}
-
-			++delta;
-			++n;
-
-		}
-		return output.join('');
-	}
-
-	/**
-	 * Converts a Punycode string representing a domain name or an email address
-	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
-	 * it doesn't matter if you call it on a string that has already been
-	 * converted to Unicode.
-	 * @memberOf punycode
-	 * @param {String} input The Punycoded domain name or email address to
-	 * convert to Unicode.
-	 * @returns {String} The Unicode representation of the given Punycode
-	 * string.
-	 */
-	function toUnicode(input) {
-		return mapDomain(input, function(string) {
-			return regexPunycode.test(string)
-				? decode(string.slice(4).toLowerCase())
-				: string;
-		});
-	}
-
-	/**
-	 * Converts a Unicode string representing a domain name or an email address to
-	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
-	 * i.e. it doesn't matter if you call it with a domain that's already in
-	 * ASCII.
-	 * @memberOf punycode
-	 * @param {String} input The domain name or email address to convert, as a
-	 * Unicode string.
-	 * @returns {String} The Punycode representation of the given domain name or
-	 * email address.
-	 */
-	function toASCII(input) {
-		return mapDomain(input, function(string) {
-			return regexNonASCII.test(string)
-				? 'xn--' + encode(string)
-				: string;
-		});
-	}
-
-	/*--------------------------------------------------------------------------*/
-
-	/** Define the public API */
-	punycode = {
-		/**
-		 * A string representing the current Punycode.js version number.
-		 * @memberOf punycode
-		 * @type String
-		 */
-		'version': '1.4.1',
-		/**
-		 * An object of methods to convert from JavaScript's internal character
-		 * representation (UCS-2) to Unicode code points, and back.
-		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
-		 * @memberOf punycode
-		 * @type Object
-		 */
-		'ucs2': {
-			'decode': ucs2decode,
-			'encode': ucs2encode
-		},
-		'decode': decode,
-		'encode': encode,
-		'toASCII': toASCII,
-		'toUnicode': toUnicode
-	};
-
-	/** Expose `punycode` */
-	// Some AMD build optimizers, like r.js, check for specific condition patterns
-	// like the following:
-	if (
-		true
-	) {
-		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
-			return punycode;
-		}).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-	} else {}
-
-}(this));
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../next/node_modules/webpack/buildin/module.js */ "./node_modules/next/node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../../next/node_modules/webpack/buildin/global.js */ "./node_modules/next/node_modules/webpack/buildin/global.js")))
+module.exports = (__webpack_require__(/*! dll-reference dll_8c5f8d517ea84ac209bb */ "dll-reference dll_8c5f8d517ea84ac209bb"))("./node_modules/next/node_modules/prop-types/checkPropTypes.js");
 
 /***/ }),
 
-/***/ "./node_modules/object-assign/index.js":
-/*!***************************************************************************************************!*\
-  !*** delegated ./node_modules/object-assign/index.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
-  \***************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/object-assign/index.js");
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/checkPropTypes.js":
-/*!*********************************************************************************************************!*\
-  !*** delegated ./node_modules/prop-types/checkPropTypes.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/prop-types/checkPropTypes.js");
-
-/***/ }),
-
-/***/ "./node_modules/prop-types/factoryWithTypeCheckers.js":
-/*!************************************************************!*\
-  !*** ./node_modules/prop-types/factoryWithTypeCheckers.js ***!
-  \************************************************************/
+/***/ "./node_modules/next/node_modules/prop-types/factoryWithTypeCheckers.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/next/node_modules/prop-types/factoryWithTypeCheckers.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9736,8 +9180,8 @@ module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa
 
 var assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
 
-var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/prop-types/lib/ReactPropTypesSecret.js");
-var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/prop-types/checkPropTypes.js");
+var ReactPropTypesSecret = __webpack_require__(/*! ./lib/ReactPropTypesSecret */ "./node_modules/next/node_modules/prop-types/lib/ReactPropTypesSecret.js");
+var checkPropTypes = __webpack_require__(/*! ./checkPropTypes */ "./node_modules/next/node_modules/prop-types/checkPropTypes.js");
 
 var printWarning = function() {};
 
@@ -10284,10 +9728,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 /***/ }),
 
-/***/ "./node_modules/prop-types/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/prop-types/index.js ***!
-  \******************************************/
+/***/ "./node_modules/next/node_modules/prop-types/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/next/node_modules/prop-types/index.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10313,20 +9757,631 @@ if (true) {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/prop-types/factoryWithTypeCheckers.js")(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(/*! ./factoryWithTypeCheckers */ "./node_modules/next/node_modules/prop-types/factoryWithTypeCheckers.js")(isValidElement, throwOnDirectAccess);
 } else {}
 
 
 /***/ }),
 
-/***/ "./node_modules/prop-types/lib/ReactPropTypesSecret.js":
-/*!*******************************************************************************************************************!*\
-  !*** delegated ./node_modules/prop-types/lib/ReactPropTypesSecret.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
-  \*******************************************************************************************************************/
+/***/ "./node_modules/next/node_modules/prop-types/lib/ReactPropTypesSecret.js":
+/*!*************************************************************************************************************************************!*\
+  !*** delegated ./node_modules/next/node_modules/prop-types/lib/ReactPropTypesSecret.js from dll-reference dll_8c5f8d517ea84ac209bb ***!
+  \*************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/prop-types/lib/ReactPropTypesSecret.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_8c5f8d517ea84ac209bb */ "dll-reference dll_8c5f8d517ea84ac209bb"))("./node_modules/next/node_modules/prop-types/lib/ReactPropTypesSecret.js");
+
+/***/ }),
+
+/***/ "./node_modules/next/node_modules/unfetch/dist/unfetch.es.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/next/node_modules/unfetch/dist/unfetch.es.js ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var index = typeof fetch=='function' ? fetch.bind() : function(url, options) {
+	options = options || {};
+	return new Promise( function (resolve, reject) {
+		var request = new XMLHttpRequest();
+
+		request.open(options.method || 'get', url);
+
+		for (var i in options.headers) {
+			request.setRequestHeader(i, options.headers[i]);
+		}
+
+		request.withCredentials = options.credentials=='include';
+
+		request.onload = function () {
+			resolve(response());
+		};
+
+		request.onerror = reject;
+
+		request.send(options.body);
+
+		function response() {
+			var keys = [],
+				all = [],
+				headers = {},
+				header;
+
+			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, function (m, key, value) {
+				keys.push(key = key.toLowerCase());
+				all.push([key, value]);
+				header = headers[key];
+				headers[key] = header ? (header + "," + value) : value;
+			});
+
+			return {
+				ok: (request.status/200|0) == 1,		// 200-299
+				status: request.status,
+				statusText: request.statusText,
+				url: request.responseURL,
+				clone: response,
+				text: function () { return Promise.resolve(request.responseText); },
+				json: function () { return Promise.resolve(request.responseText).then(JSON.parse); },
+				blob: function () { return Promise.resolve(new Blob([request.response])); },
+				headers: {
+					keys: function () { return keys; },
+					entries: function () { return all; },
+					get: function (n) { return headers[n.toLowerCase()]; },
+					has: function (n) { return n.toLowerCase() in headers; }
+				}
+			};
+		}
+	});
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (index);
+//# sourceMappingURL=unfetch.es.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/node-libs-browser/node_modules/punycode/punycode.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/node-libs-browser/node_modules/punycode/punycode.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/punycode v1.4.1 by @mathias */
+;(function(root) {
+
+	/** Detect free variables */
+	var freeExports = typeof exports == 'object' && exports &&
+		!exports.nodeType && exports;
+	var freeModule = typeof module == 'object' && module &&
+		!module.nodeType && module;
+	var freeGlobal = typeof global == 'object' && global;
+	if (
+		freeGlobal.global === freeGlobal ||
+		freeGlobal.window === freeGlobal ||
+		freeGlobal.self === freeGlobal
+	) {
+		root = freeGlobal;
+	}
+
+	/**
+	 * The `punycode` object.
+	 * @name punycode
+	 * @type Object
+	 */
+	var punycode,
+
+	/** Highest positive signed 32-bit float value */
+	maxInt = 2147483647, // aka. 0x7FFFFFFF or 2^31-1
+
+	/** Bootstring parameters */
+	base = 36,
+	tMin = 1,
+	tMax = 26,
+	skew = 38,
+	damp = 700,
+	initialBias = 72,
+	initialN = 128, // 0x80
+	delimiter = '-', // '\x2D'
+
+	/** Regular expressions */
+	regexPunycode = /^xn--/,
+	regexNonASCII = /[^\x20-\x7E]/, // unprintable ASCII chars + non-ASCII chars
+	regexSeparators = /[\x2E\u3002\uFF0E\uFF61]/g, // RFC 3490 separators
+
+	/** Error messages */
+	errors = {
+		'overflow': 'Overflow: input needs wider integers to process',
+		'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+		'invalid-input': 'Invalid input'
+	},
+
+	/** Convenience shortcuts */
+	baseMinusTMin = base - tMin,
+	floor = Math.floor,
+	stringFromCharCode = String.fromCharCode,
+
+	/** Temporary variable */
+	key;
+
+	/*--------------------------------------------------------------------------*/
+
+	/**
+	 * A generic error utility function.
+	 * @private
+	 * @param {String} type The error type.
+	 * @returns {Error} Throws a `RangeError` with the applicable error message.
+	 */
+	function error(type) {
+		throw new RangeError(errors[type]);
+	}
+
+	/**
+	 * A generic `Array#map` utility function.
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} callback The function that gets called for every array
+	 * item.
+	 * @returns {Array} A new array of values returned by the callback function.
+	 */
+	function map(array, fn) {
+		var length = array.length;
+		var result = [];
+		while (length--) {
+			result[length] = fn(array[length]);
+		}
+		return result;
+	}
+
+	/**
+	 * A simple `Array#map`-like wrapper to work with domain name strings or email
+	 * addresses.
+	 * @private
+	 * @param {String} domain The domain name or email address.
+	 * @param {Function} callback The function that gets called for every
+	 * character.
+	 * @returns {Array} A new string of characters returned by the callback
+	 * function.
+	 */
+	function mapDomain(string, fn) {
+		var parts = string.split('@');
+		var result = '';
+		if (parts.length > 1) {
+			// In email addresses, only the domain name should be punycoded. Leave
+			// the local part (i.e. everything up to `@`) intact.
+			result = parts[0] + '@';
+			string = parts[1];
+		}
+		// Avoid `split(regex)` for IE8 compatibility. See #17.
+		string = string.replace(regexSeparators, '\x2E');
+		var labels = string.split('.');
+		var encoded = map(labels, fn).join('.');
+		return result + encoded;
+	}
+
+	/**
+	 * Creates an array containing the numeric code points of each Unicode
+	 * character in the string. While JavaScript uses UCS-2 internally,
+	 * this function will convert a pair of surrogate halves (each of which
+	 * UCS-2 exposes as separate characters) into a single code point,
+	 * matching UTF-16.
+	 * @see `punycode.ucs2.encode`
+	 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+	 * @memberOf punycode.ucs2
+	 * @name decode
+	 * @param {String} string The Unicode input string (UCS-2).
+	 * @returns {Array} The new array of code points.
+	 */
+	function ucs2decode(string) {
+		var output = [],
+		    counter = 0,
+		    length = string.length,
+		    value,
+		    extra;
+		while (counter < length) {
+			value = string.charCodeAt(counter++);
+			if (value >= 0xD800 && value <= 0xDBFF && counter < length) {
+				// high surrogate, and there is a next character
+				extra = string.charCodeAt(counter++);
+				if ((extra & 0xFC00) == 0xDC00) { // low surrogate
+					output.push(((value & 0x3FF) << 10) + (extra & 0x3FF) + 0x10000);
+				} else {
+					// unmatched surrogate; only append this code unit, in case the next
+					// code unit is the high surrogate of a surrogate pair
+					output.push(value);
+					counter--;
+				}
+			} else {
+				output.push(value);
+			}
+		}
+		return output;
+	}
+
+	/**
+	 * Creates a string based on an array of numeric code points.
+	 * @see `punycode.ucs2.decode`
+	 * @memberOf punycode.ucs2
+	 * @name encode
+	 * @param {Array} codePoints The array of numeric code points.
+	 * @returns {String} The new Unicode string (UCS-2).
+	 */
+	function ucs2encode(array) {
+		return map(array, function(value) {
+			var output = '';
+			if (value > 0xFFFF) {
+				value -= 0x10000;
+				output += stringFromCharCode(value >>> 10 & 0x3FF | 0xD800);
+				value = 0xDC00 | value & 0x3FF;
+			}
+			output += stringFromCharCode(value);
+			return output;
+		}).join('');
+	}
+
+	/**
+	 * Converts a basic code point into a digit/integer.
+	 * @see `digitToBasic()`
+	 * @private
+	 * @param {Number} codePoint The basic numeric code point value.
+	 * @returns {Number} The numeric value of a basic code point (for use in
+	 * representing integers) in the range `0` to `base - 1`, or `base` if
+	 * the code point does not represent a value.
+	 */
+	function basicToDigit(codePoint) {
+		if (codePoint - 48 < 10) {
+			return codePoint - 22;
+		}
+		if (codePoint - 65 < 26) {
+			return codePoint - 65;
+		}
+		if (codePoint - 97 < 26) {
+			return codePoint - 97;
+		}
+		return base;
+	}
+
+	/**
+	 * Converts a digit/integer into a basic code point.
+	 * @see `basicToDigit()`
+	 * @private
+	 * @param {Number} digit The numeric value of a basic code point.
+	 * @returns {Number} The basic code point whose value (when used for
+	 * representing integers) is `digit`, which needs to be in the range
+	 * `0` to `base - 1`. If `flag` is non-zero, the uppercase form is
+	 * used; else, the lowercase form is used. The behavior is undefined
+	 * if `flag` is non-zero and `digit` has no uppercase form.
+	 */
+	function digitToBasic(digit, flag) {
+		//  0..25 map to ASCII a..z or A..Z
+		// 26..35 map to ASCII 0..9
+		return digit + 22 + 75 * (digit < 26) - ((flag != 0) << 5);
+	}
+
+	/**
+	 * Bias adaptation function as per section 3.4 of RFC 3492.
+	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * @private
+	 */
+	function adapt(delta, numPoints, firstTime) {
+		var k = 0;
+		delta = firstTime ? floor(delta / damp) : delta >> 1;
+		delta += floor(delta / numPoints);
+		for (/* no initialization */; delta > baseMinusTMin * tMax >> 1; k += base) {
+			delta = floor(delta / baseMinusTMin);
+		}
+		return floor(k + (baseMinusTMin + 1) * delta / (delta + skew));
+	}
+
+	/**
+	 * Converts a Punycode string of ASCII-only symbols to a string of Unicode
+	 * symbols.
+	 * @memberOf punycode
+	 * @param {String} input The Punycode string of ASCII-only symbols.
+	 * @returns {String} The resulting string of Unicode symbols.
+	 */
+	function decode(input) {
+		// Don't use UCS-2
+		var output = [],
+		    inputLength = input.length,
+		    out,
+		    i = 0,
+		    n = initialN,
+		    bias = initialBias,
+		    basic,
+		    j,
+		    index,
+		    oldi,
+		    w,
+		    k,
+		    digit,
+		    t,
+		    /** Cached calculation results */
+		    baseMinusT;
+
+		// Handle the basic code points: let `basic` be the number of input code
+		// points before the last delimiter, or `0` if there is none, then copy
+		// the first basic code points to the output.
+
+		basic = input.lastIndexOf(delimiter);
+		if (basic < 0) {
+			basic = 0;
+		}
+
+		for (j = 0; j < basic; ++j) {
+			// if it's not a basic code point
+			if (input.charCodeAt(j) >= 0x80) {
+				error('not-basic');
+			}
+			output.push(input.charCodeAt(j));
+		}
+
+		// Main decoding loop: start just after the last delimiter if any basic code
+		// points were copied; start at the beginning otherwise.
+
+		for (index = basic > 0 ? basic + 1 : 0; index < inputLength; /* no final expression */) {
+
+			// `index` is the index of the next character to be consumed.
+			// Decode a generalized variable-length integer into `delta`,
+			// which gets added to `i`. The overflow checking is easier
+			// if we increase `i` as we go, then subtract off its starting
+			// value at the end to obtain `delta`.
+			for (oldi = i, w = 1, k = base; /* no condition */; k += base) {
+
+				if (index >= inputLength) {
+					error('invalid-input');
+				}
+
+				digit = basicToDigit(input.charCodeAt(index++));
+
+				if (digit >= base || digit > floor((maxInt - i) / w)) {
+					error('overflow');
+				}
+
+				i += digit * w;
+				t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+
+				if (digit < t) {
+					break;
+				}
+
+				baseMinusT = base - t;
+				if (w > floor(maxInt / baseMinusT)) {
+					error('overflow');
+				}
+
+				w *= baseMinusT;
+
+			}
+
+			out = output.length + 1;
+			bias = adapt(i - oldi, out, oldi == 0);
+
+			// `i` was supposed to wrap around from `out` to `0`,
+			// incrementing `n` each time, so we'll fix that now:
+			if (floor(i / out) > maxInt - n) {
+				error('overflow');
+			}
+
+			n += floor(i / out);
+			i %= out;
+
+			// Insert `n` at position `i` of the output
+			output.splice(i++, 0, n);
+
+		}
+
+		return ucs2encode(output);
+	}
+
+	/**
+	 * Converts a string of Unicode symbols (e.g. a domain name label) to a
+	 * Punycode string of ASCII-only symbols.
+	 * @memberOf punycode
+	 * @param {String} input The string of Unicode symbols.
+	 * @returns {String} The resulting Punycode string of ASCII-only symbols.
+	 */
+	function encode(input) {
+		var n,
+		    delta,
+		    handledCPCount,
+		    basicLength,
+		    bias,
+		    j,
+		    m,
+		    q,
+		    k,
+		    t,
+		    currentValue,
+		    output = [],
+		    /** `inputLength` will hold the number of code points in `input`. */
+		    inputLength,
+		    /** Cached calculation results */
+		    handledCPCountPlusOne,
+		    baseMinusT,
+		    qMinusT;
+
+		// Convert the input in UCS-2 to Unicode
+		input = ucs2decode(input);
+
+		// Cache the length
+		inputLength = input.length;
+
+		// Initialize the state
+		n = initialN;
+		delta = 0;
+		bias = initialBias;
+
+		// Handle the basic code points
+		for (j = 0; j < inputLength; ++j) {
+			currentValue = input[j];
+			if (currentValue < 0x80) {
+				output.push(stringFromCharCode(currentValue));
+			}
+		}
+
+		handledCPCount = basicLength = output.length;
+
+		// `handledCPCount` is the number of code points that have been handled;
+		// `basicLength` is the number of basic code points.
+
+		// Finish the basic string - if it is not empty - with a delimiter
+		if (basicLength) {
+			output.push(delimiter);
+		}
+
+		// Main encoding loop:
+		while (handledCPCount < inputLength) {
+
+			// All non-basic code points < n have been handled already. Find the next
+			// larger one:
+			for (m = maxInt, j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+				if (currentValue >= n && currentValue < m) {
+					m = currentValue;
+				}
+			}
+
+			// Increase `delta` enough to advance the decoder's <n,i> state to <m,0>,
+			// but guard against overflow
+			handledCPCountPlusOne = handledCPCount + 1;
+			if (m - n > floor((maxInt - delta) / handledCPCountPlusOne)) {
+				error('overflow');
+			}
+
+			delta += (m - n) * handledCPCountPlusOne;
+			n = m;
+
+			for (j = 0; j < inputLength; ++j) {
+				currentValue = input[j];
+
+				if (currentValue < n && ++delta > maxInt) {
+					error('overflow');
+				}
+
+				if (currentValue == n) {
+					// Represent delta as a generalized variable-length integer
+					for (q = delta, k = base; /* no condition */; k += base) {
+						t = k <= bias ? tMin : (k >= bias + tMax ? tMax : k - bias);
+						if (q < t) {
+							break;
+						}
+						qMinusT = q - t;
+						baseMinusT = base - t;
+						output.push(
+							stringFromCharCode(digitToBasic(t + qMinusT % baseMinusT, 0))
+						);
+						q = floor(qMinusT / baseMinusT);
+					}
+
+					output.push(stringFromCharCode(digitToBasic(q, 0)));
+					bias = adapt(delta, handledCPCountPlusOne, handledCPCount == basicLength);
+					delta = 0;
+					++handledCPCount;
+				}
+			}
+
+			++delta;
+			++n;
+
+		}
+		return output.join('');
+	}
+
+	/**
+	 * Converts a Punycode string representing a domain name or an email address
+	 * to Unicode. Only the Punycoded parts of the input will be converted, i.e.
+	 * it doesn't matter if you call it on a string that has already been
+	 * converted to Unicode.
+	 * @memberOf punycode
+	 * @param {String} input The Punycoded domain name or email address to
+	 * convert to Unicode.
+	 * @returns {String} The Unicode representation of the given Punycode
+	 * string.
+	 */
+	function toUnicode(input) {
+		return mapDomain(input, function(string) {
+			return regexPunycode.test(string)
+				? decode(string.slice(4).toLowerCase())
+				: string;
+		});
+	}
+
+	/**
+	 * Converts a Unicode string representing a domain name or an email address to
+	 * Punycode. Only the non-ASCII parts of the domain name will be converted,
+	 * i.e. it doesn't matter if you call it with a domain that's already in
+	 * ASCII.
+	 * @memberOf punycode
+	 * @param {String} input The domain name or email address to convert, as a
+	 * Unicode string.
+	 * @returns {String} The Punycode representation of the given domain name or
+	 * email address.
+	 */
+	function toASCII(input) {
+		return mapDomain(input, function(string) {
+			return regexNonASCII.test(string)
+				? 'xn--' + encode(string)
+				: string;
+		});
+	}
+
+	/*--------------------------------------------------------------------------*/
+
+	/** Define the public API */
+	punycode = {
+		/**
+		 * A string representing the current Punycode.js version number.
+		 * @memberOf punycode
+		 * @type String
+		 */
+		'version': '1.4.1',
+		/**
+		 * An object of methods to convert from JavaScript's internal character
+		 * representation (UCS-2) to Unicode code points, and back.
+		 * @see <https://mathiasbynens.be/notes/javascript-encoding>
+		 * @memberOf punycode
+		 * @type Object
+		 */
+		'ucs2': {
+			'decode': ucs2decode,
+			'encode': ucs2encode
+		},
+		'decode': decode,
+		'encode': encode,
+		'toASCII': toASCII,
+		'toUnicode': toUnicode
+	};
+
+	/** Expose `punycode` */
+	// Some AMD build optimizers, like r.js, check for specific condition patterns
+	// like the following:
+	if (
+		true
+	) {
+		!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {
+			return punycode;
+		}).call(exports, __webpack_require__, exports, module),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+
+}(this));
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/module.js */ "./node_modules/webpack/buildin/module.js")(module), __webpack_require__(/*! ./../../../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js")))
+
+/***/ }),
+
+/***/ "./node_modules/object-assign/index.js":
+/*!***************************************************************************************************!*\
+  !*** delegated ./node_modules/object-assign/index.js from dll-reference dll_8c5f8d517ea84ac209bb ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(/*! dll-reference dll_8c5f8d517ea84ac209bb */ "dll-reference dll_8c5f8d517ea84ac209bb"))("./node_modules/object-assign/index.js");
 
 /***/ }),
 
@@ -10541,12 +10596,12 @@ exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node
 
 /***/ "./node_modules/react-dom/index.js":
 /*!***********************************************************************************************!*\
-  !*** delegated ./node_modules/react-dom/index.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
+  !*** delegated ./node_modules/react-dom/index.js from dll-reference dll_8c5f8d517ea84ac209bb ***!
   \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/react-dom/index.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_8c5f8d517ea84ac209bb */ "dll-reference dll_8c5f8d517ea84ac209bb"))("./node_modules/react-dom/index.js");
 
 /***/ }),
 
@@ -16291,12 +16346,12 @@ module.exports = "!function(e){function t(n){if(u[n])return u[n].exports;var r=u
 
 /***/ "./node_modules/react/index.js":
 /*!*******************************************************************************************!*\
-  !*** delegated ./node_modules/react/index.js from dll-reference dll_27b5d34cc2d6e91265fa ***!
+  !*** delegated ./node_modules/react/index.js from dll-reference dll_8c5f8d517ea84ac209bb ***!
   \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(/*! dll-reference dll_27b5d34cc2d6e91265fa */ "dll-reference dll_27b5d34cc2d6e91265fa"))("./node_modules/react/index.js");
+module.exports = (__webpack_require__(/*! dll-reference dll_8c5f8d517ea84ac209bb */ "dll-reference dll_8c5f8d517ea84ac209bb"))("./node_modules/react/index.js");
 
 /***/ }),
 
@@ -17098,75 +17153,6 @@ module.exports = function (str) {
 
 /***/ }),
 
-/***/ "./node_modules/unfetch/dist/unfetch.es.js":
-/*!*************************************************!*\
-  !*** ./node_modules/unfetch/dist/unfetch.es.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var index = typeof fetch=='function' ? fetch.bind() : function(url, options) {
-	options = options || {};
-	return new Promise( function (resolve, reject) {
-		var request = new XMLHttpRequest();
-
-		request.open(options.method || 'get', url);
-
-		for (var i in options.headers) {
-			request.setRequestHeader(i, options.headers[i]);
-		}
-
-		request.withCredentials = options.credentials=='include';
-
-		request.onload = function () {
-			resolve(response());
-		};
-
-		request.onerror = reject;
-
-		request.send(options.body);
-
-		function response() {
-			var keys = [],
-				all = [],
-				headers = {},
-				header;
-
-			request.getAllResponseHeaders().replace(/^(.*?):\s*([\s\S]*?)$/gm, function (m, key, value) {
-				keys.push(key = key.toLowerCase());
-				all.push([key, value]);
-				header = headers[key];
-				headers[key] = header ? (header + "," + value) : value;
-			});
-
-			return {
-				ok: (request.status/200|0) == 1,		// 200-299
-				status: request.status,
-				statusText: request.statusText,
-				url: request.responseURL,
-				clone: response,
-				text: function () { return Promise.resolve(request.responseText); },
-				json: function () { return Promise.resolve(request.responseText).then(JSON.parse); },
-				blob: function () { return Promise.resolve(new Blob([request.response])); },
-				headers: {
-					keys: function () { return keys; },
-					entries: function () { return all; },
-					get: function (n) { return headers[n.toLowerCase()]; },
-					has: function (n) { return n.toLowerCase() in headers; }
-				}
-			};
-		}
-	});
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (index);
-//# sourceMappingURL=unfetch.es.js.map
-
-
-/***/ }),
-
 /***/ "./node_modules/url/url.js":
 /*!*********************************!*\
   !*** ./node_modules/url/url.js ***!
@@ -17939,6 +17925,70 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/webpack/buildin/global.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/global.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1, eval)("this");
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/module.js":
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+
 /***/ 0:
 /*!******************************************************!*\
   !*** multi ./node_modules/next/dist/client/next-dev ***!
@@ -17946,19 +17996,19 @@ module.exports = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/manx/projects/instagauge/frontend/node_modules/next/dist/client/next-dev */"./node_modules/next/dist/client/next-dev.js");
+module.exports = __webpack_require__(/*! /Users/manx/projects-2/bitsjournal/frontend/node_modules/next/dist/client/next-dev */"./node_modules/next/dist/client/next-dev.js");
 
 
 /***/ }),
 
-/***/ "dll-reference dll_27b5d34cc2d6e91265fa":
+/***/ "dll-reference dll_8c5f8d517ea84ac209bb":
 /*!*******************************************!*\
-  !*** external "dll_27b5d34cc2d6e91265fa" ***!
+  !*** external "dll_8c5f8d517ea84ac209bb" ***!
   \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = dll_27b5d34cc2d6e91265fa;
+module.exports = dll_8c5f8d517ea84ac209bb;
 
 /***/ })
 

@@ -21,7 +21,7 @@ class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <script src="https://js.stripe.com/v3/" />
         </Head>
-        <body style={{ backgroundColor: "#f4f6f8" }}>
+        <body style={{ backgroundColor: "#ffffff" }}>
           <Main />
           <NextScript />
         </body>

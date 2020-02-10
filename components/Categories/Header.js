@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { wideFont } from "../shared/helpers";
 
-const SidebarCategoryListHeader = () => <Header>cryptocurrencies</Header>;
+const SidebarCategoryListHeader = () => <Header>Change Date</Header>;
 
 export default SidebarCategoryListHeader;
 
@@ -13,4 +13,5 @@ const Header = styled.span`
   padding: 12px;
   text-align: center;
   color: ${props => props.theme.mutedText};
+  color: white;
 `;

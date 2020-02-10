@@ -10,6 +10,12 @@ export class Store {
   @observable lastUpdate = 0;
   @persist @observable light = true;
   @persist @observable isAuth = false;
+  @persist @observable date = "today";
+  // @persist @observable endDate = "";
+
+  @action changeDate = newDate => {
+    this.date = newDate;
+  };
 
   //   constructor(isServer, initialData = {}) {
   //     this.lastUpdate =

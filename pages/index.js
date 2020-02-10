@@ -7,6 +7,7 @@ import { smallFont, wideFont } from "../components/shared/helpers";
 // import Typing from "react-typing-animation";
 import Typist from "react-typist";
 import TypistLoop from "react-typist-loop";
+import Link from "next/link";
 
 let cursor = {
   blink: true
@@ -30,23 +31,23 @@ export default () => (
             <InnerRowContainer>
               <TxtDiv>
                 <TypistLoop interval={500}>
-                  {["beat", "outperform", "dominate"].map(text => (
+                  {["log", "improve", "systematize"].map(text => (
                     <Typist key={text} stdTypingDelay={35} cursor={cursor}>
                       <span>{text}</span>
                       <Typist.Backspace count={text.length} delay={2200} />
                     </Typist>
                   ))}
                 </TypistLoop>
-                <div style={{ marginLeft: "1px" }}>the market</div>
+                <div style={{ marginLeft: "1px" }}>your trading</div>
               </TxtDiv>
             </InnerRowContainer>
             <InnerRowContainerBlack>
-              <TxtDivBlack>
-                Supercharge your crypto trading with state of the art machine
-                learning classifiers.
-              </TxtDivBlack>
               <TxtDivBlack2 className="hello">
-                <SignUpButton>Sign Up</SignUpButton>
+                <Link href="/signup">
+                  <SignUpButton>
+                    start automatically logging your trades
+                  </SignUpButton>
+                </Link>
               </TxtDivBlack2>
             </InnerRowContainerBlack>
           </RowOne>
@@ -80,11 +81,14 @@ const SignUpButton = styled.button`
   ${smallFont}
   padding: 8px 20px;
   border-radius: 2px;
+  background: #1890ff;
+  color: #ffffff;
+  font-size: 20px;
 `;
 
 const TxtDiv = styled.div`
   ${wideFont}
-  max-width: 230px;
+  max-width: 240px;
   font-size: 15px;
   text-align: center;
   margin: auto;
@@ -126,10 +130,11 @@ const InnerRowContainer = styled.div`
 `;
 const InnerRowContainerBlack = styled.div`
   width: 100%;
-  min-height: 400px;
+  min-height: 280px;
   margin-top: 100px;
   margin-bottom: 60px;
-  background: #1b1b1b;
+  background: #ffffff;
+
   border-radius: 2px;
   display: flex;
   flex-direction: column;
