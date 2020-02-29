@@ -26,12 +26,27 @@ export function formatDateMonthOnly(date) {
 export function getStateDate(input) {
   if (input == "today") {
     let dates = {};
-    dates.start = makeDate(0);
-    dates.end = makeDate(24);
+    dates.start = makeDateHrs(0);
+    dates.end = makeDateHrs(24);
+    console.log("is today");
+    return dates;
+  }
+  if (input == "yesterday") {
+    let dates = {};
+    dates.start = makeDateHrs(1);
+    dates.end = makeDateDays(2);
+    console.log("is yesterday");
+    return dates;
+  }
+  if (input == "this week") {
+    let dates = {};
+    dates.start = makeDateHrs(0);
+    dates.end = makeDateDays(7);
+    console.log("is this week");
     return dates;
   }
 }
-function makeDate(hrsBack) {
+function makeDateHrs(hrsBack) {
   if (hrsBack == 0) {
     let dt = new Date(new Date().toUTCString());
     dt = dt.toISOString();
@@ -42,4 +57,11 @@ function makeDate(hrsBack) {
     dt = dt.toISOString();
     return dt;
   }
+}
+function makeDateDays(num) {
+  let dt = new Date(new Date().toUTCString());
+  dt.setDate(dt.getDate() - num);
+  dt = dt.toISOString();
+  console.log("getting days back");
+  return dt;
 }

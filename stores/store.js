@@ -10,7 +10,7 @@ export class Store {
   @observable lastUpdate = 0;
   @persist @observable light = true;
   @persist @observable isAuth = false;
-  @persist @observable date = "today";
+  @persist @observable date = "this week";
   // @persist @observable endDate = "";
 
   @action changeDate = newDate => {

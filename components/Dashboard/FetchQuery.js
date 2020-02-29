@@ -12,40 +12,60 @@ import {
   ContainDivHeader
 } from "../Charts/ReChart";
 import { getStateDate } from "../Helpers/Functions";
-import { useState, useEffect } from "react";
+import { equal } from "fast-deep-equal";
+// import { useState, useEffect } from "react";
 
 // import { storesContext } from "../../stores/UserStore";
 
-const FetchQuery = inject("store")(
-  observer(({ store }) => {
-    // if (store) {
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState();
-    const [myStore, setStore] = useState();
+@inject("store")
+@observer
+class FetchQuery extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { startDate: "", endDate: "", date: "" };
+  }
 
-    useEffect(() => {
-      setStore(store);
-      let dates = getStateDate(myStore.date);
-      setStartDate(dates.start);
-      setEndDate(dates.end);
-    }, []);
+  componentDidMount() {
+    // console.log(this.props.store.date);
+    let myStore = this.props.store;
+    console.log(myStore.date);
+    let dates = getStateDate(myStore.date);
+    console.log(dates);
+    this.setState({
+      startDate: dates.start,
+      endDate: dates.end,
+      date: this.props.store.date
+    });
+  }
 
-    const clicked = () => {
-      store.isAuth = !store.isAuth;
-      console.log(store.isAuth);
-    };
-
-    // let fetchTradeHistoryVariables = {
-    //   start: "2020-01-14T12:43:56.702Z",
-    //   end: "2020-01-14T15:01:59.727Z"
-    // };
-
-    if (dates) {
-      let fetchTradeHistoryVariables = {
-        start: dates.start,
-        end: dates.end
-      };
+  componentDidUpdate(prevProps) {
+    console.log("updated");
+    if (this.props.store.date != prevProps.store.date) {
+      // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
+      let dates = getStateDate(this.props.store.date);
+      console.log(dates);
+      this.setState({
+        startDate: dates.start,
+        endDate: dates.end,
+        date: this.props.store.date
+      });
     }
+  }
+
+  clicked = () => {
+    store.isAuth = !store.isAuth;
+    console.log(store.isAuth);
+  };
+
+  render() {
+    // let fetchTradeHistoryVariables = {
+    //   start: this.state.startDate,
+    //   end: this.state.endDate
+    // };
+    let fetchTradeHistoryVariables = {
+      start: "2020-02-24T12:43:56.702Z",
+      end: "2020-02-26T15:01:59.727Z"
+    };
     return (
       <div>
         <Comp
@@ -54,14 +74,56 @@ const FetchQuery = inject("store")(
         />
       </div>
     );
-  })
-);
+  }
+}
+
+// const FetchQuery = inject("store")(
+//   observer(({ store }) => {
+//     // if (store) {
+//     // const [startDate, setStartDate] = useState();
+//     // const [endDate, setEndDate] = useState();
+//     // const [myStore, setStore] = useState();
+
+//     // useEffect(() => {
+//     //   setStore(store);
+//     //   let dates = getStateDate(myStore.date);
+//     //   setStartDate(dates.start);
+//     //   setEndDate(dates.end);
+//     // }, []);
+
+//     const clicked = () => {
+//       store.isAuth = !store.isAuth;
+//       console.log(store.isAuth);
+//     };
+
+//     // let fetchTradeHistoryVariables = {
+//     //   start: "2020-01-14T12:43:56.702Z",
+//     //   end: "2020-01-14T15:01:59.727Z"
+//     // };
+
+//     if (dates) {
+//       let fetchTradeHistoryVariables = {
+//         start: dates.start,
+//         end: dates.end
+//       };
+//     }
+//     return (
+//       <div>
+//         <Comp
+//           query={fetchTradeHistoryQuery}
+//           vars={fetchTradeHistoryVariables}
+//         />
+//       </div>
+//     );
+//   })
+// );
 
 class Comp extends React.Component {
   render() {
     return (
       <Query query={this.props.query} variables={this.props.vars}>
         {({ loading, error, data }) => {
+          console.log(data);
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
 

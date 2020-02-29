@@ -167,7 +167,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-apollo */ "react-apollo");
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_4__);
 
-var _jsxFileName = "/Users/manx/projects-2/bitsjournal/frontend/lib/with-apollo-client.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -246,12 +245,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
                   return Object(react_apollo__WEBPACK_IMPORTED_MODULE_4__["getDataFromTree"])(react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(App, _extends({}, appProps, {
                     Component: Component,
                     router: router,
-                    apolloClient: apollo,
-                    __source: {
-                      fileName: _jsxFileName,
-                      lineNumber: 24
-                    },
-                    __self: this
+                    apolloClient: apollo
                   })));
 
                 case 11:
@@ -283,7 +277,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
                   return _context.stop();
               }
             }
-          }, _callee, this, [[8, 13]]);
+          }, _callee, null, [[8, 13]]);
         }));
 
         function getInitialProps(_x) {
@@ -308,12 +302,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
       key: "render",
       value: function render() {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(App, _extends({}, this.props, {
-          apolloClient: this.apolloClient,
-          __source: {
-            fileName: _jsxFileName,
-            lineNumber: 58
-          },
-          __self: this
+          apolloClient: this.apolloClient
         }));
       }
     }]);
@@ -346,11 +335,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _stores_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../stores/store */ "./stores/store.js");
 
-var _jsxFileName = "/Users/manx/projects-2/bitsjournal/frontend/pages/_app.js";
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? Object(arguments[i]) : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -447,33 +433,11 @@ function (_App) {
           Component = _this$props.Component,
           pageProps = _this$props.pageProps,
           apolloClient = _this$props.apolloClient;
-      return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_1__["Container"], {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 35
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_4__["ApolloProvider"], {
-        client: apolloClient,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 36
-        },
-        __self: this
+      return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_1__["Container"], null, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_4__["ApolloProvider"], {
+        client: apolloClient
       }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(mobx_react__WEBPACK_IMPORTED_MODULE_5__["Provider"], {
-        store: this.mobxStore,
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 37
-        },
-        __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, _extends({}, pageProps, {
-        __source: {
-          fileName: _jsxFileName,
-          lineNumber: 38
-        },
-        __self: this
-      })))));
+        store: this.mobxStore
+      }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, pageProps))));
     }
   }]);
 
@@ -571,7 +535,7 @@ var Store = (_class = (_temp = function Store() {
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    return "today";
+    return "this week";
   }
 }), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "changeDate", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
   configurable: true,

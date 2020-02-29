@@ -106,7 +106,10 @@ class MakeCol extends Component {
 
   componentWillMount() {
     this.state.data = this.props.slic;
-    if (this.state.data[0].side == "Buy") {
+    if (
+      this.state.data[0].side == "Buy" &&
+      this.state.data[0].execType == "Trade"
+    ) {
       let avgBuyPrice = 0;
       let avgSellPrice = 0;
       let totBuyContracts = 0;
@@ -139,7 +142,10 @@ class MakeCol extends Component {
         }
       }
     }
-    if (this.state.data[0].side == "Sell") {
+    if (
+      this.state.data[0].side == "Sell" &&
+      this.state.data[0].execType == "Trade"
+    ) {
       // let avgBuyPrice = 0;
       // let avgSellPrice = 0;
       let totBuyContracts = 0;
