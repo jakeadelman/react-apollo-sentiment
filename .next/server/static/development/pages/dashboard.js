@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -140,48 +140,50 @@ var SidebarCategoryList = Object(mobx_react__WEBPACK_IMPORTED_MODULE_2__["inject
   var store = _ref.store;
 
   function handleClick(value) {
+    store.resetPnl();
     store.changeDate(value);
+    console.log(store);
   }
 
-  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(CategoryList, null, store.date == "today" ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(CategoryList, null, store.date == 1 ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
     onClick: function onClick() {
-      return handleClick("today");
+      return handleClick(1);
     }
   }, "Today") : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Item, {
     onClick: function onClick() {
-      return handleClick("today");
+      return handleClick(1);
     }
-  }, "Today"), store.date == "yesterday" ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
+  }, "Today"), store.date == 2 ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
     onClick: function onClick() {
-      return handleClick("yesterday");
+      return handleClick(2);
     }
   }, "Yesterday") : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Item, {
     onClick: function onClick() {
-      return handleClick("yesterday");
+      return handleClick(2);
     }
-  }, "Yesterday"), store.date == "this week" ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
+  }, "Yesterday"), store.date == 3 ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
     onClick: function onClick() {
-      return handleClick("this week");
+      return handleClick(3);
     }
   }, "This Week") : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Item, {
     onClick: function onClick() {
-      return handleClick("this week");
+      return handleClick(3);
     }
-  }, "This Week"), store.date == "this month" ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
+  }, "This Week"), store.date == 4 ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
     onClick: function onClick() {
-      return handleClick("this month");
+      return handleClick(4);
     }
   }, "This Month") : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Item, {
     onClick: function onClick() {
-      return handleClick("this month");
+      return handleClick(4);
     }
-  }, "This Month"), store.date == "custom" ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
+  }, "This Month"), store.date == 5 ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ItemActive, {
     onClick: function onClick() {
-      return handleClick("custom");
+      return handleClick(5);
     }
   }, "Custom") : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Item, {
     onClick: function onClick() {
-      return handleClick("custom");
+      return handleClick(5);
     }
   }, "Custom"));
 }));
@@ -257,25 +259,132 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
 /* harmony import */ var _CategoryList__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CategoryList */ "./components/Categories/CategoryList.js");
 /* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Header */ "./components/Categories/Header.js");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_5__);
 
 
 
 
 
-var Lapper = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.aside.withConfig({
-  displayName: "Menu__Lapper",
-  componentId: "sc-1uueytc-0"
-})(["display:flex;flex-direction:column;flex-basis:240px;margin-left:24px;border-radius:2px;background-color:", ";background-color:#212529;@media (max-width:768px){display:none;}"], function (props) {
-  return props.theme.foreground;
-}); // border: 1px solid ${props => props.theme.border};
+ // border: 1px solid ${props => props.theme.border};
 
-var Sidebar = function Sidebar() {
+var Sidebar = Object(mobx_react__WEBPACK_IMPORTED_MODULE_5__["inject"])("store")(Object(mobx_react__WEBPACK_IMPORTED_MODULE_5__["observer"])(function (_ref) {
+  var store = _ref.store;
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_1__["ThemeProvider"], {
     theme: Object(_theme__WEBPACK_IMPORTED_MODULE_2__["default"])(false)
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Lapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryList__WEBPACK_IMPORTED_MODULE_3__["default"], null)));
-};
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(LapperContainer, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Lapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryList__WEBPACK_IMPORTED_MODULE_3__["default"], null)), store.pnl >= 0 ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Lapper2, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InnerLapper, null, store.pnl.toFixed(4) + "xbt")) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Lapper3, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(InnerLapper, null, store.pnl.toFixed(4) + "xbt"))));
+})); // {store.pnl >= 0 ? (
+//   <Lapper2>
+//     <InnerLapper>{store.pnl.toFixed(4) + "xbt"}</InnerLapper>
+//   </Lapper2>
+// ) : (
+//   <Lapper3>
+//     <InnerLapper>{store.pnl.toFixed(4) + "xbt"}</InnerLapper>
+//   </Lapper3>
+// )}
 
 /* harmony default export */ __webpack_exports__["default"] = (Sidebar);
+var LapperContainer = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
+  displayName: "Menu__LapperContainer",
+  componentId: "sc-1uueytc-0"
+})(["display:flex;flex-direction:column;margin-left:24px;"]);
+var Lapper = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.aside.withConfig({
+  displayName: "Menu__Lapper",
+  componentId: "sc-1uueytc-1"
+})(["display:flex;flex-direction:column;flex-basis:240px;border-radius:2px;background-color:", ";background-color:#212529;margin-bottom:10px;@media (max-width:768px){display:none;}"], function (props) {
+  return props.theme.foreground;
+});
+var InnerLapper = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.div.withConfig({
+  displayName: "Menu__InnerLapper",
+  componentId: "sc-1uueytc-2"
+})(["color:white;text-align:center;margin:auto;"]);
+var Lapper2 = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.aside.withConfig({
+  displayName: "Menu__Lapper2",
+  componentId: "sc-1uueytc-3"
+})(["border-radius:2px;background-color:", ";background-color:green;max-height:30px;@media (max-width:768px){display:none;}"], function (props) {
+  return props.theme.foreground;
+});
+var Lapper3 = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.aside.withConfig({
+  displayName: "Menu__Lapper3",
+  componentId: "sc-1uueytc-4"
+})(["border-radius:2px;background-color:", ";background-color:red;max-height:30px;@media (max-width:768px){display:none;}"], function (props) {
+  return props.theme.foreground;
+});
+
+/***/ }),
+
+/***/ "./components/Charts/Notes.js":
+/*!************************************!*\
+  !*** ./components/Charts/Notes.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _default; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n  width: 100%;\n  padding: 12px 20px;\n  margin: 8px 0;\n  box-sizing: border-box;\n  background: #f8f8ff;\n  border: none;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+var _default =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(_default, _Component);
+
+  function _default() {
+    _classCallCheck(this, _default);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(_default).apply(this, arguments));
+  }
+
+  _createClass(_default, [{
+    key: "render",
+    value: function render() {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NotesInput, null);
+    }
+  }]);
+
+  return _default;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+var NotesInput = styled_components__WEBPACK_IMPORTED_MODULE_1___default.a.input(_templateObject());
 
 /***/ }),
 
@@ -305,6 +414,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_helpers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/helpers */ "./components/shared/helpers.js");
 /* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../theme */ "./components/theme.js");
 /* harmony import */ var _Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Helpers/Functions.js */ "./components/Helpers/Functions.js");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! mobx-react */ "mobx-react");
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _Charts2_index__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Charts2/index */ "./components/Charts2/index.js");
+/* harmony import */ var _Notes__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Notes */ "./components/Charts/Notes.js");
+var _dec, _class;
+
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -322,6 +437,9 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
 
 
 
@@ -356,24 +474,30 @@ function (_PureComponent) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      console.log(this.props.data);
       this.props.data.fetchTradeHistory.map(function (dat) {
         _this2.state.data.unshift(dat);
-      });
-      console.log(this.state);
+      }); // this.setState({ candleData: this.props.data.fetchCandleHistory });
+      // console.log(this.state);
+
       this.updateWindowDimensions();
       window.addEventListener("resize", this.updateWindowDimensions);
       this.state.data.map(function (dat, i) {
         if (dat.trdStart == true) {
-          var sliced = _this2.state.data.slice(i, _this2.state.data.length);
+          var sliced = _this2.state.data.slice(i, _this2.state.data.length); // console.log(sliced, "THIS SLICED");
+          // console.log(this.state.fullTrades);
 
-          console.log(sliced);
 
           for (var _i = 0; _i < sliced.length; _i++) {
-            if (sliced[_i].trdEnd == true) {
+            if (sliced[_i].trdEnd == true && _i > 0) {
               var newsliced = sliced.slice(0, _i + 1);
 
-              _this2.state.fullTrades.push(newsliced);
+              if (newsliced[0].hashtags != null) {// this.state.hashtags.push(newsliced.)
+              }
 
+              _this2.state.fullTrades.unshift(newsliced);
+
+              console.log(_this2.state.fullTrades);
               break;
             }
           }
@@ -411,6 +535,8 @@ function (_PureComponent) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_2__["ThemeProvider"], {
         theme: Object(_theme__WEBPACK_IMPORTED_MODULE_4__["default"])(false)
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -419,7 +545,12 @@ function (_PureComponent) {
         }
       }, this.state.fullTrades.map(function (slic, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MakeCol, {
-          slic: slic
+          slic: slic,
+          onemin: _this3.props.data.fetchOneMinuteCandleHistory,
+          fivemin: _this3.props.data.fetchFiveMinuteCandleHistory,
+          onehour: _this3.props.data.fetchOneHourCandleHistory,
+          oneday: _this3.props.data.fetchOneDayCandleHistory,
+          key: i
         });
       })));
     }
@@ -429,30 +560,30 @@ function (_PureComponent) {
 }(react__WEBPACK_IMPORTED_MODULE_0__["PureComponent"]);
 
 
-
-var MakeCol =
+var MakeCol = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["inject"])("store"), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["observer"])(_class =
 /*#__PURE__*/
 function (_Component) {
   _inherits(MakeCol, _Component);
 
   function MakeCol(props) {
-    var _this3;
+    var _this4;
 
     _classCallCheck(this, MakeCol);
 
-    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(MakeCol).call(this, props));
-    _this3.state = {
+    _this4 = _possibleConstructorReturn(this, _getPrototypeOf(MakeCol).call(this, props));
+    _this4.state = {
       data: [],
       pnl: 0,
       avgEntryPrice: 0,
       avgExitPrice: 0,
-      clicked: false
+      clicked: false,
+      cumQty: 0,
+      readMoreClicked: false
     };
-    return _this3;
-  } // componentDidMount() {
-  //   console.log(this.state);
-  // }
-
+    _this4.readMoreClicked = _this4.readMoreClicked.bind(_assertThisInitialized(_this4));
+    _this4.clicked = _this4.clicked.bind(_assertThisInitialized(_this4));
+    return _this4;
+  }
 
   _createClass(MakeCol, [{
     key: "componentDidMount",
@@ -463,6 +594,7 @@ function (_Component) {
     key: "componentWillMount",
     value: function componentWillMount() {
       this.state.data = this.props.slic;
+      console.log(this.state.data[0]);
 
       if (this.state.data[0].side == "Buy" && this.state.data[0].execType == "Trade") {
         var avgBuyPrice = 0;
@@ -473,27 +605,49 @@ function (_Component) {
         var sellNum = 0;
         var totBuyContractsMult = 0;
         var totSellContractsMult = 0;
+        var realQty = 0;
 
         for (var i = 0; i < this.state.data.length; i++) {
+          realQty = this.state.data[i].orderQty - this.state.data[i].leavesQty;
+
           if (this.state.data[i].side == "Buy") {
             // totBuyPrice += parseFloat(this.state.data[i].price);
             buyNum += 1;
-            totBuyContracts += this.state.data[i].orderQty;
-            totBuyContractsMult += this.state.data[i].orderQty * parseFloat(this.state.data[i].price);
+            totBuyContracts += realQty;
+            totBuyContractsMult += realQty * parseFloat(this.state.data[i].price);
           }
 
           if (this.state.data[i].side == "Sell") {
             sellNum += 1;
-            totSellContracts += this.state.data[i].orderQty;
-            totSellContractsMult += this.state.data[i].orderQty * parseFloat(this.state.data[i].price);
+            totSellContracts += realQty;
+            totSellContractsMult += realQty * parseFloat(this.state.data[i].price);
           }
 
           if (i == this.state.data.length - 1) {
             avgBuyPrice = totBuyContractsMult / totBuyContracts;
             avgSellPrice = totSellContractsMult / totSellContracts;
-            this.state.avgEntryPrice = avgBuyPrice;
-            this.state.avgExitPrice = avgSellPrice;
-            this.state.pnl = (1 / avgBuyPrice - 1 / avgSellPrice) * totSellContracts;
+
+            if (avgBuyPrice != null) {
+              this.state.avgEntryPrice = avgBuyPrice;
+            } else {
+              this.state.avgEntryPrice = 0;
+            }
+
+            if (avgSellPrice != null) {
+              this.state.avgExitPrice = avgSellPrice;
+            } else {
+              this.state.avgExitPrice = 0;
+            }
+
+            this.state.cumQty = totBuyContracts;
+            var thePnl = (1 / avgBuyPrice - 1 / avgSellPrice) * totSellContracts;
+
+            if (thePnl != null) {
+              this.state.pnl = thePnl;
+              this.props.store.addPnl(this.state.pnl);
+            } else {
+              this.state.pnl = 0;
+            }
           }
         }
       }
@@ -507,19 +661,22 @@ function (_Component) {
         var _sellNum = 0;
         var _totBuyContractsMult = 0;
         var _totSellContractsMult = 0;
+        var _realQty = 0;
 
         for (var _i2 = 0; _i2 < this.state.data.length; _i2++) {
+          _realQty = this.state.data[_i2].orderQty - this.state.data[_i2].leavesQty;
+
           if (this.state.data[_i2].side == "Buy") {
             // totBuyPrice += parseFloat(this.state.data[i].price);
             _buyNum += 1;
-            _totBuyContracts += this.state.data[_i2].orderQty;
-            _totBuyContractsMult += this.state.data[_i2].orderQty * parseFloat(this.state.data[_i2].price);
+            _totBuyContracts += _realQty;
+            _totBuyContractsMult += _realQty * parseFloat(this.state.data[_i2].price);
           }
 
           if (this.state.data[_i2].side == "Sell") {
             _sellNum += 1;
-            _totSellContracts += this.state.data[_i2].orderQty;
-            _totSellContractsMult += this.state.data[_i2].orderQty * parseFloat(this.state.data[_i2].price);
+            _totSellContracts += _realQty;
+            _totSellContractsMult += _realQty * parseFloat(this.state.data[_i2].price);
           }
 
           if (_i2 == this.state.data.length - 1) {
@@ -532,9 +689,26 @@ function (_Component) {
 
             var pnl = (1 / _avgBuyPrice - 1 / _avgSellPrice) * _totBuyContracts; // console.log(pnl, totBuyContractsMult, totBuyContracts);
 
-            this.state.avgEntryPrice = _avgBuyPrice;
-            this.state.avgExitPrice = _avgSellPrice;
-            this.state.pnl = pnl;
+            if (_avgBuyPrice != null) {
+              this.state.avgExitPrice = _avgBuyPrice;
+            } else {
+              this.state.avgExitPrice = 0;
+            }
+
+            if (_avgSellPrice != null) {
+              this.state.avgEntryPrice = _avgSellPrice;
+            } else {
+              this.state.avgEntryPrice = 0;
+            }
+
+            this.state.cumQty = _totSellContracts;
+
+            if (pnl != null) {
+              this.state.pnl = pnl;
+              this.props.store.addPnl(pnl);
+            } else {
+              this.state.pnl = 0;
+            }
           }
         }
       }
@@ -542,8 +716,7 @@ function (_Component) {
   }, {
     key: "clicked",
     value: function clicked() {
-      console.log(this.state);
-
+      // console.log(this.state);
       if (this.state.clicked == false) {
         this.setState({
           clicked: true
@@ -555,32 +728,65 @@ function (_Component) {
       }
     }
   }, {
+    key: "readMoreClicked",
+    value: function readMoreClicked() {
+      console.log(this.state);
+
+      if (this.state.readMoreClicked == false) {
+        this.setState({
+          readMoreClicked: true
+        });
+      } else {
+        this.setState({
+          readMoreClicked: false
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.state.clicked == false) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDiv, {
           onClick: this.clicked.bind(this)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, Object(_Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__["formatDateMonthOnly"])(this.state.data[0].timestamp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, Object(_Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__["formatDateMonthOnly"])(this.state.data[this.state.data.length - 1].timestamp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(IsShort, {
           side: this.state.data[0].side
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgEntryPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgExitPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.pnl.toFixed(4) + "xbt"));
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgEntryPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgExitPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.cumQty), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.pnl.toFixed(4) + "xbt"));
       } else {
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivClicked, {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(TotalDetails, null, this.state.readMoreClicked ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MoreBoxTall, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivClicked, {
           onClick: this.clicked.bind(this)
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, Object(_Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__["formatDateMonthOnly"])(this.state.data[0].timestamp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, Object(_Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__["formatDateMonthOnly"])(this.state.data[this.state.data.length - 1].timestamp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(IsShort, {
           side: this.state.data[0].side
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgEntryPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgExitPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.pnl.toFixed(4) + "xbt")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivBlack, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Side"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Order Qty"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Commission")), this.state.data.map(function (dat) {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgEntryPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgExitPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.cumQty), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.pnl.toFixed(4) + "xbt")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivBlack, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Timestamp"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Side"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Order Qty"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Commission")), this.state.data.map(function (dat) {
           return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivBlack, {
-            onClick: _this4.clicked.bind(_this4)
-          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.side), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "$", dat.price.toString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.orderQty.toString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.commission));
+            onClick: _this5.clicked.bind(_this5)
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.timestamp), dat.execType == "Trade" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.side) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.execType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "$", dat.price.toString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.orderQty.toString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.commission));
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ReadMore, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ReadMoreInner, {
+          onClick: this.readMoreClicked
+        }, "Show Less"))) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(MoreBoxShort, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivClicked, {
+          onClick: this.clicked
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, Object(_Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__["formatDateMonthOnly"])(this.state.data[0].timestamp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, Object(_Helpers_Functions_js__WEBPACK_IMPORTED_MODULE_5__["formatDateMonthOnly"])(this.state.data[this.state.data.length - 1].timestamp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(IsShort, {
+          side: this.state.data[0].side
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgEntryPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, "$", this.state.avgExitPrice.toFixed(1)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.cumQty), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDiv, null, this.state.pnl.toFixed(4) + "xbt")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivBlack, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Timestamp"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Side"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Order Qty"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "Commission")), this.state.data.map(function (dat) {
+          return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ContainDivBlack, {
+            onClick: _this5.clicked.bind(_this5)
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.timestamp), dat.execType == "Trade" ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.side) : react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.execType), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, "$", dat.price.toString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.orderQty.toString()), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NextToDivBlack, null, dat.commission));
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ReadMore, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ReadMoreInner, {
+          onClick: this.readMoreClicked
+        }, "Show All"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Notes__WEBPACK_IMPORTED_MODULE_8__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts2_index__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          onemin: this.props.onemin,
+          fivemin: this.props.fivemin,
+          onehour: this.props.onehour,
+          oneday: this.props.oneday,
+          trades: this.state.data
         }));
       }
     }
   }]);
 
   return MakeCol;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"])) || _class) || _class);
 
 var IsShort =
 /*#__PURE__*/
@@ -634,7 +840,28 @@ var NextToDivBlack = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.di
 var NextToDivHeader = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "ReChart__NextToDivHeader",
   componentId: "sc-1e3lvhz-6"
-})(["display:inline-block;width:30%;color:#78838e;font-weight:600;display:inline-block;text-transform:uppercase;padding:10px;padding-left:12px;"]); // const renderLegend = props => {
+})(["display:inline-block;width:30%;color:#78838e;font-weight:600;display:inline-block;text-transform:uppercase;padding:10px;padding-left:12px;"]);
+var ReadMore = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
+  displayName: "ReChart__ReadMore",
+  componentId: "sc-1e3lvhz-7"
+})(["position:absolute;bottom:0;left:0;width:100%;text-align:center;margin:0;padding:30px 0;background-image:-webkit-gradient( linear,left top,left bottom,color-stop(0,rgba(255,0,0,0)),color-stop(1,rgba(248,248,255,1)) );"]); // background-image: linear-gradient(to bottom, transparent, black);
+
+var MoreBoxShort = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
+  displayName: "ReChart__MoreBoxShort",
+  componentId: "sc-1e3lvhz-8"
+})(["max-height:200px;position:relative;overflow:hidden;"]);
+var MoreBoxTall = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
+  displayName: "ReChart__MoreBoxTall",
+  componentId: "sc-1e3lvhz-9"
+})(["max-height:none;position:relative;overflow:hidden;"]);
+var TotalDetails = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
+  displayName: "ReChart__TotalDetails",
+  componentId: "sc-1e3lvhz-10"
+})([""]);
+var ReadMoreInner = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
+  displayName: "ReChart__ReadMoreInner",
+  componentId: "sc-1e3lvhz-11"
+})(["background-color:#fff;color:rgba(33,37,40,1);padding:0;margin:auto;width:100px;border:1px solid rgba(33,37,40,0.7);border-radius:2px;:hover{cursor:pointer;}"]); // const renderLegend = props => {
 //   const { payload } = props;
 //   // console.log(payload);
 //   return (
@@ -662,6 +889,645 @@ var NextToDivHeader = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.d
 //     <rect width="10" height="10" fill={color} />
 //   </svg>
 // );
+
+/***/ }),
+
+/***/ "./components/Charts2/ChartDemo.js":
+/*!*****************************************!*\
+  !*** ./components/Charts2/ChartDemo.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var d3_format__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! d3-format */ "d3-format");
+/* harmony import */ var d3_format__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(d3_format__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! d3-time-format */ "d3-time-format");
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(d3_time_format__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_stockcharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-stockcharts */ "react-stockcharts");
+/* harmony import */ var react_stockcharts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_stockcharts_lib_series__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-stockcharts/lib/series */ "react-stockcharts/lib/series");
+/* harmony import */ var react_stockcharts_lib_series__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_series__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_stockcharts_lib_axes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-stockcharts/lib/axes */ "react-stockcharts/lib/axes");
+/* harmony import */ var react_stockcharts_lib_axes__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_axes__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_stockcharts_lib_coordinates__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-stockcharts/lib/coordinates */ "react-stockcharts/lib/coordinates");
+/* harmony import */ var react_stockcharts_lib_coordinates__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_coordinates__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./helpers */ "./components/Charts2/helpers.js");
+/* harmony import */ var react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-stockcharts/lib/annotation */ "react-stockcharts/lib/annotation");
+/* harmony import */ var react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react_stockcharts_lib_scale__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-stockcharts/lib/scale */ "react-stockcharts/lib/scale");
+/* harmony import */ var react_stockcharts_lib_scale__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_scale__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react_stockcharts_lib_tooltip__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-stockcharts/lib/tooltip */ "react-stockcharts/lib/tooltip");
+/* harmony import */ var react_stockcharts_lib_tooltip__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_tooltip__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var react_stockcharts_lib_indicator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-stockcharts/lib/indicator */ "react-stockcharts/lib/indicator");
+/* harmony import */ var react_stockcharts_lib_indicator__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_indicator__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var react_stockcharts_lib_helper__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-stockcharts/lib/helper */ "react-stockcharts/lib/helper");
+/* harmony import */ var react_stockcharts_lib_helper__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_helper__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react_stockcharts_lib_utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-stockcharts/lib/utils */ "react-stockcharts/lib/utils");
+/* harmony import */ var react_stockcharts_lib_utils__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(react_stockcharts_lib_utils__WEBPACK_IMPORTED_MODULE_14__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var CandleStickChartWithAnnotation =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CandleStickChartWithAnnotation, _React$Component);
+
+  function CandleStickChartWithAnnotation(props) {
+    _classCallCheck(this, CandleStickChartWithAnnotation);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(CandleStickChartWithAnnotation).call(this, props));
+  }
+
+  _createClass(CandleStickChartWithAnnotation, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      console.log(this.props);
+      var yRangeNums = Object(_helpers__WEBPACK_IMPORTED_MODULE_8__["getYRangeNums"])(this.props.data);
+      this.setState({
+        yRangeNums: yRangeNums
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var margin = {
+        left: 20,
+        right: 50,
+        top: 30,
+        bottom: 30
+      };
+      var height = 400;
+      var _this$props = this.props,
+          type = _this$props.type,
+          initialData = _this$props.data,
+          width = _this$props.width,
+          ratio = _this$props.ratio;
+      var yAxisLabelX = width - margin.left - 40,
+          yAxisLabelY = (height - margin.top - margin.bottom) / 2;
+      var xScaleProvider = react_stockcharts_lib_scale__WEBPACK_IMPORTED_MODULE_10__["discontinuousTimeScaleProvider"].inputDateAccessor(function (d) {
+        return d.date;
+      });
+
+      var _xScaleProvider = xScaleProvider(initialData),
+          data = _xScaleProvider.data,
+          xScale = _xScaleProvider.xScale,
+          xAccessor = _xScaleProvider.xAccessor,
+          displayXAccessor = _xScaleProvider.displayXAccessor;
+
+      var start = xAccessor(Object(react_stockcharts_lib_utils__WEBPACK_IMPORTED_MODULE_14__["last"])(data));
+      var end = xAccessor(data[Math.max(0, data.length - 150)]);
+      console.log(start, "CHART START");
+      console.log(end, "CHART END");
+      var xExtents = [start, end];
+
+      if (this.state == null) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading...");
+      }
+
+      try {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts__WEBPACK_IMPORTED_MODULE_4__["ChartCanvas"], {
+          height: height,
+          ratio: ratio,
+          width: width,
+          margin: margin,
+          type: type,
+          data: data,
+          xScale: xScale,
+          seriesName: "BTC",
+          xAccessor: xAccessor,
+          displayXAccessor: displayXAccessor,
+          xExtents: xExtents
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts__WEBPACK_IMPORTED_MODULE_4__["Chart"], {
+          id: 1,
+          yExtents: [function (d) {
+            return [d.high, d.low];
+          }],
+          padding: {
+            top: 80,
+            bottom: 80
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_axes__WEBPACK_IMPORTED_MODULE_6__["XAxis"], {
+          axisAt: "bottom",
+          orient: "bottom"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_coordinates__WEBPACK_IMPORTED_MODULE_7__["MouseCoordinateX"], {
+          at: "bottom",
+          orient: "bottom",
+          displayFormat: Object(d3_time_format__WEBPACK_IMPORTED_MODULE_3__["timeFormat"])("%Y-%m-%d")
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_coordinates__WEBPACK_IMPORTED_MODULE_7__["MouseCoordinateY"], {
+          at: "right",
+          orient: "right",
+          displayFormat: Object(d3_format__WEBPACK_IMPORTED_MODULE_2__["format"])(".2f")
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_axes__WEBPACK_IMPORTED_MODULE_6__["YAxis"], {
+          axisAt: "right",
+          orient: "right",
+          ticks: 5
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_series__WEBPACK_IMPORTED_MODULE_5__["CandlestickSeries"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_tooltip__WEBPACK_IMPORTED_MODULE_11__["OHLCTooltip"], {
+          origin: [-10, 0]
+        }), this.props.trades.map(function (each) {
+          console.log("mapping total length" + _this.props.trades.length.toString(), each);
+          var datu = new Date(each.timestamp);
+
+          if (each.side == "Buy") {
+            var annotationPropsUp = {
+              fontFamily: "Glyphicons Halflings",
+              fontSize: 20,
+              fill: "#018001",
+              opacity: 0.8,
+              text: "˄",
+              y: function y(_ref) {
+                var yScale = _ref.yScale;
+                return yScale.range()[0] * Object(_helpers__WEBPACK_IMPORTED_MODULE_8__["findYValBuy"])(_this.state.yRangeNums[0], _this.state.yRangeNums[1], each.price);
+              },
+              onClick: console.log.bind(console),
+              tooltip: function tooltip(d) {
+                return Object(d3_time_format__WEBPACK_IMPORTED_MODULE_3__["timeFormat"])("%B")(d.date);
+              } // onMouseOver: console.log.bind(console),
+
+            };
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9__["Annotate"], {
+              with: react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9__["LabelAnnotation"],
+              when: function when(d) {
+                return Object(_helpers__WEBPACK_IMPORTED_MODULE_8__["timeCompare"])(d, datu, _this.props.timeframe);
+              },
+              usingProps: annotationPropsUp
+            });
+          } else if (each.side == "Sell") {
+            var annotationPropsDown = {
+              fontFamily: "Glyphicons Halflings",
+              fontSize: 20,
+              fill: "#FF0000",
+              opacity: 0.8,
+              text: "˅",
+              y: function y(_ref2) {
+                var yScale = _ref2.yScale;
+                return yScale.range()[0] * Object(_helpers__WEBPACK_IMPORTED_MODULE_8__["findYValSell"])(_this.state.yRangeNums[0], _this.state.yRangeNums[1], each.price);
+              },
+              onClick: console.log.bind(console),
+              tooltip: function tooltip(d) {
+                return Object(d3_time_format__WEBPACK_IMPORTED_MODULE_3__["timeFormat"])("%B")(d.date);
+              } // onMouseOver: console.log.bind(console),
+
+            };
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9__["Annotate"], {
+              with: react_stockcharts_lib_annotation__WEBPACK_IMPORTED_MODULE_9__["LabelAnnotation"],
+              when: function when(d) {
+                return Object(_helpers__WEBPACK_IMPORTED_MODULE_8__["timeCompare"])(d, datu, _this.props.timeframe);
+              },
+              usingProps: annotationPropsDown
+            });
+          } else {
+            pass;
+          }
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_stockcharts_lib_coordinates__WEBPACK_IMPORTED_MODULE_7__["CrossHairCursor"], {
+          strokeDasharray: "LongDashDot"
+        }));
+      } catch (err) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "no chart");
+      }
+    }
+  }]);
+
+  return CandleStickChartWithAnnotation;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+CandleStickChartWithAnnotation.propTypes = {
+  data: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.array.isRequired,
+  width: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired,
+  ratio: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number.isRequired,
+  type: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOf(["svg", "hybrid"]).isRequired
+};
+CandleStickChartWithAnnotation.defaultProps = {
+  type: "svg"
+};
+CandleStickChartWithAnnotation = Object(react_stockcharts_lib_helper__WEBPACK_IMPORTED_MODULE_13__["fitWidth"])(CandleStickChartWithAnnotation);
+/* harmony default export */ __webpack_exports__["default"] = (CandleStickChartWithAnnotation);
+
+/***/ }),
+
+/***/ "./components/Charts2/helpers.js":
+/*!***************************************!*\
+  !*** ./components/Charts2/helpers.js ***!
+  \***************************************/
+/*! exports provided: timeCompare, getYRangeNums, findYValSell, findYValBuy */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timeCompare", function() { return timeCompare; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getYRangeNums", function() { return getYRangeNums; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findYValSell", function() { return findYValSell; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "findYValBuy", function() { return findYValBuy; });
+var timeCompare = function timeCompare(d, datu, timeframe) {
+  var MS_PER_MINUTE = 60000;
+  var coeffFive = 1000 * 60 * 5;
+  var coeffOne = 1000 * 60 * 5;
+
+  if (timeframe == "1m") {
+    return Math.round(d.date.getTime() / coeffOne) * coeffOne === Math.round(datu.getTime() / coeffOne) * coeffOne;
+  }
+
+  if (timeframe == "5m") {
+    return Math.round(d.date.getTime() / coeffFive) * coeffFive === Math.round(datu.getTime() / coeffFive) * coeffFive;
+  }
+
+  if (timeframe == "1h") {
+    return d.date.getHours() === datu.getHours() && d.date.getDate() === datu.getDate();
+  }
+
+  if (timeframe == "1d") {
+    return d.date.getDate() === datu.getDate();
+  }
+};
+var getYRangeNums = function getYRangeNums(data) {
+  var lowNum;
+  var highNum;
+
+  for (var i = 0; i < data.length; i++) {
+    if (i == 0) {
+      lowNum = data[0].low;
+      highNum = data[0].high;
+    }
+
+    if (data[i].low < lowNum) {
+      lowNum = data[i].low;
+    }
+
+    if (data[i].high > highNum) {
+      highNum = data[i].high;
+    }
+
+    if (i == data.length - 1) {
+      var arr = [];
+      arr.push(lowNum);
+      arr.push(highNum);
+      console.log(arr);
+      return arr;
+    }
+  }
+};
+var findYValSell = function findYValSell(yLow, yHigh, price) {
+  var fullRange = yHigh - yLow;
+  var myRange = yHigh - price;
+  return myRange / (fullRange * 1.5);
+};
+var findYValBuy = function findYValBuy(yLow, yHigh, price) {
+  var fullRange = yHigh - yLow;
+  var myRange = yHigh - price;
+  return myRange / (fullRange / 1.5);
+};
+
+/***/ }),
+
+/***/ "./components/Charts2/index.js":
+/*!*************************************!*\
+  !*** ./components/Charts2/index.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ChartComponent; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ChartDemo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ChartDemo */ "./components/Charts2/ChartDemo.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./components/Charts2/utils.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+ // import { TypeChooser } from "react-stockcharts/lib/helper";
+
+var ChartComponent =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ChartComponent, _React$Component);
+
+  function ChartComponent(props) {
+    _classCallCheck(this, ChartComponent);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ChartComponent).call(this, props)); // state = {};
+  }
+
+  _createClass(ChartComponent, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // getData().then(data => {
+      //   console.log(data);
+      //   this.setState({ data });
+      // });
+      console.log(this.props);
+      console.log(this.props.trades, "MY TRADES");
+      var startTime = new Date(this.props.trades[0].timestamp);
+      var endTime = new Date(this.props.trades[this.props.trades.length - 1].timestamp);
+      var diffMs = Math.abs(startTime - endTime);
+      var diffSecs = diffMs / 1000;
+      var diffMins = Math.round(diffSecs / 60); // minutes
+      // var diffHrs = Math.round(diffMins / 60); // hours
+      // let myTimeframe = "1m";
+
+      try {
+        if (diffMins < 60) {
+          //   this.setState({ candleData: this.props.onemin });
+          var allExec = [];
+
+          for (var i = 0; i < this.props.onemin.length; i++) {
+            var trade = this.props.onemin[i];
+            var newTrade = {};
+            newTrade.date = new Date(trade.timestamp);
+            newTrade.open = parseFloat(trade.open);
+            newTrade.close = parseFloat(trade.close);
+            newTrade.high = parseFloat(trade.high);
+            newTrade.low = parseFloat(trade.low);
+            var strt = new Date(this.props.trades[0].timestamp);
+            var end = new Date(this.props.trades[this.props.trades.length - 1].timestamp);
+            var compare1 = newTrade.date - strt;
+            var compare2 = newTrade.date - end;
+
+            if (compare1 > 0 && compare2 < 0) {
+              allExec.unshift(newTrade);
+            }
+
+            if (i == this.props.onemin.length - 1) {
+              this.setState({
+                trades: this.props.trades,
+                newDat: allExe,
+                timeframe: "1m"
+              });
+              console.log(this.state, "THIS STATE");
+            }
+          }
+        }
+
+        if (diffMins >= 60 && diffMins < 60 * 10) {
+          //   this.setState({ candleData: this.props.fivemin });
+          var _allExec = [];
+
+          for (var _i = 0; _i < this.props.fivemin.length; _i++) {
+            var _trade = this.props.fivemin[_i];
+            var _newTrade = {};
+            _newTrade.date = new Date(_trade.timestamp);
+            _newTrade.open = parseFloat(_trade.open);
+            _newTrade.close = parseFloat(_trade.close);
+            _newTrade.high = parseFloat(_trade.high);
+            _newTrade.low = parseFloat(_trade.low);
+
+            var _strt = new Date(this.props.trades[0].timestamp);
+
+            var _end = new Date(this.props.trades[this.props.trades.length - 1].timestamp);
+
+            var _compare = _newTrade.date - _strt;
+
+            var _compare2 = _newTrade.date - _end;
+
+            if (_compare > 0 && _compare2 < 0) {
+              _allExec.unshift(_newTrade);
+            }
+
+            if (_i == this.props.fivemin.length - 1) {
+              this.setState({
+                trades: this.props.trades,
+                newDat: _allExec,
+                timeframe: "5m"
+              });
+              console.log(this.state, "THIS STATE");
+            }
+          }
+        }
+
+        var day = 60 * 24;
+
+        if (diffMins >= 60 * 10 && diffMins < day * 4) {
+          //   this.setState({ candleData: this.props.onehour });
+          var _allExec2 = [];
+
+          for (var _i2 = 0; _i2 < this.props.onehour.length; _i2++) {
+            var _trade2 = this.props.onehour[_i2];
+            var _newTrade2 = {};
+            _newTrade2.date = new Date(_trade2.timestamp);
+            _newTrade2.open = parseFloat(_trade2.open);
+            _newTrade2.close = parseFloat(_trade2.close);
+            _newTrade2.high = parseFloat(_trade2.high);
+            _newTrade2.low = parseFloat(_trade2.low);
+
+            var _strt2 = new Date(this.props.trades[0].timestamp);
+
+            var _end2 = new Date(this.props.trades[this.props.trades.length - 1].timestamp);
+
+            var _compare3 = _newTrade2.date - _strt2;
+
+            var _compare4 = _newTrade2.date - _end2;
+
+            if (_compare3 > 0 && _compare4 < 0) {
+              _allExec2.unshift(_newTrade2);
+            }
+
+            if (_i2 == this.props.onehour.length - 1) {
+              this.setState({
+                trades: this.props.trades,
+                newDat: _allExec2,
+                timeframe: "1h"
+              });
+              console.log(this.state, "THIS STATE");
+            }
+          }
+        }
+
+        if (diffMins >= day * 4) {
+          //   this.setState({ candleData: this.props.oneday });
+          var _allExec3 = [];
+
+          for (var _i3 = 0; _i3 < this.props.oneday.length; _i3++) {
+            var _trade3 = this.props.oneday[_i3];
+            var _newTrade3 = {};
+            _newTrade3.date = new Date(_trade3.timestamp);
+            _newTrade3.open = parseFloat(_trade3.open);
+            _newTrade3.close = parseFloat(_trade3.close);
+            _newTrade3.high = parseFloat(_trade3.high);
+            _newTrade3.low = parseFloat(_trade3.low);
+
+            var _strt3 = new Date(this.props.trades[0].timestamp);
+
+            var _end3 = new Date(this.props.trades[this.props.trades.length - 1].timestamp);
+
+            var _compare5 = _newTrade3.date - _strt3;
+
+            var _compare6 = _newTrade3.date - _end3;
+
+            if (_compare5 > 0 && _compare6 < 0) {
+              _allExec3.unshift(_newTrade3);
+            }
+
+            if (_i3 == this.props.oneday.length - 1) {
+              this.setState({
+                trades: this.props.trades,
+                newDat: _allExec3,
+                timeframe: "1d"
+              });
+              console.log(this.state, "THIS STATE");
+            }
+          }
+        }
+      } catch (err) {
+        var _allExec4 = [];
+
+        for (var _i4 = 0; _i4 < this.props.onehour.length; _i4++) {
+          var _trade4 = this.props.onehour[_i4];
+          var _newTrade4 = {};
+          _newTrade4.date = new Date(_trade4.timestamp);
+          _newTrade4.open = parseFloat(_trade4.open);
+          _newTrade4.close = parseFloat(_trade4.close);
+          _newTrade4.high = parseFloat(_trade4.high);
+          _newTrade4.low = parseFloat(_trade4.low);
+
+          var _strt4 = new Date(this.props.trades[0].timestamp);
+
+          var _end4 = new Date(this.props.trades[this.props.trades.length - 1].timestamp);
+
+          var _compare7 = _newTrade4.date - _strt4;
+
+          var _compare8 = _newTrade4.date - _end4;
+
+          if (_compare7 > 0 && _compare8 < 0) {
+            _allExec4.unshift(_newTrade4);
+          }
+
+          if (_i4 == this.props.onehour.length - 1) {
+            this.setState({
+              trades: this.props.trades,
+              newDat: _allExec4,
+              timeframe: "1h"
+            });
+            console.log(this.state, "THIS STATE");
+          }
+        }
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (this.state == null) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading...");
+      }
+
+      return (// <TypeChooser>
+        //   {type => (
+        react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ChartDemo__WEBPACK_IMPORTED_MODULE_2__["default"], {
+          type: "hybrid",
+          data: this.state.newDat,
+          trades: this.state.trades,
+          timeframe: this.state.timeframe
+        }) //   )}
+        // </TypeChooser>
+
+      );
+    }
+  }]);
+
+  return ChartComponent;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component); // render(<ChartComponent />, document.getElementById("root"));
+
+
+
+
+/***/ }),
+
+/***/ "./components/Charts2/utils.js":
+/*!*************************************!*\
+  !*** ./components/Charts2/utils.js ***!
+  \*************************************/
+/*! exports provided: getData */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getData", function() { return getData; });
+/* harmony import */ var d3_dsv__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! d3-dsv */ "d3-dsv");
+/* harmony import */ var d3_dsv__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(d3_dsv__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! d3-time-format */ "d3-time-format");
+/* harmony import */ var d3_time_format__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(d3_time_format__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
+function parseData(parse) {
+  return function (d) {
+    d.date = parse(d.date);
+    d.open = +d.open;
+    d.high = +d.high;
+    d.low = +d.low;
+    d.close = +d.close;
+    d.volume = +d.volume;
+    return d;
+  };
+}
+
+var parseDate = Object(d3_time_format__WEBPACK_IMPORTED_MODULE_1__["timeParse"])("%Y-%m-%d");
+function getData() {
+  var promiseMSFT = fetch("https://cdn.rawgit.com/rrag/react-stockcharts/master/docs/data/MSFT.tsv").then(function (response) {
+    return response.text();
+  }).then(function (data) {
+    return Object(d3_dsv__WEBPACK_IMPORTED_MODULE_0__["tsvParse"])(data, parseData(parseDate));
+  });
+  return promiseMSFT;
+}
 
 /***/ }),
 
@@ -788,7 +1654,7 @@ var _dec, _class, _temp;
 
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  query fetchTradeHistory($start: String!, $end: String!) {\n    fetchTradeHistory(start: $start, end: $end) {\n      id\n      timestamp\n      side\n      price\n      orderQty\n      leavesQty\n      currentQty\n      avgEntryPrice\n      execGrossPnl\n      realizedPnl\n      commission\n      trdStart\n      trdEnd\n    }\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  query fetchTradeHistory($start: String!, $end: String!) {\n    fetchTradeHistory(start: $start, end: $end) {\n      id\n      timestamp\n      side\n      price\n      orderQty\n      leavesQty\n      currentQty\n      avgEntryPrice\n      execGrossPnl\n      realizedPnl\n      commission\n      execType\n      trdStart\n      trdEnd\n      notes\n      hashtags\n    }\n\n    fetchOneMinuteCandleHistory(start: $start, end: $end) {\n      id\n      timestamp\n      symbol\n      timeframe\n      open\n      high\n      low\n      close\n      trades\n      volume\n      vwap\n      lastSize\n      homeNotional\n      foreignNotional\n    }\n\n    fetchOneHourCandleHistory(start: $start, end: $end) {\n      id\n      timestamp\n      symbol\n      timeframe\n      open\n      high\n      low\n      close\n      trades\n      volume\n      vwap\n      lastSize\n      homeNotional\n      foreignNotional\n    }\n\n    fetchOneDayCandleHistory(start: $start, end: $end) {\n      id\n      timestamp\n      symbol\n      timeframe\n      open\n      high\n      low\n      close\n      trades\n      volume\n      vwap\n      lastSize\n      homeNotional\n      foreignNotional\n    }\n\n    fetchFiveMinuteCandleHistory(start: $start, end: $end) {\n      id\n      timestamp\n      symbol\n      timeframe\n      open\n      high\n      low\n      close\n      trades\n      volume\n      vwap\n      lastSize\n      homeNotional\n      foreignNotional\n    }\n  }\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -828,7 +1694,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
  // import { useState, useEffect } from "react";
 // import { storesContext } from "../../stores/UserStore";
 
-var FetchQuery = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["inject"])("store"), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["observer"])(_class = (_temp =
+var FetchQuery = (_dec = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["inject"])(["store"]), _dec(_class = Object(mobx_react__WEBPACK_IMPORTED_MODULE_6__["observer"])(_class = (_temp =
 /*#__PURE__*/
 function (_React$Component) {
   _inherits(FetchQuery, _React$Component);
@@ -855,45 +1721,40 @@ function (_React$Component) {
 
   _createClass(FetchQuery, [{
     key: "componentDidMount",
-    value: function componentDidMount() {
-      // console.log(this.props.store.date);
-      var myStore = this.props.store;
-      console.log(myStore.date);
-      var dates = Object(_Helpers_Functions__WEBPACK_IMPORTED_MODULE_7__["getStateDate"])(myStore.date);
-      console.log(dates);
-      this.setState({
-        startDate: dates.start,
-        endDate: dates.end,
-        date: this.props.store.date
-      });
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      console.log("updated");
-
-      if (this.props.store.date != prevProps.store.date) {
-        // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-        var dates = Object(_Helpers_Functions__WEBPACK_IMPORTED_MODULE_7__["getStateDate"])(this.props.store.date);
-        console.log(dates);
-        this.setState({
-          startDate: dates.start,
-          endDate: dates.end,
-          date: this.props.store.date
-        });
-      }
+    value: function componentDidMount() {// console.log(this.props.store);
+      // try {
+      //   let myStorage = window.localStorage;
+      //   let theDate = myStorage.getItem("store");
+      //   let obj = JSON.parse(theDate);
+      //   console.log(obj);
+      //   this.setState({
+      //     startDate: obj.startDate,
+      //     endDate: obj.endDate
+      //   });
+      //   console.log("SUCCESS");
+      //   console.log(obj.startDate);
+      //   console.log(obj.endDate);
+      // } catch (err) {
+      //   let theDates = getStateDate(2);
+      //   this.setState({
+      //     startDate: theDates.startDate,
+      //     endDate: theDates.endDate
+      //   });
+      //   console.log("FAILED");
+      // }
     }
   }, {
     key: "render",
     value: function render() {
-      // let fetchTradeHistoryVariables = {
-      //   start: this.state.startDate,
-      //   end: this.state.endDate
-      // };
       var fetchTradeHistoryVariables = {
-        start: "2020-02-24T12:43:56.702Z",
-        end: "2020-02-26T15:01:59.727Z"
+        start: this.props.store.startDate,
+        end: this.props.store.endDate
       };
+      console.log(fetchTradeHistoryQuery); // let fetchTradeHistoryVariables = {
+      //   start: "2020-02-24T12:43:56.702Z",
+      //   end: "2020-02-26T15:01:59.727Z"
+      // };
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Comp, {
         query: fetchTradeHistoryQuery,
         vars: fetchTradeHistoryVariables
@@ -902,42 +1763,7 @@ function (_React$Component) {
   }]);
 
   return FetchQuery;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component), _temp)) || _class) || _class); // const FetchQuery = inject("store")(
-//   observer(({ store }) => {
-//     // if (store) {
-//     // const [startDate, setStartDate] = useState();
-//     // const [endDate, setEndDate] = useState();
-//     // const [myStore, setStore] = useState();
-//     // useEffect(() => {
-//     //   setStore(store);
-//     //   let dates = getStateDate(myStore.date);
-//     //   setStartDate(dates.start);
-//     //   setEndDate(dates.end);
-//     // }, []);
-//     const clicked = () => {
-//       store.isAuth = !store.isAuth;
-//       console.log(store.isAuth);
-//     };
-//     // let fetchTradeHistoryVariables = {
-//     //   start: "2020-01-14T12:43:56.702Z",
-//     //   end: "2020-01-14T15:01:59.727Z"
-//     // };
-//     if (dates) {
-//       let fetchTradeHistoryVariables = {
-//         start: dates.start,
-//         end: dates.end
-//       };
-//     }
-//     return (
-//       <div>
-//         <Comp
-//           query={fetchTradeHistoryQuery}
-//           vars={fetchTradeHistoryVariables}
-//         />
-//       </div>
-//     );
-//   })
-// );
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component), _temp)) || _class) || _class);
 
 var Comp =
 /*#__PURE__*/
@@ -960,10 +1786,10 @@ function (_React$Component2) {
         var loading = _ref.loading,
             error = _ref.error,
             data = _ref.data;
-        console.log(data);
+        // console.log(data);
         if (error) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "no data loaded");
         if (loading) return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Loading");
-        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["ContainDivHeader"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Start"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "End"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Direction"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Avg Entry Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Avg Exit Price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Realized Pnl")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(ChartWrapper, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["ContainDivHeader"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Start"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "End"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Direction"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Avg Entry"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Avg Exit"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Qty"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["NextToDivHeader"], null, "Realized Pnl")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Charts_ReChart__WEBPACK_IMPORTED_MODULE_2__["default"], {
           data: data
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Categories_Menu__WEBPACK_IMPORTED_MODULE_3__["default"], null));
       });
@@ -1200,31 +2026,33 @@ function formatDateMonthOnly(date) {
   var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
   var theDate = new Date(date);
   var day = theDate.getDate();
+  var hours = theDate.getHours();
+  var mins = theDate.getMinutes();
   var monthIndex = theDate.getMonth();
   var year = theDate.getFullYear();
-  return day + " " + monthNames[monthIndex] + " " + year;
+  return day + " " + monthNames[monthIndex] + ", " + hours + ":" + mins;
 }
 function getStateDate(input) {
-  if (input == "today") {
+  if (input == 1) {
     var dates = {};
-    dates.start = makeDateHrs(0);
-    dates.end = makeDateHrs(24);
+    dates.end = makeDateHrs(0);
+    dates.start = makeDateHrs(24);
     console.log("is today");
     return dates;
   }
 
-  if (input == "yesterday") {
+  if (input == 2) {
     var _dates = {};
-    _dates.start = makeDateHrs(1);
-    _dates.end = makeDateDays(2);
+    _dates.end = makeDateHrs(1);
+    _dates.start = makeDateDays(2);
     console.log("is yesterday");
     return _dates;
   }
 
-  if (input == "this week") {
+  if (input == 3) {
     var _dates2 = {};
-    _dates2.start = makeDateHrs(0);
-    _dates2.end = makeDateDays(7);
+    _dates2.end = makeDateHrs(0);
+    _dates2.start = makeDateDays(7);
     console.log("is this week");
     return _dates2;
   }
@@ -1421,7 +2249,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_persist__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
+/* harmony import */ var _components_Helpers_Functions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Helpers/Functions */ "./components/Helpers/Functions.js");
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _temp;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -1430,6 +2259,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
 function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
 
 
 
@@ -1446,9 +2276,19 @@ var Store = (_class = (_temp = function Store() {
 
   _initializerDefineProperty(this, "isAuth", _descriptor3, this);
 
-  _initializerDefineProperty(this, "date", _descriptor4, this);
+  _initializerDefineProperty(this, "startDate", _descriptor4, this);
 
-  _initializerDefineProperty(this, "changeDate", _descriptor5, this);
+  _initializerDefineProperty(this, "endDate", _descriptor5, this);
+
+  _initializerDefineProperty(this, "date", _descriptor6, this);
+
+  _initializerDefineProperty(this, "pnl", _descriptor7, this);
+
+  _initializerDefineProperty(this, "changeDate", _descriptor8, this);
+
+  _initializerDefineProperty(this, "addPnl", _descriptor9, this);
+
+  _initializerDefineProperty(this, "resetPnl", _descriptor10, this);
 } //   constructor(isServer, initialData = {}) {
 //     this.lastUpdate =
 //       initialData.lastUpdate != null ? initialData.lastUpdate : Date.now();
@@ -1482,14 +2322,35 @@ var Store = (_class = (_temp = function Store() {
   initializer: function initializer() {
     return false;
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "date", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "startDate", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    return "this week";
+    return "2020-02-24T12:43:56.702Z";
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "changeDate", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "endDate", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return "2020-02-28T12:43:56.702Z";
+  }
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "date", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return 1;
+  }
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "pnl", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "changeDate", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -1497,7 +2358,32 @@ var Store = (_class = (_temp = function Store() {
     var _this = this;
 
     return function (newDate) {
+      var dates = Object(_components_Helpers_Functions__WEBPACK_IMPORTED_MODULE_4__["getStateDate"])(newDate);
       _this.date = newDate;
+      _this.startDate = dates.start;
+      _this.endDate = dates.end;
+    };
+  }
+}), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "addPnl", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this2 = this;
+
+    return function (pnl) {
+      _this2.pnl += pnl;
+    };
+  }
+}), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, "resetPnl", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this3 = this;
+
+    return function () {
+      _this3.pnl = 0;
     };
   }
 })), _class);
@@ -1533,7 +2419,7 @@ function initializeStore(initialData) {
 
 /***/ }),
 
-/***/ 4:
+/***/ 3:
 /*!**********************************!*\
   !*** multi ./pages/dashboard.js ***!
   \**********************************/
@@ -1542,6 +2428,39 @@ function initializeStore(initialData) {
 
 module.exports = __webpack_require__(/*! ./pages/dashboard.js */"./pages/dashboard.js");
 
+
+/***/ }),
+
+/***/ "d3-dsv":
+/*!*************************!*\
+  !*** external "d3-dsv" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("d3-dsv");
+
+/***/ }),
+
+/***/ "d3-format":
+/*!****************************!*\
+  !*** external "d3-format" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("d3-format");
+
+/***/ }),
+
+/***/ "d3-time-format":
+/*!*********************************!*\
+  !*** external "d3-time-format" ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("d3-time-format");
 
 /***/ }),
 
@@ -1633,6 +2552,17 @@ module.exports = require("next/router");
 
 /***/ }),
 
+/***/ "prop-types":
+/*!*****************************!*\
+  !*** external "prop-types" ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("prop-types");
+
+/***/ }),
+
 /***/ "react":
 /*!************************!*\
   !*** external "react" ***!
@@ -1652,6 +2582,127 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-apollo");
+
+/***/ }),
+
+/***/ "react-dom":
+/*!****************************!*\
+  !*** external "react-dom" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom");
+
+/***/ }),
+
+/***/ "react-stockcharts":
+/*!************************************!*\
+  !*** external "react-stockcharts" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/annotation":
+/*!***************************************************!*\
+  !*** external "react-stockcharts/lib/annotation" ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/annotation");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/axes":
+/*!*********************************************!*\
+  !*** external "react-stockcharts/lib/axes" ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/axes");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/coordinates":
+/*!****************************************************!*\
+  !*** external "react-stockcharts/lib/coordinates" ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/coordinates");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/helper":
+/*!***********************************************!*\
+  !*** external "react-stockcharts/lib/helper" ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/helper");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/indicator":
+/*!**************************************************!*\
+  !*** external "react-stockcharts/lib/indicator" ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/indicator");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/scale":
+/*!**********************************************!*\
+  !*** external "react-stockcharts/lib/scale" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/scale");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/series":
+/*!***********************************************!*\
+  !*** external "react-stockcharts/lib/series" ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/series");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/tooltip":
+/*!************************************************!*\
+  !*** external "react-stockcharts/lib/tooltip" ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/tooltip");
+
+/***/ }),
+
+/***/ "react-stockcharts/lib/utils":
+/*!**********************************************!*\
+  !*** external "react-stockcharts/lib/utils" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("react-stockcharts/lib/utils");
 
 /***/ }),
 

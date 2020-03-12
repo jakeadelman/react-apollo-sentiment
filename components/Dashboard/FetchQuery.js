@@ -17,7 +17,7 @@ import { equal } from "fast-deep-equal";
 
 // import { storesContext } from "../../stores/UserStore";
 
-@inject("store")
+@inject(["store"])
 @observer
 class FetchQuery extends React.Component {
   constructor(props) {
@@ -26,30 +26,27 @@ class FetchQuery extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.store.date);
-    let myStore = this.props.store;
-    console.log(myStore.date);
-    let dates = getStateDate(myStore.date);
-    console.log(dates);
-    this.setState({
-      startDate: dates.start,
-      endDate: dates.end,
-      date: this.props.store.date
-    });
-  }
-
-  componentDidUpdate(prevProps) {
-    console.log("updated");
-    if (this.props.store.date != prevProps.store.date) {
-      // Check if it's a new user, you can also use some unique property, like the ID  (this.props.user.id !== prevProps.user.id)
-      let dates = getStateDate(this.props.store.date);
-      console.log(dates);
-      this.setState({
-        startDate: dates.start,
-        endDate: dates.end,
-        date: this.props.store.date
-      });
-    }
+    // console.log(this.props.store);
+    // try {
+    //   let myStorage = window.localStorage;
+    //   let theDate = myStorage.getItem("store");
+    //   let obj = JSON.parse(theDate);
+    //   console.log(obj);
+    //   this.setState({
+    //     startDate: obj.startDate,
+    //     endDate: obj.endDate
+    //   });
+    //   console.log("SUCCESS");
+    //   console.log(obj.startDate);
+    //   console.log(obj.endDate);
+    // } catch (err) {
+    //   let theDates = getStateDate(2);
+    //   this.setState({
+    //     startDate: theDates.startDate,
+    //     endDate: theDates.endDate
+    //   });
+    //   console.log("FAILED");
+    // }
   }
 
   clicked = () => {
@@ -58,14 +55,15 @@ class FetchQuery extends React.Component {
   };
 
   render() {
-    // let fetchTradeHistoryVariables = {
-    //   start: this.state.startDate,
-    //   end: this.state.endDate
-    // };
     let fetchTradeHistoryVariables = {
-      start: "2020-02-24T12:43:56.702Z",
-      end: "2020-02-26T15:01:59.727Z"
+      start: this.props.store.startDate,
+      end: this.props.store.endDate
     };
+    console.log(fetchTradeHistoryQuery);
+    // let fetchTradeHistoryVariables = {
+    //   start: "2020-02-24T12:43:56.702Z",
+    //   end: "2020-02-26T15:01:59.727Z"
+    // };
     return (
       <div>
         <Comp
@@ -77,53 +75,12 @@ class FetchQuery extends React.Component {
   }
 }
 
-// const FetchQuery = inject("store")(
-//   observer(({ store }) => {
-//     // if (store) {
-//     // const [startDate, setStartDate] = useState();
-//     // const [endDate, setEndDate] = useState();
-//     // const [myStore, setStore] = useState();
-
-//     // useEffect(() => {
-//     //   setStore(store);
-//     //   let dates = getStateDate(myStore.date);
-//     //   setStartDate(dates.start);
-//     //   setEndDate(dates.end);
-//     // }, []);
-
-//     const clicked = () => {
-//       store.isAuth = !store.isAuth;
-//       console.log(store.isAuth);
-//     };
-
-//     // let fetchTradeHistoryVariables = {
-//     //   start: "2020-01-14T12:43:56.702Z",
-//     //   end: "2020-01-14T15:01:59.727Z"
-//     // };
-
-//     if (dates) {
-//       let fetchTradeHistoryVariables = {
-//         start: dates.start,
-//         end: dates.end
-//       };
-//     }
-//     return (
-//       <div>
-//         <Comp
-//           query={fetchTradeHistoryQuery}
-//           vars={fetchTradeHistoryVariables}
-//         />
-//       </div>
-//     );
-//   })
-// );
-
 class Comp extends React.Component {
   render() {
     return (
       <Query query={this.props.query} variables={this.props.vars}>
         {({ loading, error, data }) => {
-          console.log(data);
+          // console.log(data);
           if (error) return <div>no data loaded</div>;
           if (loading) return <div>Loading</div>;
 
@@ -134,8 +91,9 @@ class Comp extends React.Component {
                   <NextToDivHeader>Start</NextToDivHeader>
                   <NextToDivHeader>End</NextToDivHeader>
                   <NextToDivHeader>Direction</NextToDivHeader>
-                  <NextToDivHeader>Avg Entry Price</NextToDivHeader>
-                  <NextToDivHeader>Avg Exit Price</NextToDivHeader>
+                  <NextToDivHeader>Avg Entry</NextToDivHeader>
+                  <NextToDivHeader>Avg Exit</NextToDivHeader>
+                  <NextToDivHeader>Qty</NextToDivHeader>
                   <NextToDivHeader>Realized Pnl</NextToDivHeader>
                 </ContainDivHeader>
                 <ReChart data={data} />
@@ -165,8 +123,79 @@ const fetchTradeHistoryQuery = gql`
       execGrossPnl
       realizedPnl
       commission
+      execType
       trdStart
       trdEnd
+      notes
+      hashtags
+    }
+
+    fetchOneMinuteCandleHistory(start: $start, end: $end) {
+      id
+      timestamp
+      symbol
+      timeframe
+      open
+      high
+      low
+      close
+      trades
+      volume
+      vwap
+      lastSize
+      homeNotional
+      foreignNotional
+    }
+
+    fetchOneHourCandleHistory(start: $start, end: $end) {
+      id
+      timestamp
+      symbol
+      timeframe
+      open
+      high
+      low
+      close
+      trades
+      volume
+      vwap
+      lastSize
+      homeNotional
+      foreignNotional
+    }
+
+    fetchOneDayCandleHistory(start: $start, end: $end) {
+      id
+      timestamp
+      symbol
+      timeframe
+      open
+      high
+      low
+      close
+      trades
+      volume
+      vwap
+      lastSize
+      homeNotional
+      foreignNotional
+    }
+
+    fetchFiveMinuteCandleHistory(start: $start, end: $end) {
+      id
+      timestamp
+      symbol
+      timeframe
+      open
+      high
+      low
+      close
+      trades
+      volume
+      vwap
+      lastSize
+      homeNotional
+      foreignNotional
     }
   }
 `;

@@ -17,31 +17,33 @@ export function formatDateMonthOnly(date) {
   let theDate = new Date(date);
 
   var day = theDate.getDate();
+  var hours = theDate.getHours();
+  var mins = theDate.getMinutes();
   var monthIndex = theDate.getMonth();
   var year = theDate.getFullYear();
 
-  return day + " " + monthNames[monthIndex] + " " + year;
+  return day + " " + monthNames[monthIndex] + ", " + hours + ":" + mins;
 }
 
 export function getStateDate(input) {
-  if (input == "today") {
+  if (input == 1) {
     let dates = {};
-    dates.start = makeDateHrs(0);
-    dates.end = makeDateHrs(24);
+    dates.end = makeDateHrs(0);
+    dates.start = makeDateHrs(24);
     console.log("is today");
     return dates;
   }
-  if (input == "yesterday") {
+  if (input == 2) {
     let dates = {};
-    dates.start = makeDateHrs(1);
-    dates.end = makeDateDays(2);
+    dates.end = makeDateHrs(1);
+    dates.start = makeDateDays(2);
     console.log("is yesterday");
     return dates;
   }
-  if (input == "this week") {
+  if (input == 3) {
     let dates = {};
-    dates.start = makeDateHrs(0);
-    dates.end = makeDateDays(7);
+    dates.end = makeDateHrs(0);
+    dates.start = makeDateDays(7);
     console.log("is this week");
     return dates;
   }

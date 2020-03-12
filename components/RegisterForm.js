@@ -82,6 +82,10 @@ export default function RegisterForm() {
     </ApolloConsumer>
   );
 }
+// const MyFormWrapper = styled.div`
+//   margin: auto;
+//   margin-top: 20vh;
+// `;
 
 const StyledForm = styled.form`
   display: flex;

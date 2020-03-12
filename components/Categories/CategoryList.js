@@ -5,40 +5,36 @@ import { inject, observer } from "mobx-react";
 const SidebarCategoryList = inject("store")(
   observer(({ store }) => {
     function handleClick(value) {
+      store.resetPnl();
       store.changeDate(value);
+      console.log(store);
     }
     return (
       <CategoryList>
-        {store.date == "today" ? (
-          <ItemActive onClick={() => handleClick("today")}>Today</ItemActive>
+        {store.date == 1 ? (
+          <ItemActive onClick={() => handleClick(1)}>Today</ItemActive>
         ) : (
-          <Item onClick={() => handleClick("today")}>Today</Item>
+          <Item onClick={() => handleClick(1)}>Today</Item>
         )}
-        {store.date == "yesterday" ? (
-          <ItemActive onClick={() => handleClick("yesterday")}>
-            Yesterday
-          </ItemActive>
+        {store.date == 2 ? (
+          <ItemActive onClick={() => handleClick(2)}>Yesterday</ItemActive>
         ) : (
-          <Item onClick={() => handleClick("yesterday")}>Yesterday</Item>
+          <Item onClick={() => handleClick(2)}>Yesterday</Item>
         )}
-        {store.date == "this week" ? (
-          <ItemActive onClick={() => handleClick("this week")}>
-            This Week
-          </ItemActive>
+        {store.date == 3 ? (
+          <ItemActive onClick={() => handleClick(3)}>This Week</ItemActive>
         ) : (
-          <Item onClick={() => handleClick("this week")}>This Week</Item>
+          <Item onClick={() => handleClick(3)}>This Week</Item>
         )}
-        {store.date == "this month" ? (
-          <ItemActive onClick={() => handleClick("this month")}>
-            This Month
-          </ItemActive>
+        {store.date == 4 ? (
+          <ItemActive onClick={() => handleClick(4)}>This Month</ItemActive>
         ) : (
-          <Item onClick={() => handleClick("this month")}>This Month</Item>
+          <Item onClick={() => handleClick(4)}>This Month</Item>
         )}
-        {store.date == "custom" ? (
-          <ItemActive onClick={() => handleClick("custom")}>Custom</ItemActive>
+        {store.date == 5 ? (
+          <ItemActive onClick={() => handleClick(5)}>Custom</ItemActive>
         ) : (
-          <Item onClick={() => handleClick("custom")}>Custom</Item>
+          <Item onClick={() => handleClick(5)}>Custom</Item>
         )}
       </CategoryList>
     );

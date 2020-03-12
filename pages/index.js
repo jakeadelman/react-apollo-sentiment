@@ -8,54 +8,71 @@ import { smallFont, wideFont } from "../components/shared/helpers";
 import Typist from "react-typist";
 import TypistLoop from "react-typist-loop";
 import Link from "next/link";
+import Router from "next/router";
+import LoginPage from "./login";
+const Cookie = require("js-cookie");
 
 let cursor = {
   blink: true
 };
 
-export default () => (
-  <App>
-    <Header style={{ margin: "0" }} />
-    <ThemeProvider theme={theme(false)}>
-      <OuterWrapper style={{ margin: "0" }}>
-        <Wrapper>
-          <RowOne>
-            <InnerRowContainer>
-              <div style={{ width: "200px", height: "auto", margin: "auto" }}>
-                <img
-                  src="/static/ai2.svg"
-                  style={{ margin: "auto", maxWidth: "200px" }}
-                />
-              </div>
-            </InnerRowContainer>
-            <InnerRowContainer>
-              <TxtDiv>
-                <TypistLoop interval={500}>
-                  {["log", "improve", "systematize"].map(text => (
-                    <Typist key={text} stdTypingDelay={35} cursor={cursor}>
-                      <span>{text}</span>
-                      <Typist.Backspace count={text.length} delay={2200} />
-                    </Typist>
-                  ))}
-                </TypistLoop>
-                <div style={{ marginLeft: "1px" }}>your trading</div>
-              </TxtDiv>
-            </InnerRowContainer>
-            <InnerRowContainerBlack>
-              <TxtDivBlack2 className="hello">
-                <Link href="/signup">
-                  <SignUpButton>
-                    start automatically logging your trades
-                  </SignUpButton>
-                </Link>
-              </TxtDivBlack2>
-            </InnerRowContainerBlack>
-          </RowOne>
-        </Wrapper>
-      </OuterWrapper>
-    </ThemeProvider>
-  </App>
-);
+export default function() {
+  // componentDidMount() {
+  const cook = Cookie.get("isAuth");
+  if (!!cook) {
+    Router.push("/dashboard");
+  } else {
+    return <LoginPage />;
+  }
+  // }
+  // render() {
+  // return (
+  //   <App>
+  //     <Header style={{ margin: "0" }} />
+  //     <ThemeProvider theme={theme(false)}>
+  //       <OuterWrapper style={{ margin: "0" }}>
+  //         <Wrapper>
+  //           <RowOne>
+  //             <InnerRowContainer>
+  //               <div
+  //                 style={{ width: "200px", height: "auto", margin: "auto" }}
+  //               >
+  //                 <img
+  //                   src="/static/ai2.svg"
+  //                   style={{ margin: "auto", maxWidth: "200px" }}
+  //                 />
+  //               </div>
+  //             </InnerRowContainer>
+  //             <InnerRowContainer>
+  //               <TxtDiv>
+  //                 <TypistLoop interval={500}>
+  //                   {["log", "improve", "systematize"].map(text => (
+  //                     <Typist key={text} stdTypingDelay={35} cursor={cursor}>
+  //                       <span>{text}</span>
+  //                       <Typist.Backspace count={text.length} delay={2200} />
+  //                     </Typist>
+  //                   ))}
+  //                 </TypistLoop>
+  //                 <div style={{ marginLeft: "1px" }}>your trading</div>
+  //               </TxtDiv>
+  //             </InnerRowContainer>
+  //             <InnerRowContainerBlack>
+  //               <TxtDivBlack2 className="hello">
+  //                 <Link href="/signup">
+  //                   <SignUpButton>
+  //                     start automatically logging your trades
+  //                   </SignUpButton>
+  //                 </Link>
+  //               </TxtDivBlack2>
+  //             </InnerRowContainerBlack>
+  //           </RowOne>
+  //         </Wrapper>
+  //       </OuterWrapper>
+  //     </ThemeProvider>
+  //   </App>
+  // );
+  // }
+}
 
 const OuterWrapper = styled.div`
   background-color: ${props => props.theme.foreground};

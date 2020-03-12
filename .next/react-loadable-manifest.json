@@ -23,6 +23,12 @@
       "publicPath": "static/chunks/styles.js"
     },
     {
+      "id": 5,
+      "name": null,
+      "file": "static/chunks/styles.js",
+      "publicPath": "static/chunks/styles.js"
+    },
+    {
       "id": 6,
       "name": null,
       "file": "static/chunks/styles.js",
@@ -30,12 +36,6 @@
     },
     {
       "id": 7,
-      "name": null,
-      "file": "static/chunks/styles.js",
-      "publicPath": "static/chunks/styles.js"
-    },
-    {
-      "id": 8,
       "name": null,
       "file": "static/chunks/styles.js",
       "publicPath": "static/chunks/styles.js"

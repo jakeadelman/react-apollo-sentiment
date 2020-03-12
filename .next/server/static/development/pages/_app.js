@@ -93,6 +93,78 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
+/***/ "./components/Helpers/Functions.js":
+/*!*****************************************!*\
+  !*** ./components/Helpers/Functions.js ***!
+  \*****************************************/
+/*! exports provided: formatDateMonthOnly, getStateDate */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatDateMonthOnly", function() { return formatDateMonthOnly; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getStateDate", function() { return getStateDate; });
+function formatDateMonthOnly(date) {
+  var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+  var theDate = new Date(date);
+  var day = theDate.getDate();
+  var hours = theDate.getHours();
+  var mins = theDate.getMinutes();
+  var monthIndex = theDate.getMonth();
+  var year = theDate.getFullYear();
+  return day + " " + monthNames[monthIndex] + ", " + hours + ":" + mins;
+}
+function getStateDate(input) {
+  if (input == 1) {
+    var dates = {};
+    dates.end = makeDateHrs(0);
+    dates.start = makeDateHrs(24);
+    console.log("is today");
+    return dates;
+  }
+
+  if (input == 2) {
+    var _dates = {};
+    _dates.end = makeDateHrs(1);
+    _dates.start = makeDateDays(2);
+    console.log("is yesterday");
+    return _dates;
+  }
+
+  if (input == 3) {
+    var _dates2 = {};
+    _dates2.end = makeDateHrs(0);
+    _dates2.start = makeDateDays(7);
+    console.log("is this week");
+    return _dates2;
+  }
+}
+
+function makeDateHrs(hrsBack) {
+  if (hrsBack == 0) {
+    var dt = new Date(new Date().toUTCString());
+    dt = dt.toISOString();
+    return dt;
+  } else {
+    var _dt = new Date(new Date().toUTCString());
+
+    _dt.setHours(_dt.getHours() - hrsBack);
+
+    _dt = _dt.toISOString();
+    return _dt;
+  }
+}
+
+function makeDateDays(num) {
+  var dt = new Date(new Date().toUTCString());
+  dt.setDate(dt.getDate() - num);
+  dt = dt.toISOString();
+  console.log("getting days back");
+  return dt;
+}
+
+/***/ }),
+
 /***/ "./lib/init-apollo.js":
 /*!****************************!*\
   !*** ./lib/init-apollo.js ***!
@@ -469,7 +541,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var mobx_persist__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_persist__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _temp;
+/* harmony import */ var _components_Helpers_Functions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Helpers/Functions */ "./components/Helpers/Functions.js");
+var _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _temp;
 
 function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
@@ -478,6 +551,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
 function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
+
 
 
 
@@ -494,9 +568,19 @@ var Store = (_class = (_temp = function Store() {
 
   _initializerDefineProperty(this, "isAuth", _descriptor3, this);
 
-  _initializerDefineProperty(this, "date", _descriptor4, this);
+  _initializerDefineProperty(this, "startDate", _descriptor4, this);
 
-  _initializerDefineProperty(this, "changeDate", _descriptor5, this);
+  _initializerDefineProperty(this, "endDate", _descriptor5, this);
+
+  _initializerDefineProperty(this, "date", _descriptor6, this);
+
+  _initializerDefineProperty(this, "pnl", _descriptor7, this);
+
+  _initializerDefineProperty(this, "changeDate", _descriptor8, this);
+
+  _initializerDefineProperty(this, "addPnl", _descriptor9, this);
+
+  _initializerDefineProperty(this, "resetPnl", _descriptor10, this);
 } //   constructor(isServer, initialData = {}) {
 //     this.lastUpdate =
 //       initialData.lastUpdate != null ? initialData.lastUpdate : Date.now();
@@ -530,14 +614,35 @@ var Store = (_class = (_temp = function Store() {
   initializer: function initializer() {
     return false;
   }
-}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "date", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+}), _descriptor4 = _applyDecoratedDescriptor(_class.prototype, "startDate", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
   configurable: true,
   enumerable: true,
   writable: true,
   initializer: function initializer() {
-    return "this week";
+    return "2020-02-24T12:43:56.702Z";
   }
-}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "changeDate", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, "endDate", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return "2020-02-28T12:43:56.702Z";
+  }
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, "date", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return 1;
+  }
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, "pnl", [mobx_persist__WEBPACK_IMPORTED_MODULE_2__["persist"], mobx__WEBPACK_IMPORTED_MODULE_0__["observable"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    return 0;
+  }
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, "changeDate", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
   configurable: true,
   enumerable: true,
   writable: true,
@@ -545,7 +650,32 @@ var Store = (_class = (_temp = function Store() {
     var _this = this;
 
     return function (newDate) {
+      var dates = Object(_components_Helpers_Functions__WEBPACK_IMPORTED_MODULE_4__["getStateDate"])(newDate);
       _this.date = newDate;
+      _this.startDate = dates.start;
+      _this.endDate = dates.end;
+    };
+  }
+}), _descriptor9 = _applyDecoratedDescriptor(_class.prototype, "addPnl", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this2 = this;
+
+    return function (pnl) {
+      _this2.pnl += pnl;
+    };
+  }
+}), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, "resetPnl", [mobx__WEBPACK_IMPORTED_MODULE_0__["action"]], {
+  configurable: true,
+  enumerable: true,
+  writable: true,
+  initializer: function initializer() {
+    var _this3 = this;
+
+    return function () {
+      _this3.pnl = 0;
     };
   }
 })), _class);

@@ -2,6 +2,7 @@ import { action, observable } from "mobx";
 import { useStaticRendering } from "mobx-react";
 import { create, persist } from "mobx-persist";
 import { createContext } from "react";
+import { getStateDate } from "../components/Helpers/Functions";
 
 const isServer = !process.browser;
 useStaticRendering(isServer);
@@ -10,11 +11,24 @@ export class Store {
   @observable lastUpdate = 0;
   @persist @observable light = true;
   @persist @observable isAuth = false;
-  @persist @observable date = "this week";
-  // @persist @observable endDate = "";
+  @persist @observable startDate = "2020-02-24T12:43:56.702Z";
+  @persist @observable endDate = "2020-02-28T12:43:56.702Z";
+  @persist @observable date = 1;
+  @persist @observable pnl = 0;
 
   @action changeDate = newDate => {
+    let dates = getStateDate(newDate);
     this.date = newDate;
+    this.startDate = dates.start;
+    this.endDate = dates.end;
+  };
+
+  @action addPnl = pnl => {
+    this.pnl += pnl;
+  };
+
+  @action resetPnl = () => {
+    this.pnl = 0;
   };
 
   //   constructor(isServer, initialData = {}) {
