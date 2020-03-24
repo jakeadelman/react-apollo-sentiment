@@ -53,7 +53,7 @@ export default class Example extends PureComponent {
               // this.state.hashtags.push(newsliced.)
             }
             this.state.fullTrades.unshift(newsliced);
-            console.log(this.state.fullTrades);
+            // console.log(this.state.fullTrades);
 
             break;
           }
@@ -129,12 +129,12 @@ class MakeCol extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   componentWillMount() {
     this.state.data = this.props.slic;
-    console.log(this.state.data[0]);
+    // console.log(this.state.data[0]);
     if (
       this.state.data[0].side == "Buy" &&
       this.state.data[0].execType == "Trade"
@@ -215,8 +215,8 @@ class MakeCol extends Component {
             realQty * parseFloat(this.state.data[i].price);
         }
         if (i == this.state.data.length - 1) {
-          console.log(totBuyContracts, totBuyContractsMult);
-          console.log(totSellContracts, totSellContractsMult);
+          // console.log(totBuyContracts, totBuyContractsMult);
+          // console.log(totSellContracts, totSellContractsMult);
           let avgBuyPrice = totBuyContractsMult / totBuyContracts;
           let avgSellPrice = totSellContractsMult / totSellContracts;
           let pnl = (1 / avgBuyPrice - 1 / avgSellPrice) * totBuyContracts;
@@ -253,7 +253,7 @@ class MakeCol extends Component {
     }
   }
   readMoreClicked() {
-    console.log(this.state);
+    // console.log(this.state);
     if (this.state.readMoreClicked == false) {
       this.setState({ readMoreClicked: true });
     } else {
@@ -323,11 +323,11 @@ class MakeCol extends Component {
                   </ContainDivBlack>
                 );
               })}
-              <ReadMore>
+              <ReadMoreTall>
                 <ReadMoreInner onClick={this.readMoreClicked}>
                   Show Less
                 </ReadMoreInner>
-              </ReadMore>
+              </ReadMoreTall>
             </MoreBoxTall>
           ) : (
             <MoreBoxShort>
@@ -376,7 +376,7 @@ class MakeCol extends Component {
               </ReadMore>
             </MoreBoxShort>
           )}
-          <Notes />
+          <Notes firstTrade={this.state.data[0]} />
           <MainChart
             onemin={this.props.onemin}
             fivemin={this.props.fivemin}
@@ -482,6 +482,15 @@ const ReadMore = styled.div`
     color-stop(0, rgba(255, 0, 0, 0)),
     color-stop(1, rgba(248, 248, 255, 1))
   );
+`;
+const ReadMoreTall = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 30px 0;
 `;
 // background-image: linear-gradient(to bottom, transparent, black);
 const MoreBoxShort = styled.div`

@@ -47,6 +47,13 @@ export function getStateDate(input) {
     console.log("is this week");
     return dates;
   }
+  if (input == 4) {
+    let dates = {};
+    dates.end = makeDateHrs(0);
+    dates.start = makeDateDays(30);
+    console.log("is this month");
+    return dates;
+  }
 }
 function makeDateHrs(hrsBack) {
   if (hrsBack == 0) {

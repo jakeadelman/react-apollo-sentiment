@@ -138,6 +138,14 @@ function getStateDate(input) {
     console.log("is this week");
     return _dates2;
   }
+
+  if (input == 4) {
+    var _dates3 = {};
+    _dates3.end = makeDateHrs(0);
+    _dates3.start = makeDateDays(30);
+    console.log("is this month");
+    return _dates3;
+  }
 }
 
 function makeDateHrs(hrsBack) {
