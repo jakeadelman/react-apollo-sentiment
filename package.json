@@ -82,7 +82,7 @@
     "styled-jsx": "^3.2.1",
     "svg-inline-react": "^3.2.0",
     "typist": "^0.1.0",
-    "underscore": "^1.9.1"
+    "underscore": "^1.12.1"
   },
   "author": "",
   "license": "ISC",
